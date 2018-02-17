@@ -1,0 +1,47 @@
+<div  [@inOut]="mainActive">
+	<h1>Lista de Clientes</h1>
+	<datagrid 
+		[data]="clients" 
+		[selected]="selected" 
+		[column]="col" 
+		(add)="onLoadForm($event)" 
+		(edit)="onEdit($event)"
+		(del)="onDelete($event)"
+	>	
+	</datagrid>
+</div>
+<div [@inOut]="formActive">
+	<form  #userForm="ngForm"  (ngSubmit)="userForm.form.valid && onSubmit()">
+		<h1>{{formTitle}}</h1>
+		<hr>
+		<div class="form-group" [class.has-danger]="nombre.invalid && nombre.touched" >
+			<label for="name">Nombre</label>
+			<input [class.form-control-danger]="nombre.invalid && nombre.touched"  [(ngModel)]="model.nombre" type="text" class=" form-control" required autofocus name="name"  #nombre="ngModel" >
+		</div>
+		<div class="form-group"  >
+			<label for="direccion">Dirección</label>
+			<input   [(ngModel)]="model.direccion" type="text" class=" form-control"   name="direccion"  >
+		</div>
+		<div class="form-group"  >
+			<label for="telefono">Teléfono</label>
+			<input   [(ngModel)]="model.telefono" type="text" class=" form-control"   name="telefono"  >
+		</div>
+		<div class="form-group"  >
+			<label for="celular">Celular</label>
+			<input   [(ngModel)]="model.celular" type="text" class=" form-control"   name="celular"  >
+		</div>
+		<div class="form-group"  >
+			<label for="email">Correo</label>
+			<input   [(ngModel)]="model.email" type="email" class=" form-control"   name="email"  >
+		</div>
+		 <div class="form-group" >
+			<label>Prioridad</label>
+			<select  class=" form-control" name="parent_id"  [(ngModel)]="model.priorities_id"> 
+				<option *ngFor="let row of list;" [value]="row.id">{{row.text}}</option>
+			</select>
+		</div>
+		<hr>
+		<button class="btn btn-lg btn-primary"  [disabled]="!userForm.form.valid">{{formBtnLabel}}</button>
+		<button class="btn btn-lg btn-primary" (click)="onCancel()"> Cancelar </button>
+	</form>
+</div>

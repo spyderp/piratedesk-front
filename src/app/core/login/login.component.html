@@ -1,0 +1,26 @@
+<div class="container">
+ <div class="row justify-content-md-center align-middle">
+    <div class="col col-lg-4 col-md-6 col-sm-8 col-12">
+      <div class="card border">
+        <div class="card-body">
+         <form  #loginForm="ngForm"  (ngSubmit)="loginForm.form.valid && onSubmit()">
+          <div class="form-group" [class.has-danger]="username.invalid && username.touched" >
+            <input [class.form-control-danger]="username.invalid && username.touched"  [(ngModel)]="model.username" type="text" class=" form-control" placeholder="Usuario" required autofocus name="usuario"  #username="ngModel" >
+          </div>
+          <div class="form-group" [class.has-danger]="password.invalid && password.touched">
+            <input [class.form-control-danger]="password.invalid && password.touched" [(ngModel)]="model.password" type="password" class="form-control" placeholder="Contraseña" required name="password"  #password="ngModel" >
+          </div>
+          <button class="btn btn-lg btn-primary btn-block"   [disabled]="!loginForm.form.valid || loading">
+            Acceder</button>
+            <img *ngIf="loading" src="../../assets/img/loading-ellipsis.svg" />
+            <label class="checkbox pull-left">
+              <input  [(ngModel)]="model.remember" name="remember"  type="checkbox" value="true">
+              Recordar
+            </label>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

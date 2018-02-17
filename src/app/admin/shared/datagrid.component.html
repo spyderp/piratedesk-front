@@ -1,0 +1,26 @@
+<div class="text-right datagridAction">
+	<button  class="btn btn-success" (click)="onAdd()"><i class="fa fa-plus " aria-hidden="true"></i> </button>
+	<button class="btn btn-info"  [disabled]="!isEdit" (click)="onEdit()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </button>
+	<button *ngIf="del" class="btn btn-danger" [disabled]="!isDel" (click)="onDel()"><i class="fa fa-times-circle " aria-hidden="true"></i> </button>
+</div>
+<ngx-datatable
+      [rows]="data"
+      [columnMode]="'force'"
+      [headerHeight]="headerH"
+      [rowHeight]="rowH"
+      [footerHeight]="footerH"
+      [selected]="selected"
+    	[selectionType]="'checkbox'"
+    	(select)='onSelect($event)'
+      >
+	<ngx-datatable-column
+		[width]="30"
+		[sortable]="false"
+		[canAutoResize]="false"
+		[draggable]="false"
+		[resizeable]="false"
+		[headerCheckboxable]="true"
+		[checkboxable]="true">
+      </ngx-datatable-column>
+      <ngx-datatable-column [name]="row.name" [prop]="row.prop" *ngFor="let row of column"></ngx-datatable-column>
+</ngx-datatable>

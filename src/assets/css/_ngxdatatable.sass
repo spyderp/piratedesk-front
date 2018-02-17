@@ -1,0 +1,23 @@
+$border-table: 2px
+$header: $border-table solid $olivo
+$padding-row-header: .3rem 1.2rem
+$padding-row: .3rem 1.2rem
+.ngx-datatable
+	.datatable-body-row 
+		.datatable-body-cell
+			padding: $padding-row
+			border-bottom: 1px solid rgba(44, 45, 51, 0.58)
+	.datatable-row-odd
+		background: rgba(236,236,236,1);
+	.datatable-header 
+		border-bottom: $header
+		border-top: $header
+		.datatable-header-cell 
+			text-align: center
+			padding: $padding-row-header
+			color: #000
+			&.sortable span:hover
+				font-weight: 500
+		.datatable-header-cell-wrapper 
+			position: relative
+		

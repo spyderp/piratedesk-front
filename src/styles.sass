@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+$blue:    #1189c5 !default;
+$red:     #da3d3e !default;
+$orange: #f57b20 !default;
+$yellow:  #ffd500 !default;
+$green:    #6abd36 !default;
+$teal:    #40b0fc !default;
+$aqua:   #00a69c !default;
+$darkAqua: #1f8d83 !default;
+$olivo:  #b1b22e !default;
+$border-radius:          0 ;
+$border-radius-lg:       0 ;
+$border-radius-sm:       0 ;
+@import "assets/css/theme"
+@import "node_modules/bootstrap/scss/bootstrap"
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome"
+@import assets/css/toasty
+@import assets/css/ngxdatatable
+
+body
+	background: rgba(236,236,236,1)
+
+#sidebar
+	color: $olivo;
+	height: 93vh
+.open>.dropdown-menu
+	display: block
+
+
+.swashOut
+	animation-duration: 1s
+	animation-fill-mode: both
+	animation-name: swashOut
+.swashIn
+  animation-duration: 1s
+  animation-fill-mode: both
+  animation-name: swashIn
+
+@keyframes swashOut
+  0%
+    opacity: 1
+    transform: scale(1, 1)
+
+  80%
+    opacity: 1
+    transform: scale(0.9, 0.9)
+
+  100%
+    opacity: 0
+    transform: scale(0, 0)
+
+
+
+@keyframes swashIn
+  0%
+    opacity: 0
+    transform: scale(0, 0)
+
+  90%
+    opacity: 1
+    transform: scale(0.9, 0.9)
+
+  100%
+    opacity: 1
+    transform: scale(1, 1)
