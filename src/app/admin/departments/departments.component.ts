@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-import { DepartmentService } from '../shared/department.service';
 import { Department } from '../shared/department.model';
 import {NgProgress } from 'ngx-progressbar';
 import { pirateAnimation } from '../../shared/pirate.animation';
-
+import { DepartmentService } from '../shared/department.service';
 @Component({
 	selector: 'departments',
 	templateUrl: './departments.component.html',
 	styleUrls: ['./departments.component.sass'],
-	providers:[DepartmentService],
 	animations: [pirateAnimation],
 })
 export class DepartmentsComponent implements OnInit {
@@ -69,7 +67,7 @@ export class DepartmentsComponent implements OnInit {
 		if(this.model.id){
 			this.progressService.start();
 			 this.departmentService.update(this.model).subscribe(data => {
-				if(data.success){
+				if(data){
 					this.toastyService.success('Registro Actualizado');
 					this.loadAll({ offset: 0 });
 				//this.users.push(this.model);
@@ -87,9 +85,9 @@ export class DepartmentsComponent implements OnInit {
 		 	this.progressService.start();
 			 this.departmentService.create(this.model).subscribe(
 			data => {
-				if(data.success){
+				if(data){
 					this.toastyService.success('Nuevo registro creado con exito');
-					this.departments.push(data.department);
+					this.departments= this.departments.concat(data);
 					this.onCancel();
 				}else{
 					this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
@@ -103,11 +101,12 @@ export class DepartmentsComponent implements OnInit {
 		 }
 	}
 	loadAll(pageInfo){
-		this.departmentService.getAll().subscribe(departments => { this.departments = departments.departments; 	});
+		this.departmentService.getAll().subscribe(data => { this.departments = data; 	});
 	}
 	private loadList(){
-		this.departmentService.getList().subscribe(departments => { this.list = departments.departments; });
+		this.departmentService.getList().subscribe(data => { this.list = data; });
 	}
+	
 	private loadForm(add:boolean=true){
 		this.formActive = 'active';
 		this.mainActive = 'inactive';

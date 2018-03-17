@@ -4,7 +4,9 @@
 	<button *ngIf="del" class="btn btn-danger" [disabled]="!isDel" (click)="onDel()"><i class="fa fa-times-circle " aria-hidden="true"></i> </button>
 </div>
 <ngx-datatable
+	   class="striped"
       [rows]="data"
+      [loadingIndicator]="true"
       [columnMode]="'force'"
       [headerHeight]="headerH"
       [rowHeight]="rowH"
@@ -12,8 +14,9 @@
       [selected]="selected"
     	[selectionType]="'checkbox'"
     	(select)='onSelect($event)'
+    	[limit]="20"
       >
-	<ngx-datatable-column
+	 <ngx-datatable-column
 		[width]="30"
 		[sortable]="false"
 		[canAutoResize]="false"
@@ -21,6 +24,7 @@
 		[resizeable]="false"
 		[headerCheckboxable]="true"
 		[checkboxable]="true">
-      </ngx-datatable-column>
-      <ngx-datatable-column [name]="row.name" [prop]="row.prop" *ngFor="let row of column"></ngx-datatable-column>
+	      </ngx-datatable-column> -->
+      <ngx-datatable-column [name]="row.name" [prop]="row.prop" *ngFor="let row of column">
+      </ngx-datatable-column> 
 </ngx-datatable>

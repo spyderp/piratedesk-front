@@ -1,33 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Rest } from '../../shared/rest';
 import { User } from './user.model';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+
 @Injectable()
 export class UserService extends Rest{
-	constructor(http: Http) { 
+	constructor(http: HttpClient) { 
 		super(http);
 	}
-	getAll() {
-		return this.http.get(this.url+'/users').map((response: Response) => response.json());
+	getAll():Observable<User[]> {
+		return this.http.get<User[]>(this.url+'/users');
 	}
 
-	getById(id: number) {
-		return this.http.get(this.url+'/users/' + id).map((response: Response) => response.json());
+	getById(id: number):Observable<User> {
+		return this.http.get<User>(this.url+'/users/' + id);
 	}
 
-	create(user: User) {
-		return this.http.post(this.url+'/users', user).map((response: Response) => response.json());
-	}
+	create(user: User):Observable<User> {
+		return this.http.post<User>(this.url+'/users', user);
+	}any
 
-	update(user: User) {
-		return this.http.put(this.url+'/users/' + user.id, user).map((response: Response) => response.json());
+	update(user: User):Observable<User> {
+		return this.http.put<User>(this.url+'/users/' + user.id, user);
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/users/' + id).map((response: Response) => response.json());
+		return this.http.delete(this.url+'/users/' + id);
 	}
+
+	patch(id:number,data:any){
+		return this.http.patch(this.url+'/users/' + id, data);	
+	}
+
 	associations() {
-		return this.http.get(this.url+'/users/associations').map((response: Response) => response.json());
+		return this.http.get(this.url+'/departments?type=list');
 	}
 }

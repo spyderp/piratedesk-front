@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Rest } from '../../shared/rest';
 import { Client } from './client.model';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ClientService extends Rest {
-	constructor(http: Http) { 
+	constructor(http: HttpClient) { 
 		super(http);
 	}
 
-	getAll() {
-		return this.http.get(this.url+'/clients').map((response: Response) => response.json());
+	getAll():Observable<Client[]> {
+		return this.http.get<Client[]>(this.url+'/clients');
 	}
 
 	getById(id: number) {
-		return this.http.get(this.url+'/clients/' + id).map((response: Response) => response.json());
+		return this.http.get(this.url+'/clients/' + id);
 	}
 
 	getAssoc() {
-		return this.http.get(this.url+'/clients/associations').map((response: Response) => response.json());
+		return this.http.get<any[]>(this.url+'/clients?type=list');
 	}
 
 	create(client: Client) {
-		return this.http.post(this.url+'/clients', client).map((response: Response) => response.json());
+		return this.http.post<Client>(this.url+'/clients', client);
 	}
 
-	update(client: Client) {
-		return this.http.put(this.url+'/clients/' + client.id, client).map((response: Response) => response.json());
+	update(client: Client):Observable<Client> {
+		return this.http.put<Client>(this.url+'/clients/' + client.id, client);
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/clients/' + id).map((response: Response) => response.json());
+		return this.http.delete(this.url+'/clients/' + id);
 	}
 
 }

@@ -1,15 +1,14 @@
 
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-import { ClientService } from '../shared/client.service';
 import { Client } from '../shared/client.model';
 import { NgProgress } from 'ngx-progressbar';
 import { pirateAnimation } from '../../shared/pirate.animation';
+import { ClientService } from '../shared/client.service';
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.sass'],
-  providers:[ClientService],
   animations: [pirateAnimation],
 })
 export class ClientsComponent implements OnInit {
@@ -20,6 +19,7 @@ export class ClientsComponent implements OnInit {
 	public formActive = 'inactive';
 	private model:Client = new Client();;
 	private list=[];
+	isDataLoaded = false
 	selected = [];
 	col = [
 		{ name:'Nombre', prop:'nombre'},
@@ -68,10 +68,10 @@ export class ClientsComponent implements OnInit {
 		this.progressService.start();
 		if(this.model.id){
 			 this.clientService.update(this.model).subscribe(data => {
-				if(data.success){
+				if(data){
 					this.toastyService.success('Registro Actualizado');
 					this.loadAll();
-					//this.users.push(this.model);
+					//this.clients.push(this.model);
 					this.onCancel();
 				}else{
 		           		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
@@ -83,25 +83,26 @@ export class ClientsComponent implements OnInit {
 			});
 		 }else{
 			 this.clientService.create(this.model).subscribe(
-			data => {
-				if(data.success){
-					this.toastyService.success('Nuevo registro creado con exito');
-					this.clients.push(data.client);
-					this.onCancel();
-				}else{
-					this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
-				}
-			},
-			error => {
-				this.toastyService.error(error);
-				//this.loading = false;
+				data => {
+					if(data){
+						this.toastyService.success('Nuevo registro creado con exito');
+						this.clients= this.clients.concat(data);
+
+						this.onCancel();
+					}else{
+						this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
+					}
+				},
+				error => {
+					this.toastyService.error(error);
+					//this.loading = false;
 			});
 		 }
 		 this.progressService.done();
 	}
 	private loadAll(){
-		this.clientService.getAll().subscribe(clients => { this.clients = clients.clients; });
-		this.clientService.getAssoc().subscribe(clients => { this.list = clients.clients; });
+		this.clientService.getAll().subscribe(data => { this.clients = data; });
+		this.clientService.getAssoc().subscribe(data => { this.list = data; });
 	}
 	private loadForm(add:boolean=true){
 		this.formActive = 'active';

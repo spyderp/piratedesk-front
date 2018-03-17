@@ -1,32 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Rest } from '../../shared/rest';
 import { Rol } from './rol.model';
-import 'rxjs/add/operator/map';
 @Injectable()
 export class RolService extends Rest {
-	constructor(http: Http) { 
+	constructor(http: HttpClient) { 
 		super(http);
 	}
 
 	getAll() {
-		return this.http.get(this.url+'/rols').map((response: Response) => response.json());
+		return this.http.get(this.url+'/rols');
 	}
 
 	getById(id: number) {
-		return this.http.get(this.url+'/rols/' + id).map((response: Response) => response.json());
+		return this.http.get(this.url+'/rols/' + id);
 	}
 
 	create(rol: Rol) {
-		return this.http.post(this.url+'/rols', rol).map((response: Response) => response.json());
+		return this.http.post(this.url+'/rols', rol);
 	}
 
 	update(rol: Rol) {
-		return this.http.put(this.url+'/rols' + rol.id, rol).map((response: Response) => response.json());
+		return this.http.put(this.url+'/rols' + rol.id, rol);
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/rols/' + id).map((response: Response) => response.json());
+		return this.http.delete(this.url+'/rols/' + id);
 	}
 
 }

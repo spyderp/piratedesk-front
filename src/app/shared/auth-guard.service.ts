@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-
+import { AuthService } from './auth.service'
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
   constructor(
+    private auth: AuthService,
   	private router: Router,
     private toastyService:ToastyService, 
     private toastyConfig: ToastyConfig
@@ -16,18 +17,16 @@ export class AuthGuardService implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let expired = Number(localStorage.getItem('current.expired'));
-    if (localStorage.getItem('current.token') && expired > (Date.now()/1000)) {
-        let user = localStorage.getItem('current.user');
-        let path = route.url.join('');
-        return true;
-       // if(user.search(path)>0){
-       //   return true;
-       // }else{
-       //     this.toastyService.info('No tiene permisos de accesos a esta sección');
-       //     this.router.navigate(['/inbox']);
-       //      return false;
-       // }
+    let isExpired = this.auth.getExpired();
+    let isTokken = this.auth.getToken()?true:false;
+    let path = state.url;
+    if ( isTokken && !isExpired) {
+       //return true;
+       return this.__privigele(path);
+    }else if(isTokken && isExpired) {
+      this.auth.getRefresh();
+      //return true;
+      return this.__privigele(path);
     }
 
     // not logged in so redirect to login page with the return url
@@ -35,6 +34,17 @@ export class AuthGuardService implements CanActivate {
     this.router.navigate(['/login']);
     return false;
    
+   }
+
+   private __privigele(path:string):boolean{
+      let user = this.auth.getUser();
+      if(user.search(path)>0){
+        return true;
+      }else{
+        this.toastyService.info('No tiene permisos de accesos a esta sección');
+        this.router.navigate(['/inbox']);
+        return false;
+      }
    }
 
 }

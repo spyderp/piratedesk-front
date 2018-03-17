@@ -1,17 +1,94 @@
 <ng-progress showSpinner="'false'" color="#ffd500" direction="leftToRightReduced" ></ng-progress>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
- 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#"><i class="fa fa-inbox fa-2x" aria-hidden="true"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
-      </li>
-      
-    </ul>
+	<a class="navbar-brand" href="#">
+		<img src="/assets/img/logo.svg" width="250px" alt="logo">
+	</a>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item ">
+				<a class="nav-link" routerLink="/inbox" routerLinkActive="active"><i class="fa fa-inbox fa-2x" aria-hidden="true"></i></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="/admin" routerLinkActive="active"><i class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
+			</li>
+			<li class="nav-item dropdown" >
+				<a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
+				<div class="dropdown-menu dropdown-menu-right"[ngbCollapse]="isCollapsed"  aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="open(content)">Perfil</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()" >Salir</a>
+        </div>
+			</li>
+			
+		</ul>
 	</div>
 </nav>
+
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h5 class="modal-title">Perfil del Usuario</h5>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<form  #userEditForm="ngForm"   >
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-6">
+				<div class="form-group"  >
+					<label for="usuario">Nombre</label>
+					<input  type="text" class="form-control" readOnly [(ngModel)]="model.nombre" name="nombre">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form-group"  >
+					<label for="usuario">Apellido</label>
+					<input  type="text" class="form-control" readOnly [(ngModel)]="model.apellido" name="apellido" >
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form-group" [class.has-danger]="email.invalid && email.touched" >
+					<label for="usuario">Correo</label>
+					<input  type="email" class="form-control"  #email="ngModel" [(ngModel)]="model.email" [class.form-control-danger]="email.invalid && email.touched" required name="email">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form-group"  >
+					<label for="usuario">último Acceso</label>
+					<input  type="text" class="form-control" readOnly [(ngModel)]="model.ultimo_acceso" name="ultimo_acceso" >
+				</div>
+			</div>
+				<div class="col-6">
+					<div class="form-group" [class.has-danger]="password.invalid && password.touched" >
+						<label for="usuario">Contraseña</label>
+						<input  type="password" class="form-control" #password="ngModel" [(ngModel)]="model.password" [class.form-control-danger]="password.invalid && password.touched" minlength="8" forbiddenPassword="3" name="password">
+						<div *ngIf="password.errors && (password.touched || password.dirty)" class="alert alert-danger" role="alert">
+							<div [hidden]="!password.errors.forbiddenPassword">
+								<strong>Error</strong> La contraseña debe tener  una mayuscula, una minuscula y un número.
+							</div>
+							<div [hidden]="!password.errors.minlength">
+								<strong>Error</strong> La contraseña debe tener  8 caracteres minimo.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group" [class.has-danger]="repassword.invalid && repassword.touched" >
+						<label for="usuario">Repetir contraseña</label>
+						<input  type="password" class="form-control" #repassword="ngModel" [(ngModel)]="model.repassword" confirmPassword="password"  [required]="model.password!=null?false:true" [class.form-control-danger]="repassword.invalid && repassword.touched" name="repassword">
+						 <div *ngIf="repassword.errors && (repassword.touched || repassword.dirty)" class="alert alert-danger" role="alert">
+								<div [hidden]="!repassword.errors.confirmPassword">
+									<strong>Error</strong> No coinciden la contraseña.
+								</div>
+							</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar Cambios</button>
+		<button type="button" class="btn  btn-secondary" (click)="c('Close click')">Cancelar</button>
+	</div>
+	</form>
+</ng-template>

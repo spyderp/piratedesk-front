@@ -1,41 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Rest } from '../../shared/rest';
 import { Department } from './department.model';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DepartmentService extends Rest {
-	constructor(http: Http) { 
+	constructor(http: HttpClient) { 
 		super(http);
 	}
 
-	getAll(page=0) {
+	getAll(page=0):Observable<Department[]> {
 		let pages:string='';
 		if(page>0){
 			page = page+1;
 			pages = '?page='+page;
 		}
-		return this.http.get(this.url+'/departments'+pages).map((response: Response) => response.json());
+		return this.http.get<Department[]>(this.url+'/departments'+pages);
 	}
 
 	getById(id: number) {
-		return this.http.get(this.url+'/departments/' + id).map((response: Response) => response.json());
+		return this.http.get(this.url+'/departments/' + id);
 	}
 
 	getList() {
-		return this.http.get(this.url+'/departments/list_tree').map((response: Response) => response.json());
+		return this.http.get<any[]>(this.url+'/departments?type=list');
 	}
 
-	create(deparment: Department) {
-		return this.http.post(this.url+'/departments', deparment).map((response: Response) => response.json());
+	create(deparment: Department):Observable<Department> {
+		return this.http.post<Department>(this.url+'/departments', deparment);
 	}
 
-	update(deparment: Department) {
-		return this.http.put(this.url+'/departments' + deparment.id, deparment).map((response: Response) => response.json());
+	update(deparment: Department):Observable<Department> {
+		return this.http.put<Department>(this.url+'/departments' + deparment.id, deparment);
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/departments/' + id).map((response: Response) => response.json());
+		return this.http.delete(this.url+'/departments/' + id);
 	}
 
 	

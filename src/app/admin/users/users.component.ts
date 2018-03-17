@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-import { UserService } from '../shared/user.service';
 import { User } from '../shared/user.model';
 import {NgProgress } from 'ngx-progressbar';
 import { pirateAnimation } from '../../shared/pirate.animation';
+import { UserService  } from '../shared/user.service'
 @Component({
 	selector: 'app-users',
 	templateUrl: './users.component.html',
@@ -12,7 +12,7 @@ import { pirateAnimation } from '../../shared/pirate.animation';
 })
 export class UsersComponent implements OnInit {
 	@ViewChild('selectedDepart') selectedDepart;
-	private users: User[]=[];
+	private users:User[]=[];
 	private model:User =  new User();
 	private active:Array<any>=[];
 	public mainActive = 'active';
@@ -42,13 +42,12 @@ export class UsersComponent implements OnInit {
 	 public ngOnInit():any {
 		this.progressService.start();
 		this.loadAllUsers();
-		 this.userService.associations().subscribe(data=>{
-			this.selectedDepart.items =  data.departments;
+		this.userService.associations().subscribe(data=>{
+			this.selectedDepart.items =  data;
 			this.progressService.done();
 		});
 	}
 	onDelete(event){
-		console.log(event);
 		let id = event[0].id;
 		this.progressService.start();
 		let index:number = this.users.map((element)=>{return element.id}).indexOf(id);
@@ -63,7 +62,7 @@ export class UsersComponent implements OnInit {
 		this.progressService.start();
 		if(this.model.id){
 			 this.userService.update(this.model).subscribe(data => {
-				if(data.success){
+				if(data){
 					this.toastyService.success('Registro Actualizado');
 					this.loadAllUsers();
 					this.onCancel();
@@ -78,9 +77,9 @@ export class UsersComponent implements OnInit {
 		 }else{
 			 this.userService.create(this.model).subscribe(
 			data => {
-				if(data.success){
+				if(data){
 					this.toastyService.success('Nuevo registro creado con exito');
-					this.users.push(data.user);
+					this.users = this.users.concat(data);
 					this.onCancel();
 				}else{
 					this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
@@ -96,7 +95,7 @@ export class UsersComponent implements OnInit {
 	onLoadForm(event){
 		this.loadForm();
 	}
-	onEdit(ievent){
+	onEdit(event){
 		this.loadForm(false);
 		this.model = this.users.filter((user: User) => user.id ===  event[0].id)[0];
 		this.active=[];
@@ -106,7 +105,8 @@ export class UsersComponent implements OnInit {
 		this.mainActive = 'active';
 	}
 	private loadAllUsers(){
-		this.userService.getAll().subscribe(users => { this.users = users.users; });
+		this.userService.getAll().subscribe(data => { this.users = data;});
+		
 	}
 	private loadForm(add:boolean=true){
 		this.formActive = 'active';
@@ -116,14 +116,13 @@ export class UsersComponent implements OnInit {
 		this.model = new User();
 	}
 	public selected(value:any):void {
-		 this.model.departments.push({id:value.id});
-		 console.log( this.model.departments);
+		 this.model.departments.concat({id:value.id});
+		 //console.log( this.model.departments);
 	 }
  
 	public removed(value:any):void {
 		let index:number = this.model.departments.map((element)=>{return element.id}).indexOf(value.id);
 		 delete this.model.departments[index];
-		console.log('Removed value is: ', this.model.departments);
 	}
 
 

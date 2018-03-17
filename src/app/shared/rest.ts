@@ -1,9 +1,9 @@
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Config } from './config.model';
 
 export abstract class Rest {
 	url: string;
- 	constructor(public http: Http) { 
+ 	constructor(public http: HttpClient) { 
 		this.url = Config.API_ENDPOINT;
 	}
 

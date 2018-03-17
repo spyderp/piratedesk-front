@@ -12,6 +12,6 @@ export class User {
 	ultimo_acceso: Date;
 	puntaje:       number;
 	rol_id:		   number;
-	rol:					 any;
-	departments: 	 any[];
+	rol:			any;
+	departments: 	 any[]=[];
 }

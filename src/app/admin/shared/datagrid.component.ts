@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild  } from '@angular/core';
 
 @Component({
   selector: 'datagrid',
@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
   styleUrls: ['./datagrid.component.sass']
 })
 export class DatagridComponent implements OnInit {
+  @ViewChild('dataGrid') dataGrid;
 	@Input() headerH:number =40;
   @Input() footerH:number =50;
   @Input() rowH:number =40;
@@ -21,6 +22,7 @@ export class DatagridComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
   onSelect({ selected }) {
     if(selected.length>0 && selected.length<2){
@@ -46,4 +48,5 @@ export class DatagridComponent implements OnInit {
       this.del.emit(this.selected);
     }
   }
+  
 }

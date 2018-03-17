@@ -1,14 +1,14 @@
 <div  [@inOut]="mainActive">
 	<h1>Lista de Clientes</h1>
-	<datagrid 
-		[data]="clients" 
-		[selected]="selected" 
-		[column]="col" 
-		(add)="onLoadForm($event)" 
-		(edit)="onEdit($event)"
-		(del)="onDelete($event)"
-	>	
-	</datagrid>
+	<datagrid  
+	[data]="clients" 
+	[selected]="selected" 
+	[column]="col" 
+	(add)="onLoadForm($event)" 
+	(edit)="onEdit($event)"
+	(del)="onDelete($event)"
+>	
+</datagrid>
 </div>
 <div [@inOut]="formActive">
 	<form  #userForm="ngForm"  (ngSubmit)="userForm.form.valid && onSubmit()">

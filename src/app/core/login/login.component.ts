@@ -43,8 +43,7 @@ export class LoginComponent implements OnInit {
 					this.router.navigate([this.returnUrl]); }, 500);
 			},
 			error => {
-				let option = JSON.parse(error._body);
-				this.toastyService.error(option.message);
+				this.toastyService.error('Su usuario y/o contraseña son incorrectos intente nuevamente');
 				this.loading = false;
 		});
 	}

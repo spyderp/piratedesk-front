@@ -1,4 +1,4 @@
-import { Directive, Attribute } from '@angular/core';
+import { Directive, Attribute  } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 
 

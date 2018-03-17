@@ -4,13 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth.service'
 import { AuthGuardService } from './auth-guard.service'
 import { ToastyModule } from 'ng2-toasty';
-
+import { ConfirmPasswordDirective } from './confirm-password.directive';
+import { ForbiddenPasswordDirective } from './forbidden-password.directive';
 @NgModule({
   imports: [
     CommonModule,
     ToastyModule.forRoot(),
   ],
   declarations: [
+  ConfirmPasswordDirective,
+  ForbiddenPasswordDirective
   ],
   providers: [
     AuthService,
@@ -20,6 +23,8 @@ import { ToastyModule } from 'ng2-toasty';
     CommonModule,
     FormsModule,
     ToastyModule,
+    ConfirmPasswordDirective,
+    ForbiddenPasswordDirective
   ],
 })
 export class SharedModule { }

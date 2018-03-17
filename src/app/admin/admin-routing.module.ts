@@ -7,7 +7,7 @@ import { UsersComponent} from './users/users.component'
 import { AuthGuardService } from '../shared/auth-guard.service'
 
 const routes: Routes = [
-	{ path: 'admin',  component: AdminComponent, canActivate: [AuthGuardService],
+	{ path: '',  component: AdminComponent, canActivate: [AuthGuardService],
 	children:[
 		{ path: '', component: UsersComponent, pathMatch: 'full' },
 		{ path: 'users',  component: UsersComponent, canActivate: [AuthGuardService]},
