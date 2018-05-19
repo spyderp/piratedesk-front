@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { NgProgressModule } from 'ngx-progressbar';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +9,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 @NgModule({
   imports: [
     CommonModule,
-    NgProgressModule,
     RouterModule,
     NgbModule,
     SharedModule

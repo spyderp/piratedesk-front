@@ -1,8 +1,9 @@
-@import "assets/css/color"
-$border-radius:          0 ;
-$border-radius-lg:       0 ;
-$border-radius-sm:       0 ;
-@import "assets/css/theme"
+@import assets/css/color
+$card-cap-bg: #eef4d7
+$border-radius:          0 
+$border-radius-lg:       0 
+$border-radius-sm:       0 
+@import assets/css/theme
 @import "node_modules/bootstrap/scss/bootstrap"
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome"
@@ -10,9 +11,23 @@ $fa-font-path: "~font-awesome/fonts";
 @import assets/css/ngxdatatable
 @import '~@swimlane/ngx-datatable/release/index.css'
 @import '~@swimlane/ngx-datatable/release/assets/icons.css'
-body
-	background: rgba(236,236,236,1)
+@import "~@ng-select/ng-select/themes/default.theme.css"
+@import assets/css/loader
 
+body
+	background: #F1F1F1
+.card-header
+  font-weight: bold
+  color: $gray-600
+  border-bottom: #eef4d7 solid
+
+.modal-header
+  background: $darkAqua
+  color: $white  
+.modal-header .close
+  color: #ccc
+  &:hover
+    color: $white
 #sidebar
 	color: $olivo;
 	height: 93vh
@@ -20,39 +35,4 @@ body
 	display: block
 
 
-.swashOut
-	animation-duration: 1s
-	animation-fill-mode: both
-	animation-name: swashOut
-.swashIn
-  animation-duration: 1s
-  animation-fill-mode: both
-  animation-name: swashIn
 
-@keyframes swashOut
-  0%
-    opacity: 1
-    transform: scale(1, 1)
-
-  80%
-    opacity: 1
-    transform: scale(0.9, 0.9)
-
-  100%
-    opacity: 0
-    transform: scale(0, 0)
-
-
-
-@keyframes swashIn
-  0%
-    opacity: 0
-    transform: scale(0, 0)
-
-  90%
-    opacity: 1
-    transform: scale(0.9, 0.9)
-
-  100%
-    opacity: 1
-    transform: scale(1, 1)

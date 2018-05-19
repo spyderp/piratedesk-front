@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Rest } from '../../shared/rest';
-import { Rol } from './rol.model';
+import { Rol } from './models';
 @Injectable()
 export class RolService extends Rest {
 	constructor(http: HttpClient) { 

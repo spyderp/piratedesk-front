@@ -40,12 +40,15 @@ export class DatagridComponent implements OnInit {
     this.add.emit(true);
   }
   onEdit(){
+    this.isEdit = false;
     this.edit.emit(this.selected);
+    this.selected = [];
   }
   onDel(){
     let msg = this.selected.length>1?'Esta seguro que desea Borrar los registros seleccionados':'Esta seguro que desea Borrar el registro seleccionado';
     if(confirm(msg)){
       this.del.emit(this.selected);
+      this.isDel  = false;
     }
   }
   

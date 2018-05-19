@@ -1,0 +1,104 @@
+<div>
+	<h1>Días Festivos</h1>
+	<div class="row">
+		<div class="col-8">
+			 <input
+				type='text'
+				style='padding:8px;margin:15px auto;width:30%;'
+				placeholder='buscar por la festividad...'
+				(keyup)='updateFilter($event)'
+			  />
+		</div>
+		<div class="text-right col-4">
+			<button  class="btn btn-success" (click)="loadForm(content)"><i class="fa fa-plus " aria-hidden="true"></i> </button>
+			<button  [disabled]="!isDel"  class="btn btn-danger" (click)="onDelete()"><i class="fa fa-times-circle " aria-hidden="true"></i> </button>
+		</div>
+	</div>
+	<div class="row">
+		
+		<div class="col-6">
+		
+			 <ngx-datatable
+		#mydatatable
+		class="striped"
+		[headerHeight]="50"
+		[limit]="10"
+		[columnMode]="'force'"
+		[footerHeight]="50"
+		[rowHeight]="'auto'"
+		[rows]="rowsData"
+		  [selected]="selected"
+    	[selectionType]="'checkbox'"
+    	(select)='onSelect($event)'
+		>
+		 <ngx-datatable-column
+		[width]="30"
+		[sortable]="false"
+		[canAutoResize]="false"
+		[draggable]="false"
+		[resizeable]="false"
+		[headerCheckboxable]="true"
+		[checkboxable]="true">
+	      </ngx-datatable-column>
+		<ngx-datatable-column name="Descripcion ">
+		  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+			<span
+			  title="Double click to edit"
+			  (dblclick)="editing[rowIndex + '-descripcion'] = true"
+			  *ngIf="!editing[rowIndex + '-descripcion']">
+			  {{value}}
+			</span>
+			<input
+			  autofocus
+			  (blur)="onUpdate($event, 'descripcion', rowIndex)"
+			  *ngIf="editing[rowIndex+ '-descripcion']"
+			  type="text"
+			  [value]="value"
+			/>
+		  </ng-template>
+		</ngx-datatable-column>
+		<ngx-datatable-column name="Fecha">
+		  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+			 <span
+			  title="Double click to edit"
+			  (dblclick)="editing[rowIndex + '-fecha'] = true"
+			  *ngIf="!editing[rowIndex + '-fecha']">
+			  {{value | date:'dd/MM/yyyy'}}
+			</span>
+			<input
+			  autofocus
+			  (blur)="onUpdate($event, 'fecha', rowIndex)"
+			  *ngIf="editing[rowIndex+ '-fecha']"
+			  type="text"
+			  [value]="value"
+			/>
+		  </ng-template>
+		</ngx-datatable-column>
+	  </ngx-datatable>
+		</div>
+	</div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Nuevo día festivo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  	<form  #festiveForm="ngForm"  (ngSubmit)="festiveForm.form.valid && onSubmit()" >
+			<input [class.form-control-danger]="descripcion.invalid && descripcion.touched"  [(ngModel)]="model.descripcion" type="text" class=" form-control mb-2 mr-sm-2" required autofocus name="name"  #descripcion="ngModel" placeholder="nombre del festivo..." >
+    	<div class="input-group mb-2 mr-sm-2">
+				<input [class.form-control-danger]="fecha.invalid && fecha.touched"  [(ngModel)]="modelf" type="text" class=" form-control " required autofocus name="name"  #fecha="ngModel" ngbDatepicker #d="ngbDatepicker" >
+				<div class="input-group-append">
+	        <button class="btn btn-secondary" (click)="d.toggle()" type="button">
+	          <i class="fa fa-calendar"></i>
+	        </button>
+	      </div>
+			</div>
+
+			<button class="btn  btn-primary mb-2  mr-sm-2"  [disabled]="!festiveForm.form.valid">Agregar</button>
+  			<button class="btn  btn-primary" (click)="c('Close click')"> Cancelar </button>
+    </form>
+  </div>
+</ng-template>

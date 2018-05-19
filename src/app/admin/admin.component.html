@@ -1,20 +1,22 @@
-<navbar></navbar>
+<navbar (toogleSidebar)="onToogle($event)"></navbar>
 <div class="container-fluid">
 	<div class="row">
-		<div id="sidebar" class="col-lg-2 bg-dark">
+		<div id="sidebar" class="col-lg-2 bg-dark ">
 			<ul class="list-group">
-				<li class="list-group-item"><a [routerLink]="['users']">Usuario</a></li>
-	<li class="list-group-item"><a [routerLink]="['departments']">Departamentos</a></li>
-	<li class="list-group-item"><a [routerLink]="['clients']">Clientes</a></li>
-	<li class="list-group-item"><a [routerLink]='[users]'>Archivos</a></li>
-	<li class="list-group-item"><a [routerLink]='[users]'>Calendario</a></li>
-	<li class="list-group-item"><a [routerLink]='[users]'>Base dato conocimiento</a></li>
-	<li class="list-group-item"><a [routerLink]='[users]'>Plantillas</a></li>
-	<li class="list-group-item"><a [routerLink]='[users]'>Log</a></li> 
+				<li class="list-group-item"><a [routerLink]="['clients']">Clientes</a></li>
+				<li class="list-group-item"><a [routerLink]="['departments']">Departamentos</a></li>
+				<li class="list-group-item"><a [routerLink]="['calendars']">Calendario</a></li>
+				<li class="list-group-item"><a [routerLink]="['festives']">Días Festivos</a></li>
+				<li class="list-group-item"><a [routerLink]="['estates']">Estados</a></li>
+				<li class="list-group-item"><a [routerLink]="['faqs']">Preguntas frecuentes</a></li>
+				<li class="list-group-item"><a [routerLink]="['priorities']">Prioridades</a></li>
+				<li class="list-group-item"><a [routerLink]="['templates']">Plantillas</a></li>
+				<li class="list-group-item"><a [routerLink]="['trophies']">Trofeos</a></li>
+				<li class="list-group-item"><a [routerLink]="['users']">Usuarios</a></li> 
 			</ul>
 		</div>
-		<div class="col-lg-10" >
-		<div class="container bg-white mt-4">
+		<div id="bodyContent" class="col-lg-10" >
+		<div class="container-fluid bg-white mt-3 pb-2 border">
 			<router-outlet></router-outlet>			
 		</div>
 		</div>

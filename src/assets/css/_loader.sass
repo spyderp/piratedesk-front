@@ -1,0 +1,113 @@
+// Color
+$item-1: #1f8d83
+$item-2: #00a69c
+$item-3: #b1b22e
+$item-4: #888
+
+$itemColors: () !default
+$itemColors:  ("1": $item-1, "2": $item-2, "3": $item-3, "4": $item-4)
+
+//para crear la variantes de item
+@mixin item-variant($br,$index)
+	width: 100px
+	height: 100px
+	position: absolute
+	background-color: $br
+	animation: item-#{$index}_move 1.8s cubic-bezier(0.6, 0.01, 0.4, 1) infinite
+
+.wrapper-load
+	position: fixed
+	top: 0
+	width: 100%
+	height: 100%
+	background: rgba(255,255,255,0.75)
+	z-index: 1000
+
+.quadLoad
+	position: absolute
+	width: 200px
+	height: 200px
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
+	margin: auto
+
+//
+// Alternate item
+//
+
+@each $index,$color in $itemColors
+	.item-#{$index}
+		@include item-variant($color, $index)
+
+.item-1,
+	top: 0
+	left: 0
+	z-index: 1
+.item-2
+	top: 0
+	right: 0
+.item-3
+	bottom: 0
+	right: 0
+	z-index: 1
+.item-4
+	bottom: 0
+	left: 0
+
+
+@keyframes item-1_move
+	0%, 100%
+		transform: translate(0, 0)
+
+	25%
+		transform: translate(0, 100px)
+
+	50%
+		transform: translate(100px, 100px)
+
+	75%
+		transform: translate(100px, 0)
+
+
+@keyframes item-2_move
+	0%, 100%
+		transform: translate(0, 0)
+
+	25%
+		transform: translate(-100px, 0)
+
+	50%
+		transform: translate(-100px, 100px)
+
+	75%
+		transform: translate(0, 100px)
+
+
+@keyframes item-3_move
+	0%, 100%
+		transform: translate(0, 0)
+
+	25%
+		transform: translate(0, -100px)
+
+	50%
+		transform: translate(-100px, -100px)
+
+	75%
+		transform: translate(-100px, 0)
+
+
+@keyframes item-4_move
+	0%, 100%
+		transform: translate(0, 0)
+
+	25%
+		transform: translate(100px, 0)
+
+	50%
+		transform: translate(100px, -100px)
+
+	75%
+		transform: translate(0, -100px)

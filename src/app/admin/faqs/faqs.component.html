@@ -1,0 +1,41 @@
+<div>
+	<h1>Listado de Preguntas Frecuentes</h1>
+	
+
+			<datagrid  
+			[data]="rowsData" 
+			[selected]="selected" 
+			[column]="col" 
+			(add)="onLoadForm($event, content)" 
+			(edit)="onEdit($event, content)"
+			(del)="onDelete($event)"
+			>	
+			</datagrid>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{formTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	<form  #faqsForm="ngForm"  (ngSubmit)="faqsForm.form.valid && onSubmit()">
+		<div class="form-group" [class.has-danger]="title.invalid && title.touched" >
+			<label for="name">Titulo</label>
+			<input [class.form-control-danger]="title.invalid && title.touched"  [(ngModel)]="model.title" type="text" class=" form-control" required autofocus name="name"  #title="ngModel" >
+		</div>
+		<div class="form-group" [class.has-danger]="orden.invalid && orden.touched" >
+			<label for="order">Orden</label>
+			<input [class.form-control-danger]="orden.invalid && orden.touched"  [(ngModel)]="model.orden" type="text" class=" form-control" required autofocus name="order"  #orden="ngModel" >
+		</div>
+		<div class="form-group">
+			<label for="contenido">Plantilla</label>
+			<quill-editor [style]="{height: '200px'}" [(ngModel)]="model.content" name="contenido"></quill-editor>
+		</div>
+		<hr>
+		<button class="btn btn-lg btn-aqua"  [disabled]="!faqsForm.form.valid">{{formBtnLabel}}</button>
+			<button class="btn btn-lg btn-aqua" (click)="c('Close click')"> Cancelar </button>
+    </form>
+  </div>
+</ng-template>

@@ -1,0 +1,106 @@
+<div >
+	<h1>Calendarios</h1>
+	<div class="row">
+		<div class="col-12">
+
+			<datagrid  
+			[data]="rowsData" 
+			[selected]="selected" 
+			[column]="col" 
+			(add)="onLoadForm($event, content)" 
+			(edit)="onEdit($event, content)"
+			(del)="onDelete($event)"
+			>	
+			</datagrid>
+		</div>
+	</div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{formTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	<form  #estatesForm="ngForm"  (ngSubmit)="estatesForm.form.valid && onSubmit()">
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<div class="form-group" [class.has-danger]="descripcion.invalid && descripcion.touched" >
+					<label for="name">Descripcion</label>
+					<input [class.form-control-danger]="descripcion.invalid && descripcion.touched"  [(ngModel)]="model.descripcion" type="text" class=" form-control" required autofocus name="name"  #descripcion="ngModel" >
+				</div>
+			</div>
+			<div class="col-12 col-md-6">
+				<h6>Días de la semana</h6>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions1" (click)="onDay(1)"  value="1" [checked]="onChecked('1', model.dias)">
+					<label class="form-check-label" for="inlineCheck1">L</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions2" (click)="onDay(2)"  value="2" [checked]="onChecked('2', model.dias)">
+					<label class="form-check-label" for="inlineCheck2">M</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions3" (click)="onDay(3)"  value="3" [checked]="onChecked('3', model.dias)">
+					<label class="form-check-label" for="inlineCheck3">Mi</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions4" (click)="onDay(4)"  value="4" [checked]="onChecked('4', model.dias)">
+					<label class="form-check-label" for="inlineCheck4">J</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions5" (click)="onDay(5)"  value="5" [checked]="onChecked('5', model.dias)">
+					<label class="form-check-label" for="inlineCheck5">V</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions6" (click)="onDay(6)"  value="6" [checked]="onChecked('6', model.dias)">
+					<label class="form-check-label" for="inlineCheck6">S</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" name="inlineCheckOptions7" (click)="onDay(0)"  value="0" [checked]="onChecked('0', model.dias)">
+					<label class="form-check-label" for="inlineCheck7">D</label>
+				</div>
+			</div>
+			<div class="col-12 col-md-6">
+				<label >Hora de Entrada</label>
+				<ngb-timepicker [(ngModel)]="entrada" name="i"></ngb-timepicker>
+			</div>
+			<div class="col-12 col-md-6 form-group">
+				<label >Hora de Salida</label>
+				<ngb-timepicker [(ngModel)]="salida" name="f"></ngb-timepicker>
+			</div>
+			<div class="col-12 col-md-6">
+				<h6>Tiempo Completo</h6>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="inlineRadioOptions" [(ngModel)]="model.fulltime"  [value]="1">
+					<label class="form-check-label" for="inlineRadio1">Si</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="inlineRadioOptions" [(ngModel)]="model.fulltime"  [value]="0">
+					<label class="form-check-label" for="inlineRadio2">No</label>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6">	
+			<div class="form-group">
+					<label for="">Días Festivos</label>
+					<ng-select   
+							[items]="items"
+							[multiple]="true"
+							bindLabel="text"
+                   			bindValue="id"
+				              	 [(ngModel)]="this.model.festives"
+				              	 name="iiii"
+				              	 placeholder="seleccione el día festivo">
+				              </ng-select>
+				</div>
+			</div>
+			<div class="col-12">
+				<hr>
+				<button class="btn btn-lg btn-aqua"  [disabled]="!estatesForm.form.valid">{{formBtnLabel}}</button>
+				<button class="btn btn-lg btn-aqua" (click)="c('Close click')"> Cancelar </button>
+			</div>
+		</div>
+    </form>
+  </div>
+</ng-template>

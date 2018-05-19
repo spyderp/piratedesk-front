@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-import { Department } from '../shared/department.model';
-import {NgProgress } from 'ngx-progressbar';
-import { pirateAnimation } from '../../shared/pirate.animation';
+import { Department } from '../shared/models';
 import { DepartmentService } from '../shared/department.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
 	selector: 'departments',
 	templateUrl: './departments.component.html',
 	styleUrls: ['./departments.component.sass'],
-	animations: [pirateAnimation],
 })
 export class DepartmentsComponent implements OnInit {
+	modalReference;
+	closeResult: string;
 	private departments:Department[]=[];
-	public formActive = 'inactive';
 	private formBtnLabel:string;
 	private formTitle:string;
 	private list=[];
-	public mainActive = 'active';
 	private model:Department = new Department();
 	privi =  localStorage.getItem('currentUser');
 	selected = [];
@@ -28,7 +27,8 @@ export class DepartmentsComponent implements OnInit {
 		private toastyService:ToastyService, 
 		private toastyConfig: ToastyConfig,
 		private departmentService: DepartmentService,
-		private progressService: NgProgress 
+		public loader: NgxSmartLoaderService,
+		private modalService: NgbModal 
 	) { 
 		this.toastyConfig.theme = 'bootstrap';
 	this.toastyConfig.timeout = 5000;
@@ -36,68 +36,69 @@ export class DepartmentsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.progressService.start();
+		this.loader.start('appLoader');
 		this.loadAll({ offset: 0 });
 		this.loadList();
-		this.progressService.done();
-	}
-	onCancel(){
-		this.formActive = 'inactive';
-		this.mainActive = 'active';
+		this.loader.stop('appLoader')
 	}
 	onDelete(event){
-		console.log(event);
 		let id = event[0].id;
-		this.progressService.start();
+		
 		let index:number = this.departments.map((element)=>{return element.id}).indexOf(id);
 		delete this.departments[index];
 		this.departmentService.delete(id).subscribe();
-		this.progressService.done();
+		
 	}
-	onEdit(event){
+	onEdit(event, content){
 		this.loadForm(false);
 		this.model = this.departments.filter((department: Department) => department.id === event[0].id)[0];
+		this.modalReference = this.modalService.open(content)
+
 	}
-	onLoadForm(event){
+	onLoadForm(event, content){
 		if(event){
 			this.loadForm();
+			this.modalReference = this.modalService.open(content)
 		}
 	}
 	onSubmit() {
+		this.loader.start('appLoader');
 		if(this.model.id){
-			this.progressService.start();
+			
 			 this.departmentService.update(this.model).subscribe(data => {
 				if(data){
 					this.toastyService.success('Registro Actualizado');
 					this.loadAll({ offset: 0 });
 				//this.users.push(this.model);
-					this.onCancel();
+					this.modalReference.close()
 				}else{
 		           		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
 		        	}	
+		        	this.loader.stop('appLoader')
 			},
 			error => {
 				this.toastyService.error(error);
 				//this.loading = false;
 			});
-			 this.progressService.done();
+			 
 		 }else{
-		 	this.progressService.start();
+		 	
 			 this.departmentService.create(this.model).subscribe(
 			data => {
 				if(data){
 					this.toastyService.success('Nuevo registro creado con exito');
 					this.departments= this.departments.concat(data);
-					this.onCancel();
+					this.modalReference.close()
 				}else{
 					this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
 				}
+				this.loader.stop('appLoader')
 			},
 			error => {
 				this.toastyService.error(error);
 				//this.loading = false;
 			});
-			 this.progressService.done();
+			 
 		 }
 	}
 	loadAll(pageInfo){
@@ -108,8 +109,6 @@ export class DepartmentsComponent implements OnInit {
 	}
 	
 	private loadForm(add:boolean=true){
-		this.formActive = 'active';
-		this.mainActive = 'inactive';
 		this.formTitle = (add)?'Crear departamento':'Editar departamento';
 		this.formBtnLabel = (add)?'Guardar':'Actualizar';
 		this.model = new Department();

@@ -1,0 +1,52 @@
+<div class="container-fluid">
+	<div class="row">
+		<div id="sidebar" class="col-lg-2 bg-dark sidebar" >
+			
+		</div>
+		<div id="bodyContent" class="col-lg-10" >
+		<div class="container-fluid bg-white mt-3 pb-2 border">
+			<h1>Bandeja</h1>
+			<ngx-datatable
+				class="striped"
+				[rows]="tickets"
+				[loadingIndicator]="true"
+				[columnMode]="'force'"
+				[headerHeight]="40"
+				[rowHeight]="40"
+				[footerHeight]="50"
+				[selected]="selected"
+				[selectionType]="'checkbox'"
+				(select)='onSelect($event)'
+				[limit]="20"
+      >
+				<ngx-datatable-column
+				[width]="30"
+				[sortable]="false"
+				[canAutoResize]="false"
+				[draggable]="false"
+				[resizeable]="false"
+				[headerCheckboxable]="true"
+				[checkboxable]="true">
+				</ngx-datatable-column> 
+      <ngx-datatable-column name="Titulo"  ></ngx-datatable-column>
+      <ngx-datatable-column name="Estado" prop="states.descripcion" >
+      	<ng-template let-value="value" ngx-datatable-cell-template >
+           <div class="text-center"> {{value}}</div>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Departamento" prop="departments.descripcion" >
+      	<ng-template let-value="value" ngx-datatable-cell-template >
+           <div class="text-center"> {{value}}</div>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Creado" prop="creado" ></ngx-datatable-column> 
+      <ngx-datatable-column name="Prioridad" prop="priorities" >
+      	<ng-template let-value="value" ngx-datatable-cell-template >
+           <div class="text-center h5" > <span [ngClass]="{'badge-success':value.id==1,'badge-info':value.id==2,'badge-warning':value.id==3,'badge-orange':value.id==4,'badge-red':value.id==5}" class="badge ">{{value.descripcion}}</span></div>
+          </ng-template>
+      </ngx-datatable-column> 
+</ngx-datatable>
+		</div>
+		</div>
+	</div>
+</div>

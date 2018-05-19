@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Rest } from '../../shared/rest';
-import { Client } from './client.model';
+import { Client } from './models';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ClientService extends Rest {
 	}
 
 	getAssoc() {
-		return this.http.get<any[]>(this.url+'/clients?type=list');
+		return this.http.get<any[]>(this.url+'/calendars?type=list');
 	}
 
 	create(client: Client) {

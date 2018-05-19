@@ -1,25 +1,24 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-import { User } from '../shared/user.model';
-import {NgProgress } from 'ngx-progressbar';
-import { pirateAnimation } from '../../shared/pirate.animation';
+import { User } from '../shared/models';
 import { UserService  } from '../shared/user.service'
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSmartLoaderService } from 'ngx-smart-loader';
+
 @Component({
 	selector: 'app-users',
 	templateUrl: './users.component.html',
 	styleUrls: ['./users.component.sass'],
-	animations: [pirateAnimation],
 })
 export class UsersComponent implements OnInit {
-	@ViewChild('selectedDepart') selectedDepart;
+	private items:any = []
 	private users:User[]=[];
 	private model:User =  new User();
 	private active:Array<any>=[];
-	public mainActive = 'active';
-	public formActive = 'inactive';
 	private formTitle:string;
 	private formBtnLabel:string;
 	private value:any = {};
+	modalReference;
 	s = [];
 	col = [
 		{ name:'Usuario', prop:'username'},
@@ -32,7 +31,8 @@ export class UsersComponent implements OnInit {
 		private toastyService:ToastyService, 
 		private toastyConfig: ToastyConfig,
 		private userService: UserService,
-		private progressService: NgProgress 
+		private modalService: NgbModal, 
+		public loader: NgxSmartLoaderService
 	) { 
 		this.toastyConfig.theme = 'bootstrap';
 		this.toastyConfig.timeout = 5000;
@@ -40,90 +40,85 @@ export class UsersComponent implements OnInit {
 	}
 
 	 public ngOnInit():any {
-		this.progressService.start();
+	 	this.loader.start('appLoader');
 		this.loadAllUsers();
-		this.userService.associations().subscribe(data=>{
-			this.selectedDepart.items =  data;
-			this.progressService.done();
-		});
+		this.userService.associations().subscribe(
+			data=>{
+				this.items =  data;
+			}
+		)
+		this.loader.stop('appLoader')
+
 	}
 	onDelete(event){
 		let id = event[0].id;
-		this.progressService.start();
 		let index:number = this.users.map((element)=>{return element.id}).indexOf(id);
 		delete this.users[index];
-		this.userService.delete(id).subscribe();
-		this.progressService.done();
+		this.userService.delete(id).subscribe()
 	}
 	onSubmit() {
+		this.loader.start('appLoader');
 		 if(this.model.departments.length!=0){
 			 this.model.departments =  [{id:this.model.departments}];
 		 }
-		this.progressService.start();
 		if(this.model.id){
 			 this.userService.update(this.model).subscribe(data => {
 				if(data){
 					this.toastyService.success('Registro Actualizado');
 					this.loadAllUsers();
-					this.onCancel();
+					this.modalReference.close()
 				}else{
 		           		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
-		        	}	
+		        }
+		        this.loader.stop('appLoader')	
 			},
 			error => {
 				this.toastyService.error(error);
 			});
-			this.progressService.done();
 		 }else{
 			 this.userService.create(this.model).subscribe(
 			data => {
 				if(data){
 					this.toastyService.success('Nuevo registro creado con exito');
 					this.users = this.users.concat(data);
-					this.onCancel();
+					this.modalReference.close()
 				}else{
 					this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
 				}
+				this.loader.stop('appLoader')
 				
 			},
 			error => {
 				this.toastyService.error(error);
 			});
-			this.progressService.done();
 		 }
 	}
-	onLoadForm(event){
+	onLoadForm(event, content){
 		this.loadForm();
+		this.modalReference = this.modalService.open(content, {size:'lg'})
 	}
-	onEdit(event){
+	onEdit(event, content){
 		this.loadForm(false);
 		this.model = this.users.filter((user: User) => user.id ===  event[0].id)[0];
 		this.active=[];
-	}
-	onCancel(){
-		this.formActive = 'inactive';
-		this.mainActive = 'active';
+		this.modalReference = this.modalService.open(content, {size:'lg'})
 	}
 	private loadAllUsers(){
 		this.userService.getAll().subscribe(data => { this.users = data;});
 		
 	}
 	private loadForm(add:boolean=true){
-		this.formActive = 'active';
-		this.mainActive = 'inactive';
 		this.formTitle = (add)?'Crear usuario':'Editar usuario';
 		this.formBtnLabel = (add)?'Guardar':'Actualizar';
 		this.model = new User();
 	}
-	public selected(value:any):void {
-		 this.model.departments.concat({id:value.id});
-		 //console.log( this.model.departments);
-	 }
- 
-	public removed(value:any):void {
-		let index:number = this.model.departments.map((element)=>{return element.id}).indexOf(value.id);
-		 delete this.model.departments[index];
-	}
 
+	public onUploadError(args: any): void {
+   	 	
+  	}
 
+ 	public onUploadSuccess(args: any): void {
+    	this.model.file_id = args[1].id;
+    	
+  	}
 }

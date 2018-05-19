@@ -1,0 +1,41 @@
+<div  >
+	<h1>Listado de Plantillas</h1>
+	<div class="row">
+		<div class="col-8">
+
+			<datagrid  
+			[data]="rowsData" 
+			[selected]="selected" 
+			[column]="col" 
+			(add)="onLoadForm($event, content)" 
+	(edit)="onEdit($event, content)"
+			(del)="onDelete($event)"
+			>	
+			</datagrid>
+		</div>
+	</div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{formTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	<form  #templatesForm="ngForm"  (ngSubmit)="templatesForm.form.valid && onSubmit()">
+		<div class="form-group" [class.has-danger]="descripcion.invalid && descripcion.touched" >
+			<label for="name">Descripcion</label>
+			<input [class.form-control-danger]="descripcion.invalid && descripcion.touched"  [(ngModel)]="model.descripcion" type="text" class=" form-control" required autofocus name="name"  #descripcion="ngModel" >
+		</div>
+
+		<div class="form-group">
+			<label for="plantilla">Plantilla</label>
+			<quill-editor [style]="{height: '200px'}" [(ngModel)]="model.body" name="platilla"></quill-editor>
+		</div>
+		<hr>
+		<button class="btn btn-lg btn-aqua"  [disabled]="!templatesForm.form.valid">{{formBtnLabel}}</button>
+		<button class="btn btn-lg btn-aqua" (click)="c('Close click')"> Cancelar </button>
+    </form>
+  </div>
+</ng-template>

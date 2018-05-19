@@ -10,7 +10,7 @@
           <div class="form-group" [class.has-danger]="password.invalid && password.touched">
             <input [class.form-control-danger]="password.invalid && password.touched" [(ngModel)]="model.password" type="password" class="form-control" placeholder="Contraseña" required name="password"  #password="ngModel" >
           </div>
-          <button class="btn btn-lg btn-primary btn-block"   [disabled]="!loginForm.form.valid || loading">
+          <button class="btn btn-lg btn-aqua btn-block"   [disabled]="!loginForm.form.valid || loading">
             Acceder</button>
             <img *ngIf="loading" src="../../assets/img/loading-ellipsis.svg" />
               <label class="checkbox pull-left">
@@ -19,7 +19,7 @@
             </label>
           </form><br>
           <hr>
-          <a routerLink="/forgot_password">Olvido su contraseña</a>
+          <a class="text-darkAqua" routerLink="/forgot_password">Olvido su contraseña</a>
         </div>
       </div>
     </div>

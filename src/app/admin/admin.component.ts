@@ -11,5 +11,10 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onToogle(event){
+  	if(event){
+  		//alert('Hola mundo')
+  		
+  	}
+  }
 }

@@ -1,22 +1,21 @@
 
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
-import { Client } from '../shared/client.model';
-import { NgProgress } from 'ngx-progressbar';
+import { Client } from '../shared/models';
 import { pirateAnimation } from '../../shared/pirate.animation';
 import { ClientService } from '../shared/client.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.sass'],
-  animations: [pirateAnimation],
 })
 export class ClientsComponent implements OnInit {
+	modalReference;
 	private clients: Client[]=[];
 	private formBtnLabel:string;
 	private formTitle:string;
-	public mainActive = 'active';
-	public formActive = 'inactive';
 	private model:Client = new Client();;
 	private list=[];
 	isDataLoaded = false
@@ -26,13 +25,15 @@ export class ClientsComponent implements OnInit {
 		{ name:'Dirección', prop:'direccion'},
 		{ name:'Teléfono', prop:'telefono'},
 		{ name:'Célular', prop:'celular'},
-		{ name:'Correo', prop:'email'}
+		{ name:'Correo', prop:'email'},
+		{ name:'Calendario', prop:'calendars.descripcion'}
 	];
 	constructor(
 		private toastyService:ToastyService, 
 		private toastyConfig: ToastyConfig,
 		private clientService: ClientService,
-		private progressService: NgProgress 
+		public loader: NgxSmartLoaderService,
+		private modalService: NgbModal 
 	) { 
 		this.toastyConfig.theme = 'bootstrap';
 	  	this.toastyConfig.timeout = 5000;
@@ -40,42 +41,40 @@ export class ClientsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.progressService.start();
+		this.loader.start('appLoader');
 		this.loadAll();
-		this.progressService.done();
-	}
-	onCancel(){
-		this.formActive = 'inactive';
-		this.mainActive = 'active';
+		this.loader.stop('appLoader')
 	}
 	onDelete(event){
-		console.log(event);
 		let id = event[0].id;
-		this.progressService.start();
+		
 		let index:number = this.clients.map((element)=>{return element.id}).indexOf(id);
 		delete this.clients[index];
 		this.clientService.delete(id).subscribe();
-		this.progressService.done();
+		
 	}
-	onEdit(event){
+	onEdit(event, content){
 		this.loadForm(false);
 		this.model = this.clients.filter((client: Client) => client.id === event[0].id)[0];
+		this.modalReference = this.modalService.open(content)
 	}
-	onLoadForm(){
+	onLoadForm(event, content){
 		this.loadForm();
+		this.modalReference = this.modalService.open(content)
 	}
 	onSubmit() {
-		this.progressService.start();
+		this.loader.start('appLoader');
 		if(this.model.id){
 			 this.clientService.update(this.model).subscribe(data => {
 				if(data){
 					this.toastyService.success('Registro Actualizado');
 					this.loadAll();
+					this.modalReference.close()
 					//this.clients.push(this.model);
-					this.onCancel();
 				}else{
 		           		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
-		        	}	
+		        	}
+		        	this.loader.stop('appLoader')	
 			},
 			error => {
 				this.toastyService.error(error);
@@ -87,29 +86,26 @@ export class ClientsComponent implements OnInit {
 					if(data){
 						this.toastyService.success('Nuevo registro creado con exito');
 						this.clients= this.clients.concat(data);
-
-						this.onCancel();
+						this.modalReference.close()
 					}else{
 						this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
 					}
+					this.loader.stop('appLoader')
 				},
 				error => {
 					this.toastyService.error(error);
 					//this.loading = false;
 			});
 		 }
-		 this.progressService.done();
+		 
 	}
 	private loadAll(){
 		this.clientService.getAll().subscribe(data => { this.clients = data; });
 		this.clientService.getAssoc().subscribe(data => { this.list = data; });
 	}
 	private loadForm(add:boolean=true){
-		this.formActive = 'active';
-		this.mainActive = 'inactive';
 		this.formTitle = (add)?'Crear departamento':'Editar departamento';
 		this.formBtnLabel = (add)?'Guardar':'Actualizar';
 		this.model = new Client();
 	}
-
 }

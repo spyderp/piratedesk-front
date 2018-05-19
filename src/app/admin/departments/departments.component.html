@@ -1,4 +1,4 @@
-<div  [@inOut]="mainActive">
+<div  >
 	<h1>Lista de Departamentos</h1>
 	<div class="row">
 		<div class="col-5">
@@ -6,18 +6,23 @@
 			[data]="departments" 
 			[selected]="selected" 
 			[column]="col" 
-			(add)="onLoadForm($event)" 
-			(edit)="onEdit($event)"
+			(add)="onLoadForm($event, content)" 
+			(edit)="onEdit($event, content)"
 			(del)="onDelete($event)"
 		>	
 		</datagrid>
 		</div>
 	</div>
 </div>
-<div  [@inOut]="formActive" >
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{formTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
 	<form  #userForm="ngForm"  (ngSubmit)="userForm.form.valid && onSubmit()">
-		<h1>{{formTitle}}</h1>
-		<hr>
 		<div class="form-group" [class.has-danger]="descripcion.invalid && descripcion.touched" >
 			<label>Descripción</label>
 			<input [class.form-control-danger]="descripcion.invalid && descripcion.touched"  [(ngModel)]="model.descripcion" type="text" class=" form-control" placeholder="Descripción" required autofocus name="despcripcion"  #descripcion="ngModel" >
@@ -30,7 +35,8 @@
 			</select>
 		</div>
 		<hr>
-		<button class="btn btn-lg btn-primary"  [disabled]="!userForm.form.valid">{{formBtnLabel}}</button>
-		<button class="btn btn-lg btn-primary" (click)="onCancel()"> Cancelar </button>
-	</form>
-</div>
+		<button class="btn btn-lg btn-aquq"  [disabled]="!userForm.form.valid">{{formBtnLabel}}</button>
+		<button class="btn btn-lg btn-aquq" (click)="c('Close click')"> Cancelar </button>
+    </form>
+  </div>
+</ng-template>
