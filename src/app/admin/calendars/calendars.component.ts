@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 import { Calendar } from '../shared/models';
-import { pirateAnimation } from '../../shared/pirate.animation';
 import { CalendarService } from '../shared/services/calendar.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-calendars',
   templateUrl: './calendars.component.html',
-  styleUrls: ['./calendars.component.sass'],
-  animations: [pirateAnimation],
 })
 export class CalendarsComponent implements OnInit {
 	closeResult: string;

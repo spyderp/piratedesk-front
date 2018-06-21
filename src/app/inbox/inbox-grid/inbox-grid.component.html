@@ -1,13 +1,80 @@
 <div class="container-fluid">
 	<div class="row">
-		<div id="sidebar" class="col-lg-2 bg-dark sidebar" >
-			
+		<div id="sidebar" class="col-lg-2 bg-dark sidebar py-2" >
+			<h4 class="header mb-2">Filtros</h4>
+
+			 <form  #filterForm="ngForm"  >
+			<div class="form-group">
+				<input   [(ngModel)]="model.descripcion" type="text" class=" form-control"   name="descripcion" placeholder="descripcion..." autocomplete="false" >
+			</div>
+			<div class="form-group">
+				<label for="estado">Estado</label>
+				<select name="estado" [(ngModel)]="model.estado" class=" form-control" multiple="true">
+					<option value="{{row.id}}" *ngFor="let row of estados">{{row.descripcion}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="departamento">Departamento</label>
+				<select name="departamento" [(ngModel)]="model.departamento" class=" form-control" multiple="true">
+					<option *ngFor="let row of departamentos;" [value]="row.id">{{row.text}}</option>
+				</select>
+			</div>
+			<label for="">Prioridad</label>
+			<div class="container"><div class="row">
+			<div class="col-md-6 form-check">
+				<input class="form-check-input"  type="checkbox" value="1"  (change)="onCheck($event)">
+				<label class="form-check-label">Baja</label>
+			</div>
+			<div class="col-md-6 form-check">
+				<input class="form-check-input"  type="checkbox" value="2" (change)="onCheck($event)">
+				<label class="form-check-label">Media baja</label>
+			</div>
+			<div class="col-md-6 form-check">
+				<input class="form-check-input"  type="checkbox" value="3" (change)="onCheck($event)">
+				<label class="form-check-label">Media</label>
+			</div>
+			<div class="col-md-6 form-check">
+				<input class="form-check-input"  type="checkbox" value="4" (change)="onCheck($event)">
+				<label class="form-check-label">Alta</label>
+			</div>
+			<div class="col-md-6 form-check">
+				<input class="form-check-input"  type="checkbox" value="5" (change)="onCheck($event)">
+				<label class="form-check-label">Urgente</label>
+			</div>
+			</div></div>
+			<div class="form-group">
+				<label for="">Fecha:Desde</label>
+				<div class="input-group">
+					<input class="form-control" placeholder="YY-mm-dd"
+					name="dp" [(ngModel)]="model.fecha_desde" ngbDatepicker #d="ngbDatepicker">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+							<i class="fa fa-calendar"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+				<div class="form-group">
+				<label for="">Fecha:Hasta</label>
+				<div class="input-group">
+					<input class="form-control" placeholder="YY-mm-dd"
+					name="dp2" [(ngModel)]="model.fecha_hasta" ngbDatepicker #d2="ngbDatepicker">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+							<i class="fa fa-calendar"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			 <hr/>	
+			 <button class="btn btn-olivo"  (click)="onFilter()">Filtrar</button>
+		<button class="btn btn-olivo" (click)="onReset(filterForm)" > Reset </button>
+			 </form>
 		</div>
 		<div id="bodyContent" class="col-lg-10" >
 		<div class="container-fluid bg-white mt-3 pb-2 border">
 			<h1>Bandeja</h1>
 			<ngx-datatable
-				class="striped"
 				[rows]="tickets"
 				[loadingIndicator]="true"
 				[columnMode]="'force'"
@@ -17,7 +84,8 @@
 				[selected]="selected"
 				[selectionType]="'checkbox'"
 				(select)='onSelect($event)'
-				[limit]="20"
+				[limit]="18"
+				[rowClass]="getRowClass"
       >
 				<ngx-datatable-column
 				[width]="30"
@@ -26,7 +94,8 @@
 				[draggable]="false"
 				[resizeable]="false"
 				[headerCheckboxable]="true"
-				[checkboxable]="true">
+				[checkboxable]="true"
+				>
 				</ngx-datatable-column> 
       <ngx-datatable-column name="Titulo"  ></ngx-datatable-column>
       <ngx-datatable-column name="Estado" prop="states.descripcion" >

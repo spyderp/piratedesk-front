@@ -8,7 +8,6 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-faqs',
   templateUrl: './faqs.component.html',
-  styleUrls: ['./faqs.component.sass'],
 })
 export class FaqsComponent implements OnInit {
 	modalReference;

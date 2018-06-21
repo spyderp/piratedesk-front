@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 import { User } from '../shared/models';
-import { UserService  } from '../shared/user.service'
+import { UserService  } from '../shared/services/user.service'
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 

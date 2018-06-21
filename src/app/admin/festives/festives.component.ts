@@ -7,7 +7,6 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-festives',
   templateUrl: './festives.component.html',
-  styleUrls: ['./festives.component.sass'],
 })
 export class FestivesComponent implements OnInit {
 	editing = {};

@@ -8,7 +8,6 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-templates',
   templateUrl: './templates.component.html',
-  styleUrls: ['./templates.component.sass'],
 })
 export class TemplatesComponent implements OnInit {
 private rowsData: Template[]=[];

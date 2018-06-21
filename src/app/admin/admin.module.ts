@@ -7,13 +7,13 @@ import { SharedModule } from '../shared/shared.module'
 import { AdminComponent } from './admin.component'
 import { AdminRoutingModule } from './admin-routing.module';
 import { ClientsComponent } from './clients/clients.component';
-import { ClientService  } from './shared/client.service'
+import { ClientService  } from './shared/services/client.service'
 import { DatagridComponent } from './shared/datagrid.component';
 import { DepartmentsComponent } from './departments/departments.component';
-import { DepartmentService  } from './shared/department.service'
-import { RolService  } from './shared/rol.service'
+import { DepartmentService  } from './shared/services/department.service'
+import { RolService  } from './shared/services/rol.service'
 import { UsersComponent } from './users/users.component';
-import { UserService  } from './shared/user.service';
+import { UserService  } from './shared/services/user.service';
 import { CalendarsComponent } from './calendars/calendars.component';
 import { CalendarService } from './shared/services/calendar.service';
 import { TemplatesComponent } from './templates/templates.component';

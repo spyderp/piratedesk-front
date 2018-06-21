@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ticket } from '../shared/models/ticket.model'
+import { Ticket } from '../shared/models'
 import { TicketService } from  '../shared/services/ticket.service'
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 @Component({

@@ -4,11 +4,9 @@ $padding-row-header: .3rem 1.2rem
 $padding-row: .3rem 1.2rem
 .ngx-datatable
 	.datatable-body-row 
+		border-bottom: 1px solid rgba(44, 45, 51, 0.58)
 		.datatable-body-cell
 			padding: $padding-row
-			border-bottom: 1px solid rgba(44, 45, 51, 0.58)
-	.datatable-row-odd
-		background: rgba(236,236,236,1);
 	.datatable-header 
 		border-bottom: $header
 		border-top: $header
@@ -20,4 +18,18 @@ $padding-row: .3rem 1.2rem
 				font-weight: 500
 		.datatable-header-cell-wrapper 
 			position: relative
-		
+.striped
+	.datatable-row-odd
+		background: rgba(236,236,236,1);
+
+
+.datatable-body-row.row-info, .datatable-body-row.row-warning, .datatable-body-row.row-orange, .datatable-body-row.row-danger
+  border-bottom: 2px solid
+.datatable-body-row.row-info
+  border-color: $blue
+.datatable-body-row.row-warning
+  border-color: $yellow
+.datatable-body-row.row-orange
+  border-color: $orange
+.datatable-body-row.row-danger
+  border-color: $red  

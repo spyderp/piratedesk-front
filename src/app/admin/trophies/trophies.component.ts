@@ -7,7 +7,6 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-trophies',
   templateUrl: './trophies.component.html',
-  styleUrls: ['./trophies.component.sass'],
 })
 export class TrophiesComponent implements OnInit {
 private rowsData: Trophy[]=[];

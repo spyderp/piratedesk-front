@@ -3,13 +3,12 @@ import { AuthService } from '../../shared/auth.service';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 import { Router} from '@angular/router';
 import { User } from '../../admin/shared/models';
-import { UserService  } from '../../admin/shared/user.service'
+import { UserService  } from '../../admin/shared/services/user.service'
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 @Component({
 	selector: 'navbar',
 	templateUrl: './navbar.component.html',
-	styleUrls: ['./navbar.component.sass'],
 	providers:[UserService ]
 })
 export class NavbarComponent implements OnInit {

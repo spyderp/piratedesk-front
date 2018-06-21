@@ -2,14 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 import { Client } from '../shared/models';
-import { pirateAnimation } from '../../shared/pirate.animation';
-import { ClientService } from '../shared/client.service';
+import { ClientService } from '../shared/services/client.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.sass'],
 })
 export class ClientsComponent implements OnInit {
 	modalReference;

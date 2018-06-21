@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Rest } from '../../shared/rest';
-import { Client } from './models';
+import { Rest } from '../../../shared/rest';
+import { Client } from '../models';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()

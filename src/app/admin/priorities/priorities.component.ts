@@ -7,7 +7,6 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-priorities',
   templateUrl: './priorities.component.html',
-  styleUrls: ['./priorities.component.sass'],
 })
 export class PrioritiesComponent implements OnInit {
 	private rowsData: Priority[]=[];

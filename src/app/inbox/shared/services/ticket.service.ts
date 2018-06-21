@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Rest } from '../../../shared/rest';
-import { Ticket } from '../models/ticket.model';
+import { Ticket } from '../models';
 import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class TicketService extends Rest {
@@ -9,13 +9,16 @@ export class TicketService extends Rest {
   constructor(http: HttpClient) { 
 		super(http);
 	}
-	getAll(page=0):Observable<Ticket[]> {
-		let pages:string='';
+	getAll(filter:any=null, page=0):Observable<Ticket[]> {
+		let filtros:string='?';
 		if(page>0){
-			page = page+1;
-			pages = '?page='+page;
+			//page = page+1;
+			filtros = filtros+'page='+page;
+		}else if(filter){
+			filtros =  page>0?filtros+'&':filtros+''
+			filtros = filtros+'find='+JSON.stringify(filter)
 		}
-		return this.http.get<Ticket[]>(this.url+'/tickets'+pages);
+		return this.http.get<Ticket[]>(this.url+'/tickets'+filtros);
 	}
 
 	getById(id: number) {

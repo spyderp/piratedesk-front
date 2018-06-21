@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 import { Department } from '../shared/models';
-import { DepartmentService } from '../shared/department.service';
+import { DepartmentService } from '../shared/services/department.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
 	selector: 'departments',
 	templateUrl: './departments.component.html',
-	styleUrls: ['./departments.component.sass'],
 })
 export class DepartmentsComponent implements OnInit {
 	modalReference;

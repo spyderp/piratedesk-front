@@ -7,7 +7,6 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
   selector: 'app-estates',
   templateUrl: './estates.component.html',
-  styleUrls: ['./estates.component.sass'],
 })
 export class EstatesComponent implements OnInit {
 	modalReference;
