@@ -7,12 +7,14 @@ import { PublicComponent } from './public.component';
 import { ContactComponent } from './contact/contact.component';
 import { FaqComponent } from './faq/faq.component';
 import { IndexComponent } from './index/index.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
     PublicRoutingModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ],
   declarations: [
   	PublicComponent,

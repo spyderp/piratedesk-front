@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./faq.component.sass']
 })
 export class FaqComponent implements OnInit {
-
+	private search:string
   constructor() { }
 
   ngOnInit() {
   }
+  onSubmit(){
 
+	}
 }
