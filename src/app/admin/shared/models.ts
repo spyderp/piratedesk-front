@@ -38,6 +38,14 @@ export class Faq {
 	orden:number;
 	creado:string;
 	modificado:string;
+	categoryfaq_id:number;
+	categories = [];
+}
+
+export class CategoryFaq {
+	id:number;
+	name: string;
+	descripcion: string;
 }
 
 export class Festive {

@@ -9,6 +9,7 @@ const routes: Routes = [
 		children:[
 			{ path:'', component:IndexComponent,},
 			{ path:'faq', component:FaqComponent,},
+			{ path:'faq/:category', component:FaqComponent,},
 			{ path:'contact', component:ContactComponent,},
 		]
 	}

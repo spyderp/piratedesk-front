@@ -30,6 +30,8 @@ import { QuillModule } from 'ngx-quill';
 import { FestiveService } from './shared/services/festive.service';
 import { FestivesComponent } from './festives/festives.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CategoryfaqService } from './shared/services/categoryfaq.service';
+import { CategoryfaqsComponent } from './categoryfaqs/categoryfaqs.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
      PrioritiesComponent,
      FaqsComponent,
      FestivesComponent,
+     CategoryfaqsComponent,
      ],
   providers: [ 
     CalendarService,
@@ -66,7 +69,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TrophyService,
     UserService,
     FaqService,
-    FestiveService
+    FestiveService,
+    CategoryfaqService
   ]
 })
 export class AdminModule { }

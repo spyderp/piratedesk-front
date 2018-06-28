@@ -1,11 +1,8 @@
 <div class="row">
 	<div class="col-3">
 		<ul class="list-group">
-				<li class="list-group-item"><a routerLink="/faq">Clientes</a></li>
-				<li class="list-group-item"><a routerLink="/faq">Departamentos</a></li>
-				<li class="list-group-item"><a routerLink="/faq">Calendario</a></li>
-				<li class="list-group-item"><a routerLink="/faq">Días Festivos</a></li>
-				<li class="list-group-item"><a routerLink="/faq">Estados</a></li>
+				<li class="list-group-item" *ngFor="let row of categoryList"><a routerLink="/faq/{{row.name}}" >{{row.name}}</a></li>
+			
 			</ul>
 
 	</div>
@@ -18,31 +15,18 @@
 		</div>
 		</form>
 		<br><br>
-		<div id="list-category"  *ngIf="showCategory"></div>
+		<div id="list-category" class="row"  *ngIf="showCategory">
+			<div class="col-12 col-md-6"  *ngFor="let row of categoryList">
+				<h3><a routerLink="/faq/ {{row.name}}"><i class="fa fa-folder"></i> {{row.name}}</a></h3>
+				<p> {{row.descripcion}}</p>
+			</div>
+		</div>
 		
 		<div id="result-faq" *ngIf="!showCategory">
 			<ngb-accordion #acc="ngbAccordion">
-		  <ngb-panel title="Simple" class="prueba">
-		    <ng-template ngbPanelContent>
-		      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-		      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-		      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-		      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-		      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-		      labore sustainable VHS.
-		    </ng-template>
-		  </ngb-panel>
-		  <ngb-panel>
-		    <ng-template ngbPanelTitle>
-		      <span>&#9733; <b>Fancy</b> title &#9733;</span>
-		    </ng-template>
-		    <ng-template ngbPanelContent>
-		      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-		      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-		      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-		      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-		      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-		      labore sustainable VHS.
+		  <ngb-panel title="{{row.title}}" *ngFor="let row of faqList" >
+		    <ng-template ngbPanelContent >
+		      {{row.content}}
 		    </ng-template>
 		  </ngb-panel>
 		</ngb-accordion>

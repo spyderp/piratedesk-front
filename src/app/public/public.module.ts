@@ -8,19 +8,21 @@ import { ContactComponent } from './contact/contact.component';
 import { FaqComponent } from './faq/faq.component';
 import { IndexComponent } from './index/index.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminModule } from '../admin/admin.module';
 @NgModule({
   imports: [
     CommonModule,
     PublicRoutingModule,
     RouterModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    AdminModule
   ],
   declarations: [
   	PublicComponent,
   	ContactComponent,
   	FaqComponent,
-  	IndexComponent
+  	IndexComponent,
   ]
 })
 export class PublicModule { }
