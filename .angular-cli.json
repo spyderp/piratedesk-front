@@ -20,7 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.sass",
-        "../node_modules/quill/dist/quill.snow.css",
+        "../node_modules/quill/dist/quill.snow.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

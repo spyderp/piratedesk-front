@@ -46,8 +46,8 @@ export class FaqComponent implements OnInit {
     this.faqList = temp;
 	}
   loadAll(){
-    this.faqService.getAll().subscribe(data=>{this.faqList = data; this.temp = [...data];})
-     this.categoryfaqService.getAll().subscribe(data=>{this.categoryList = data})
+    //this.faqService.getAll().subscribe(data=>{this.faqList = data; this.temp = [...data];})
+    //this.categoryfaqService.getAll().subscribe(data=>{this.categoryList = data})
   }
   private filterCategory(search:string=null){
     let result:any = this.categoryList.filter(data => data.name == search);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
 	selector: 'app-index',
 	templateUrl: './index.component.html',
@@ -7,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 	public model:any = [];
-	constructor() { }
+	constructor(private notificationService:ToastrService) {	 }
 
 	ngOnInit() {
+		this.notificationService.info('Hola mundo')
 	}
 	onSubmit(){
 

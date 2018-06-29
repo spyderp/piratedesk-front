@@ -37,10 +37,10 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   exports: [
     CommonModule,
     FormsModule,
-    ToastyModule,
     ConfirmPasswordDirective,
     ForbiddenPasswordDirective,
-    DropzoneModule
+    DropzoneModule,
+    ToastyModule
   ],
 })
 export class SharedModule { }

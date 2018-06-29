@@ -10,7 +10,7 @@ import { JwtInterceptor } from './shared/jwt.interceptor'
 import { SharedModule } from './shared/shared.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderModule, NgxSmartLoaderService } from 'ngx-smart-loader';
-
+import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule, } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,12 @@ import { NgxSmartLoaderModule, NgxSmartLoaderService } from 'ngx-smart-loader';
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule.forRoot(),
-    NgxSmartLoaderModule
+    NgxSmartLoaderModule,
+   ToastNoAnimationModule,
+     ToastrModule.forRoot({
+        toastComponent: ToastNoAnimation,
+        progressBar:true
+     }), // ToastrModule added
   ],
   exports:[SharedModule],
   providers: [
