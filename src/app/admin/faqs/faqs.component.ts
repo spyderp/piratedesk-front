@@ -3,6 +3,7 @@ import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 import { Faq } from '../shared/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FaqService } from '../shared/services/faq.service';
+import { CategoryfaqService } from '../shared/services/categoryfaq.service';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 
 @Component({
@@ -16,6 +17,7 @@ export class FaqsComponent implements OnInit {
 	private formTitle:string;
 	private model:Faq = new Faq();
 	private list=[];
+	private category:any[] = []
 	isDataLoaded = false
 	selected = [];
 	col = [
@@ -28,6 +30,7 @@ export class FaqsComponent implements OnInit {
 		private toastyService:ToastyService, 
 		private toastyConfig: ToastyConfig,
 		private faqService: FaqService,
+		private categoryService: CategoryfaqService,
 		public loader: NgxSmartLoaderService,
 		private modalService: NgbModal 
 	) { 
@@ -98,6 +101,7 @@ export class FaqsComponent implements OnInit {
 	}
 	private loadAll(){
 		this.faqService.getAll().subscribe(data => { this.rowsData = data });
+		this.categoryService.getAll().subscribe(data => { this.category = data });
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear Estado':'Editar Estado';

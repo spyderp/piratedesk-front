@@ -18,7 +18,7 @@ export class CategoryfaqsComponent implements OnInit {
 	isDataLoaded = false
 	selected = [];
 	col = [
-		{ name:'Nombre', prop:'nombre'},
+		{ name:'Nombre', prop:'name'},
 		{ name:'Descripcion', prop:'descripcion'},
 	];
 	constructor(
@@ -28,15 +28,15 @@ export class CategoryfaqsComponent implements OnInit {
 		public loader: NgxSmartLoaderService,
 		private modalService: NgbModal 
 	) { 
-		this.toastyConfig.theme = 'bootstrap';
+		this.toastyConfig.theme = 'default';
 	  	this.toastyConfig.timeout = 5000;
-	  	this.toastyConfig.position = 'top-right';
+	  	this.toastyConfig.position = 'bottom-center';
 	}
 
 	ngOnInit() {
 		this.loader.start('appLoader');
 		this.loadAll();
-		this.loader.stop('appLoader')
+		this.loader.stop('appLoader');
 	}
 	onDelete(event){
 		let id = event[0].id;

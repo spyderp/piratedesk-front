@@ -25,12 +25,18 @@
 			<label for="name">Titulo</label>
 			<input [class.form-control-danger]="title.invalid && title.touched"  [(ngModel)]="model.title" type="text" class=" form-control" required autofocus name="name"  #title="ngModel" >
 		</div>
+		<div class="form-group"  >
+			<label for="category_id">Categoría</label>
+			<select  class=" form-control" name="category_id"  [(ngModel)]="model.category_id" required> 
+				<option *ngFor="let row of category;" [value]="row.id">{{row.name}}</option>
+			</select>
+		</div>
 		<div class="form-group" [class.has-danger]="orden.invalid && orden.touched" >
 			<label for="order">Orden</label>
 			<input [class.form-control-danger]="orden.invalid && orden.touched"  [(ngModel)]="model.orden" type="text" class=" form-control" required autofocus name="order"  #orden="ngModel" >
 		</div>
 		<div class="form-group">
-			<label for="contenido">Plantilla</label>
+			<label for="contenido">Contenido</label>
 			<quill-editor [style]="{height: '200px'}" [(ngModel)]="model.content" name="contenido"></quill-editor>
 		</div>
 		<hr>

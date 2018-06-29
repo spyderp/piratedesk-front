@@ -38,8 +38,7 @@ export class Faq {
 	orden:number;
 	creado:string;
 	modificado:string;
-	categoryfaq_id:number;
-	categories = [];
+	category_id:number;
 }
 
 export class CategoryFaq {

@@ -18,7 +18,7 @@
 		<div id="list-category" class="row"  *ngIf="showCategory">
 			<div class="col-12 col-md-6"  *ngFor="let row of categoryList">
 				<h3><a routerLink="/faq/ {{row.name}}"><i class="fa fa-folder"></i> {{row.name}}</a></h3>
-				<p> {{row.descripcion}}</p>
+				<p> {{row.descripcion}}</p><div [innerHTML]="theHtmlString"></div>
 			</div>
 		</div>
 		
@@ -26,7 +26,7 @@
 			<ngb-accordion #acc="ngbAccordion">
 		  <ngb-panel title="{{row.title}}" *ngFor="let row of faqList" >
 		    <ng-template ngbPanelContent >
-		      {{row.content}}
+		      <div [innerHTML]="row.content"></div>
 		    </ng-template>
 		  </ngb-panel>
 		</ngb-accordion>

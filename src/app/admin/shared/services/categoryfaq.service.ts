@@ -11,23 +11,23 @@ export class CategoryfaqService extends Rest {
 	}
 
 	getAll():Observable<CategoryFaq[]> {
-		return this.http.get<CategoryFaq[]>(this.url+'/category_faqs');
+		return this.http.get<CategoryFaq[]>(this.url+'/categories');
 	}
 
 	getById(id: number) {
-		return this.http.get(this.url+'/category_faqs/' + id);
+		return this.http.get(this.url+'/categories/' + id);
 	}
 
 	create(model: CategoryFaq) {
-		return this.http.post<CategoryFaq>(this.url+'/category_faqs', model);
+		return this.http.post<CategoryFaq>(this.url+'/categories', model);
 	}
 
 	update(model: CategoryFaq):Observable<CategoryFaq> {
-		return this.http.put<CategoryFaq>(this.url+'/category_faqs/' + model.id, model);
+		return this.http.put<CategoryFaq>(this.url+'/categories/' + model.id, model);
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/category_faqs/' + id);
+		return this.http.delete(this.url+'/categories/' + id);
 	}
 
 }

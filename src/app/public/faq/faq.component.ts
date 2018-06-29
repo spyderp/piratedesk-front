@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FaqService } from '../../admin/shared/services/faq.service';
 import { CategoryfaqService } from '../../admin/shared/services/categoryfaq.service';
+import { CategoryFaq } from '../../admin/shared/models';
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
@@ -10,11 +11,10 @@ import { CategoryfaqService } from '../../admin/shared/services/categoryfaq.serv
 export class FaqComponent implements OnInit {
 	private search:string
 	private showCategory:boolean= false;
-  private sub: any;
 	private category: string = null;
-   categoryList:any[] = []
+  private categoryList:CategoryFaq[] = []
   private faqList:any[] = [];
-
+  temp:any[] = [];
   constructor(
     private route: ActivatedRoute,
     private faqService:FaqService,
@@ -22,34 +22,42 @@ export class FaqComponent implements OnInit {
    ) { }
 
   ngOnInit() {
-  	 this.sub = this.route.params.subscribe(params => {
+  	 
+     this.loadAll();
+     this.route.params.subscribe(params => {
        this.category = params['category']; 
+       if(this.category =='all') {
+         this.showCategory = true
+       }else if(this.category) {
+         this.filterCategory(this.category)
+       }
      });
-     //this.faqService.getAll().subscribe(data=>{this.faqList = data})
-     this.faqList = [{title:'Hola mundo', content:'Chao', categoryfaq_id:2},{title:'Hola mundo2', content:'Chao2', categoryfaq_id:5},]
-     if(this.category && this.category=='all') {
-     	this.showCategory = true
-     }else if(this.category) {
-     }
-      //this.categoryfaqService.getAll().subscribe(data=>{this.categoryList = data})
-      this.categoryList = [
-        {id:1, name:'Clientes', descripcion:"My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get" },
-        {id:2, name:'Departamentos', descripcion:"My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get" },
-        {id:3, name:'Calendario', descripcion:"My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get" },
-        {id:4, name:'Días Festivos', descripcion:"My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get" },
-        {id:5, name:'Estados', descripcion:"My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get" },
-      ];
-      console.log( this.categoryList)
+     
+     
   }
-  onSubmit(){
-
+  onSearch(search){
+    const val = search.toLowerCase();
+    // filter our data
+    
+    const temp = this.temp.filter(function(d) {
+      return d.title.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.faqList = temp;
 	}
-
-	ngOnDestroy() {
-    this.sub.unsubscribe();
+  loadAll(){
+    this.faqService.getAll().subscribe(data=>{this.faqList = data; this.temp = [...data];})
+     this.categoryfaqService.getAll().subscribe(data=>{this.categoryList = data})
+  }
+  private filterCategory(search:string=null){
+    let result:any = this.categoryList.filter(data => data.name == search);
+    console.log(this.categoryList)
+    //const val = result.id;
+    /*const temp = this.temp.filter(function(d) {
+      return d.category_id.indexOf(val) !== -1 || !val;
+    });*/
+    // update the rows
+    //this.faqList = temp;
   }
 
-  private filterFaq(search:string=null,  category:string=null){
-
-  }
 }

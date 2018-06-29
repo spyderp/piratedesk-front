@@ -21,9 +21,9 @@
   </div>
   <div class="modal-body">
 	<form  #faqsForm="ngForm"  (ngSubmit)="faqsForm.form.valid && onSubmit()">
-		<div class="form-group" [class.has-danger]="nombre.invalid && nombre.touched" >
+		<div class="form-group" [class.has-danger]="name.invalid && name.touched" >
 			<label for="name">Nombre</label>
-			<input [class.form-control-danger]="nombre.invalid && nombre.touched"  [(ngModel)]="model.nombre" type="text" class=" form-control" required autofocus name="name"  #nombre="ngModel" >
+			<input [class.form-control-danger]="name.invalid && name.touched"  [(ngModel)]="model.name" type="text" class=" form-control" required autofocus name="name"  #name="ngModel" >
 		</div>
 		<div class="form-group" [class.has-danger]="descripcion.invalid && descripcion.touched" >
 			<label for="name">Descripcion</label>
