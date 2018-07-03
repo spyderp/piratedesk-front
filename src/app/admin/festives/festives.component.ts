@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 import { Festive } from '../shared/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FestiveService } from '../shared/services/festive.service';
@@ -22,15 +22,14 @@ export class FestivesComponent implements OnInit {
 	private modelf:any;
 	private rowsData: Festive[]=[];
 	constructor(
-		private toastyService:ToastyService, 
-		private toastyConfig: ToastyConfig,
+		private toastyService:ToastrService, 
 		private festiveService: FestiveService,
 		public loader: NgxSmartLoaderService,
 		private modalService: NgbModal 
 	) { 
-		this.toastyConfig.theme = 'bootstrap';
-	  	this.toastyConfig.timeout = 5000;
-	  	this.toastyConfig.position = 'top-right';
+		
+	  	
+	  	
 	}
 
 	ngOnInit() {

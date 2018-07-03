@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
-import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'forgot-password',
@@ -15,12 +15,9 @@ export class ForgotPasswordComponent implements OnInit {
 		private auth: AuthService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private toastyConfig: ToastyConfig,
-		private toastyService:ToastyService, 
+		private toastyService:ToastrService, 
 	) { 
-		this.toastyConfig.theme = 'bootstrap';
-		this.toastyConfig.timeout = 8000;
-		this.toastyConfig.position = 'top-right';
+		
 	}
 
 	ngOnInit() {

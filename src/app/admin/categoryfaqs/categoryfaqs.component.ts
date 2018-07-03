@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryFaq } from '../shared/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { CategoryfaqService } from '../shared/services/categoryfaq.service';
@@ -22,15 +22,11 @@ export class CategoryfaqsComponent implements OnInit {
 		{ name:'Descripcion', prop:'descripcion'},
 	];
 	constructor(
-		private toastyService:ToastyService, 
-		private toastyConfig: ToastyConfig,
+		private toastyService:ToastrService, 
 		private  categoryFaqService: CategoryfaqService,
 		public loader: NgxSmartLoaderService,
 		private modalService: NgbModal 
 	) { 
-		this.toastyConfig.theme = 'default';
-	  	this.toastyConfig.timeout = 5000;
-	  	this.toastyConfig.position = 'bottom-center';
 	}
 
 	ngOnInit() {

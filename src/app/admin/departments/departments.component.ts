@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 import { Department } from '../shared/models';
 import { DepartmentService } from '../shared/services/department.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -23,15 +23,14 @@ export class DepartmentsComponent implements OnInit {
 	];
 	messages = {selectedMessage:false, emptyMessage: 'Sin datos'};
 	constructor(
-		private toastyService:ToastyService, 
-		private toastyConfig: ToastyConfig,
+		private toastyService:ToastrService, 
 		private departmentService: DepartmentService,
 		public loader: NgxSmartLoaderService,
 		private modalService: NgbModal 
 	) { 
-		this.toastyConfig.theme = 'bootstrap';
-	this.toastyConfig.timeout = 5000;
-	this.toastyConfig.position = 'top-right';
+		
+	
+	
 	}
 
 	ngOnInit() {

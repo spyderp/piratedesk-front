@@ -1,7 +1,7 @@
 import { Component, OnInit,} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
-import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'login',
@@ -16,14 +16,8 @@ export class LoginComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private auth: AuthService,
-		private toastyService:ToastyService, 
-		private toastyConfig: ToastyConfig
-	) {
-		this.toastyConfig.theme = 'bootstrap';
-		this.toastyConfig.timeout = 5000;
-		this.toastyConfig.position = 'top-right';
-
-	 }
+		private toastyService:ToastrService, 
+	) {	 }
 
 	ngOnInit() {
 		// reset login status

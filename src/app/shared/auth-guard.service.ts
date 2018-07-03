@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './auth.service'
 @Injectable()
 export class AuthGuardService implements CanActivate {
@@ -8,13 +8,8 @@ export class AuthGuardService implements CanActivate {
   constructor(
     private auth: AuthService,
   	private router: Router,
-    private toastyService:ToastyService, 
-    private toastyConfig: ToastyConfig
-  ) { 
-        this.toastyConfig.theme = 'bootstrap';
-        this.toastyConfig.timeout = 5000;
-        this.toastyConfig.position = 'top-right';
-  }
+    private toastyService:ToastrService, 
+  ) {   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let isExpired = this.auth.getExpired();

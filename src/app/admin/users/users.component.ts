@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 import { User } from '../shared/models';
 import { UserService  } from '../shared/services/user.service'
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -28,15 +28,14 @@ export class UsersComponent implements OnInit {
 		{ name:'Creado', prop:'creado'}
 	];
 	constructor(
-		private toastyService:ToastyService, 
-		private toastyConfig: ToastyConfig,
+		private toastyService:ToastrService, 
 		private userService: UserService,
 		private modalService: NgbModal, 
 		public loader: NgxSmartLoaderService
 	) { 
-		this.toastyConfig.theme = 'bootstrap';
-		this.toastyConfig.timeout = 5000;
-		this.toastyConfig.position = 'top-right';
+		
+		
+		
 	}
 
 	 public ngOnInit():any {

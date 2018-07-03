@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth.service'
 import { AuthGuardService } from './auth-guard.service'
-import { ToastyModule } from 'ng2-toasty';
 import { ConfirmPasswordDirective } from './confirm-password.directive';
 import { ForbiddenPasswordDirective } from './forbidden-password.directive';
 import { Config } from './config.model';
@@ -19,7 +18,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
 @NgModule({
   imports: [
     CommonModule,
-    ToastyModule.forRoot(),
     DropzoneModule
   ],
   declarations: [
@@ -40,7 +38,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ConfirmPasswordDirective,
     ForbiddenPasswordDirective,
     DropzoneModule,
-    ToastyModule
   ],
 })
 export class SharedModule { }

@@ -1,0 +1,18 @@
+<h3>Acceso de Usuarios</h3>
+ <form  #loginForm="ngForm"  (ngSubmit)="loginForm.form.valid && onSubmit()">
+ 	  <div class="form-group" [class.has-danger]="codigo_cliente.invalid && codigo_cliente.touched" >
+    <input [class.form-control-danger]="codigo_cliente.invalid && codigo_cliente.touched"  [(ngModel)]="model.codigo_cliente" type="text" class=" form-control" placeholder="# de cliente" required autofocus name="codigo_cliente"  #codigo_usuario="ngModel" autocomplete="off">
+  </div>
+  <div class="form-group" [class.has-danger]="username.invalid && username.touched" >
+    <input [class.form-control-danger]="username.invalid && username.touched"  [(ngModel)]="model.username" type="text" class=" form-control" placeholder="Usuario" required autofocus name="usuario"  #username="ngModel" autocomplete="off">
+  </div>
+  <div class="form-group" [class.has-danger]="password.invalid && password.touched">
+    <input [class.form-control-danger]="password.invalid && password.touched" [(ngModel)]="model.password" type="password" class="form-control" placeholder="Contraseña" required name="password"  #password="ngModel" >
+  </div>
+  <button class="btn btn-lg bg-primary btn-block"   [disabled]="!loginForm.form.valid || loading">
+    Acceder</button>
+    <img *ngIf="loading" src="../../assets/img/loading-ellipsis.svg" />
+  </form><br>
+  <hr>
+  <a class="text-default" routerLink="/forgot_password">Olvido su contraseña</a>
+

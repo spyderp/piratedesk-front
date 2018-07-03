@@ -5,7 +5,7 @@ import { Router} from '@angular/router';
 import { User } from '../../admin/shared/models';
 import { UserService  } from '../../admin/shared/services/user.service'
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 @Component({
 	selector: 'navbar',
 	templateUrl: './navbar.component.html',
@@ -20,10 +20,9 @@ export class NavbarComponent implements OnInit {
 	constructor(
 	private auth: AuthService,
 	private router: Router,
-	private toastyConfig: ToastyConfig,
 	private userService: UserService,
 	private modalService: NgbModal,
-	private toastyService:ToastyService, 
+	private toastyService:ToastrService, 
 	public loader: NgxSmartLoaderService,
 	) { }
 

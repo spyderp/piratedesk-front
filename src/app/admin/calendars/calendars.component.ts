@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
+import { ToastrService } from 'ngx-toastr';
 import { Calendar } from '../shared/models';
 import { CalendarService } from '../shared/services/calendar.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -31,15 +31,11 @@ export class CalendarsComponent implements OnInit {
 		{ name:'24/7', prop:'fulltime'},
 	];
 	constructor(
-		private toastyService:ToastyService, 
-		private toastyConfig: ToastyConfig,
+		private toastyService:ToastrService, 
 		private calendarService: CalendarService,
 		public loader: NgxSmartLoaderService,
 		private modalService: NgbModal 
 	) { 
-		this.toastyConfig.theme = 'bootstrap';
-	  	this.toastyConfig.timeout = 5000;
-	  	this.toastyConfig.position = 'top-right';
 	}
 
 	ngOnInit() {

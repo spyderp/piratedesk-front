@@ -13,7 +13,8 @@ $fa-font-path: "~font-awesome/fonts";
 @import '~@swimlane/ngx-datatable/release/assets/icons.css'
 @import "~@ng-select/ng-select/themes/default.theme.css"
 @import assets/css/loader
-@import "~ngx-toastr/toastr.css"
+@import "~ngx-toastr/toastr-bs4-alert"
+
 
 body
 	background: #F1F1F1
@@ -35,5 +36,18 @@ body
 .open>.dropdown-menu
 	display: block
 
-
-
+.toast-success, .toast-error, .toast-info,.toast-warning
+  color: $white
+.toast-success
+  background-color: theme-color-level('success')
+  border: 1px solid theme-color-level('success', -2)
+.toast-error
+  background-color: theme-color-level('danger')
+  border: 1px solid theme-color-level('danger', -2)
+.toast-info
+  background-color: theme-color-level('info')
+  border: 1px solid theme-color-level('info', -2)
+.toast-warning
+  color: $black
+  background-color: theme-color-level('warning')
+  border: 1px solid theme-color-level('warning', -2)
