@@ -103,7 +103,7 @@ export class FaqsComponent implements OnInit {
 		this.categoryService.getAll().subscribe(data => { this.category = data });
 	}
 	private loadForm(add:boolean=true){
-		this.formTitle = (add)?'Crear Estado':'Editar Estado';
+		this.formTitle = (add)?'Crear Faq':'Editar Faq';
 		this.formBtnLabel = (add)?'Guardar':'Actualizar';
 		this.model = new Faq();
 	}

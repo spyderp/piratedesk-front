@@ -12,7 +12,6 @@ export class IndexComponent implements OnInit {
 	constructor(private notificationService:ToastrService) {	 }
 
 	ngOnInit() {
-		this.notificationService.warning('Hola mundo', 'Prueba')
 	}
 	onSubmit(){
 

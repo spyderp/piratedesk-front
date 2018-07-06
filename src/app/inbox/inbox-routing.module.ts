@@ -11,7 +11,7 @@ const routes: Routes = [
 			{ path:'', component:InboxGridComponent, outlet:'tabsbody'},
 			{ path:'new_ticket', component:AddTicketComponent, outlet:'tabsbody'},
 		]
-	}
+	},
 ];
 
 @NgModule({

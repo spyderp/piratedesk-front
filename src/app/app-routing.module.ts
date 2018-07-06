@@ -5,10 +5,11 @@ import { ForgotPasswordComponent } from './core/forgot-password/forgot-password.
 
 const routes: Routes = [
 	{ path: '', loadChildren: 'app/public/public.module#PublicModule' },
-	{ path:'login', component:LoginComponent, },
+	{ path:'admin',  loadChildren: 'app/admin/admin.module#AdminModule'},
 	{ path: 'forgot_password', component:ForgotPasswordComponent},
 	{ path:'inbox',   loadChildren: 'app/inbox/inbox.module#InboxModule'},
-	{ path:'admin',  loadChildren: 'app/admin/admin.module#AdminModule'}
+	{ path:'know',   loadChildren: 'app/knowledges/knowledges.module#KnowledgesModule'},
+	{ path:'login', component:LoginComponent, }
 ];
 
 @NgModule({

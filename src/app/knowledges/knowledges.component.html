@@ -1,0 +1,121 @@
+<navbar></navbar>
+<div class="container-fluid">
+	<div class="row">
+		<div id="sidebar" class="col-lg-2 bg-dark ">
+			<div class="p-2"><a [routerLink]="" (click)="onLoadForm(content)" class="btn btn-success btn-lg btn-block"><i class="fa fa-plus"></i> Crear</a></div>
+			<h4 class="py-1 m-2">Departamentos</h4>
+			<ul class="list-group">
+				<li class="list-group-item" *ngFor="let row of deparmentList"><a (click)="onCategorySearch(row.id)" [routerLink]="">{{row.text}}</a></li>
+			</ul>
+		</div>
+		<div id="bodyContent" class="col-lg-10"  ><div class="container-fluid bg-white mt-3 pb-2 border" *ngIf="showSearch">
+			<h1>Base de Datos del Conocimiento</h1>
+			
+	    	<div  class="inputbox p-1 mx-auto">
+					<input (keyup)="onSearch($event)"   type="text" class="border-0 inputsearch"  autofocus   placeholder="Describa lo que busca...">
+					<label for="">
+						<input type="radio" [(ngModel)]="searchOption" [value]="false" checked="checked" name="option">
+						Titulo
+					</label>
+					<label for="">
+						
+						<input type="radio" [(ngModel)]="searchOption" [value]="true"  name="option">
+						Palabras claves
+					</label>
+			</div>
+			
+			<br>
+			<div id="list-category" class="row"  *ngIf="showCategory">
+				<!-- Listado Populares -->
+				<div class="col-12 col-md-6">
+					<h4>Populares</h4>
+					<ul >
+						<li *ngFor="let row of popular | slice:0:5; let i=index"><a [routerLink]="" (click)="onView(row.id)">{{row.title}}</a></li>
+					</ul>
+				</div>
+				<!-- Listado de acceso frecuente -->
+				<div class="col-12 col-md-6">
+					<h4>Mayor frecuencia</h4>
+					<ul >
+						<li *ngFor="let row of access | slice:0:5; let i=index"><a [routerLink]="" (click)="onView(row.id)">{{row.title}}</a></li>
+					</ul>
+				</div>
+				<!-- Listado de actualizado recientes -->
+				<div class="col-12 col-md-6">
+					<h4>Últimas actualizaciones</h4>
+					<ul >
+						<li *ngFor="let row of update | slice:0:5; let i=index"><a [routerLink]="" (click)="onView(row.id)">{{row.title}}</a></li>
+					</ul>
+				</div>
+				<!-- Listado de últimos creados -->
+				<div class="col-12 col-md-6">
+					<h4>Nuevos</h4>
+					<ul >
+						<li *ngFor="let row of create | slice:0:5; let i=index"><a [routerLink]="" (click)="onView(row.id)">{{row.title}} </a></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div id="result-faq" *ngIf="!showCategory">
+				<h4>Resultados</h4>
+				<ul >
+					<ul >
+						<li *ngFor="let row of rowsData | slice:0:5; let i=index"><a [routerLink]=""  (click)="onView(row.id)">{{row.title}} </a></li>
+					</ul>
+				</ul>
+			</div>
+		</div>
+		<div id="ViewContent" class="container-fluid bg-white mt-3 pb-2 border" *ngIf="!showSearch">
+			
+			<div class="float-right mt-1">
+				<a [routerLink]="" class="btn btn-secondary " (click)="onPopular(model.id)" ngbPopover="ME GUSTA!" triggers="mouseenter:mouseleave" placement="bottom"><i class="fa fa-star"></i></a>
+				<a [routerLink]="" class="btn btn-secondary " (click)="onEdit(content)"><i class="fa fa-pencil-square-o"></i> Editar</a>
+				<a [routerLink]="" class="btn btn-secondary " (click)="onClose()"><i class="fa fa-times-circle"></i> Cerrar</a>
+			</div>
+			<h1>{{model.title}}</h1>
+			<h5>Departamento: {{deparmentName}}</h5>
+			<h5  class="pt-2">Palabras claves</h5>
+			<div id="keys">
+				<span class="badge badge-info mx-1" *ngFor="let row of model.keys.split(' ')">{{row}}</span>
+			
+			</div>
+			<h5 class="pt-2">Contenido</h5>
+			<div id="KnowlegeContent" [innerHTML]="model.content"></div>
+		</div>	
+		</div>
+	</div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+   <div class="modal-header">
+    <h4 class="modal-title">{{formTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+		<form  #knowForm="ngForm"  (ngSubmit)="knowForm.form.valid && onSubmit()">
+			<div class="form-group" [class.has-danger]="title.invalid && title.touched" >
+				<label for="name">Titulo</label>
+				<input [class.form-control-danger]="title.invalid && title.touched"  [(ngModel)]="model.title" type="text" class=" form-control" required autofocus name="name"  #title="ngModel" >
+			</div>
+			<div class="form-group" [class.has-danger]="keys.invalid && keys.touched" >
+				<label for="name">Palabras claves</label>
+				<input [class.form-control-danger]="keys.invalid && keys.touched"  [(ngModel)]="model.keys" type="text" class=" form-control" required autofocus name="name"  #keys="ngModel" >
+			</div>
+			<div class="form-group"  >
+				<label for="category_id">Departamento</label>
+				<select  class=" form-control" name="department_id"  [(ngModel)]="model.department_id" required> 
+					<option *ngFor="let row of deparmentList;" [value]="row.id">{{row.text}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="contenido">Contenido</label>
+				<quill-editor [style]="{height: '200px'}" [(ngModel)]="model.content" name="contenido"></quill-editor>
+			</div>
+			<hr>
+			<button class="btn btn-lg btn-aqua"  [disabled]="!knowForm.form.valid">{{formBtnLabel}}</button>
+			<button class="btn btn-lg btn-aqua" (click)="c('Close click')"> Cancelar </button>
+		</form>
+  </div>
+</ng-template>

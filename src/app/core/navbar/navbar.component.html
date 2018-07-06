@@ -17,6 +17,9 @@
 			<li class="nav-item ">
 				<a class="nav-link" routerLink="/inbox" routerLinkActive="active"><i class="fa fa-inbox fa-1x" aria-hidden="true"></i> Bandeja </a>
 			</li>
+			<li class="nav-item ">
+				<a class="nav-link" [routerLink]="'/know'" routerLinkActive="active"><i class="fa fa-exclamation-circle fa-1x" aria-hidden="true"></i> B.D. Conocimiento </a>
+			</li>
 			<li class="nav-item">
 				<a class="nav-link" routerLink="/admin" routerLinkActive="active"> <i class="fa fa-cog fa-1x" aria-hidden="true"></i> Configuración</a>
 			</li>
@@ -25,12 +28,12 @@
 		</ul>
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item dropdown" >
-				<a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" (click)="isCollapsed = !isCollapsed"
+				<a class="nav-link dropdown-toggle" [routerLink] data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" (click)="isCollapsed = !isCollapsed"
 				[attr.aria-expanded]="!isCollapsed"><i class="fa fa-user fa-1x" aria-hidden="true"></i></a>
 				<div class="dropdown-menu dropdown-menu-right"[ngbCollapse]="isCollapsed"  aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" (click)="open(content)">Perfil</a>
+					<a class="dropdown-item" (click)="open(content)" [routerLink]="">Perfil</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" (click)="logout()" >Salir</a>
+					<a class="dropdown-item" (click)="logout()" [routerLink] >Salir</a>
 				</div>
 			</li>
 		</ul>

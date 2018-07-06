@@ -7,8 +7,8 @@
 
 	</div>
 	<div class="col-9 pb-2">
-		<h1>Contactenos</h1>
-		<form  #searchForm="ngForm"  (ngSubmit)="onSubmit()">
+		<h3>Preguntas Frecuentes<span *ngIf="showCategory">::Categorias</span></h3>
+		<form  #searchForm="ngForm"  (ngSubmit)="onSearch()">
     	<div  class="inputbox p-1 mx-auto">
 			<input   [(ngModel)]="search" type="text" class="border-0 inputsearch" required autofocus name="s"  placeholder="Describa lo que busca...">
 			<button class="btn bg-primary"  >Buscar</button>
@@ -17,7 +17,7 @@
 		<br><br>
 		<div id="list-category" class="row"  *ngIf="showCategory">
 			<div class="col-12 col-md-6"  *ngFor="let row of categoryList">
-				<h3><a routerLink="/faq/ {{row.name}}"><i class="fa fa-folder"></i> {{row.name}}</a></h3>
+				<h3><a routerLink="/faq/{{row.name}}"><i class="fa fa-folder"></i> {{row.name}}</a></h3>
 				<p> {{row.descripcion}}</p><div [innerHTML]="theHtmlString"></div>
 			</div>
 		</div>
