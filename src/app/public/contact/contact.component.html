@@ -14,6 +14,7 @@
 		<div class="form-group">
 			<textarea  class=" form-control" [(ngModel)]="model.area" id="" cols="40" rows="5" name="area" placeholder="Su consulta..." required></textarea>
 		</div>
+		<re-captcha  [(ngModel)]="captcha" name="cap" required></re-captcha>
 		<hr>
 		<button class="btn btn-lg bg-primary"  [disabled]="!contactForm.form.valid">Enviar Ticket</button>
     </form>

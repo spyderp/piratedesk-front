@@ -32,6 +32,7 @@ import { FestivesComponent } from './festives/festives.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryfaqService } from './shared/services/categoryfaq.service';
 import { CategoryfaqsComponent } from './categoryfaqs/categoryfaqs.component';
+import { ClientusersComponent } from './clientusers/clientusers.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -57,6 +58,7 @@ import { CategoryfaqsComponent } from './categoryfaqs/categoryfaqs.component';
      FaqsComponent,
      FestivesComponent,
      CategoryfaqsComponent,
+     ClientusersComponent,
      ],
   providers: [ 
     CalendarService,

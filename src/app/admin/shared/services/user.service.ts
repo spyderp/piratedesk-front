@@ -9,8 +9,8 @@ export class UserService extends Rest{
 	constructor(http: HttpClient) { 
 		super(http);
 	}
-	getAll():Observable<User[]> {
-		return this.http.get<User[]>(this.url+'/users');
+	getAll(client=false):Observable<User[]> {
+		return (client)?this.http.get<User[]>(this.url+'/users?client=true'):this.http.get<User[]>(this.url+'/users');
 	}
 
 	getById(id: number):Observable<User> {

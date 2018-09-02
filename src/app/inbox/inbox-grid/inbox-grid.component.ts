@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Ticket, Filter } from '../shared/models'
 import { TicketService } from  '../shared/services/ticket.service'
 import { EstateService } from '../../admin/shared/services/estate.service';
 import { DepartmentService } from '../../admin/shared/services/department.service';
 @Component({
-  selector: 'app-inbox-grid',
+  selector: 'inbox-grid',
   templateUrl: './inbox-grid.component.html',
   styleUrls: ['./inbox-grid.component.sass'],
-  providers:[EstateService,DepartmentService]
 })
 export class InboxGridComponent implements OnInit {
+  @Output() edit = new EventEmitter();
 	private tickets:Ticket[]=[];
   selected = [];
   isEdit:boolean = false;
@@ -68,18 +68,26 @@ export class InboxGridComponent implements OnInit {
     this.tickets = this.temp;
   }
   onSelect({ selected }) {
-    if(selected.length>0 && selected.length<2){
+    if(selected.length>0){
       this.isEdit = true;
-      this.isDel  = true;
-    }else if(selected.length>1){
-      this.isEdit = false;
       this.isDel  = true;
     }else if(selected.length==0){
       this.isEdit = false;
       this.isDel  = false;
     }
   }
-
+  onEdit(){
+    this.isEdit = false;
+    this.edit.emit(this.selected);
+    this.selected = [];
+  }
+  onDel(){
+    let msg = this.selected.length>1?'Esta seguro que desea Borrar los registros seleccionados':'Esta seguro que desea Borrar el registro seleccionado';
+    if(confirm(msg)){
+      //this.del.emit(this.selected);
+      this.isDel  = false;
+    }
+  }
   
 
 }

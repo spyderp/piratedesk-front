@@ -18,6 +18,9 @@ export class ClientService extends Rest {
 		return this.http.get(this.url+'/clients/' + id);
 	}
 
+	getList(){
+		return this.http.get(this.url+'/clients/?type=list');
+	}
 	getAssoc() {
 		return this.http.get<any[]>(this.url+'/calendars?type=list');
 	}

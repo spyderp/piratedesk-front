@@ -18,6 +18,10 @@ export class PriorityService extends Rest {
 		return this.http.get(this.url+'/priorities/' + id);
 	}
 
+	getList(){
+		return this.http.get(this.url+'/priorities?type=list');
+	}
+
 	create(model: Priority) {
 		return this.http.post<Priority>(this.url+'/priorities', model);
 	}

@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { Config } from './config.model';
-
+import { environment} from '../../environments/environment';
 export abstract class Rest {
 	url: string;
  	constructor(public http: HttpClient) { 
-		this.url = Config.API_ENDPOINT;
+		this.url = environment.apiServer;
 	}
 
 	abstract getAll():any; 

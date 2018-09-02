@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Config } from './config.model'
-
+import { environment} from '../../environments/environment';
 @Injectable()
 export class AuthService {
 	url: string;
 	headers : any;
 	options : any;
-	refreshInterval:number;
+	refreshInterval:any;
 	constructor(private http: HttpClient) { 
-		this.url     = Config.API_ENDPOINT;
+		this.url = environment.apiServer;
 	}
 
 	getUser(){
@@ -52,7 +51,6 @@ export class AuthService {
 		let httpOptions = {
 		  headers: new HttpHeaders({
 		    'Content-Type':  'application/json',
-		    //'Authorization': 'my-auth-token'
 		  })
 		};
 	    return this.http.post(this.url+'/login', JSON.stringify({ username: username, password: password }), httpOptions)
@@ -69,7 +67,15 @@ export class AuthService {
 	            return data;
 	        });
 	}
-
+	loginPublic(client:number, username: string, password: string) {
+		let httpOptions = {
+		  headers: new HttpHeaders({
+		    'Content-Type':  'application/json',
+		  })
+		};
+	    return this.http.post(this.url+'/login_public', JSON.stringify({ clienteID:client,username: username, password: password }), httpOptions)
+	}
+	
 	logout() {
 		let httpOptionsLogout = {
 			headers: new HttpHeaders({

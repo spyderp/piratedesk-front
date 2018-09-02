@@ -10,6 +10,8 @@ import { TicketService } from './shared/services/ticket.service';
 import { QuillModule } from 'ngx-quill'
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
+import { AdminModule } from '../admin/admin.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,9 +20,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     QuillModule,
     NgxDatatableModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    AdminModule
   ],
-  declarations: [InboxComponent, InboxGridComponent, AddTicketComponent],
+  declarations: [InboxComponent, InboxGridComponent, AddTicketComponent, EditTicketComponent],
   providers: [TicketService],
 })
 export class InboxModule { }

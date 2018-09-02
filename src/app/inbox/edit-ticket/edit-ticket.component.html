@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<div class="row">
+		<div id="sidebar" class="col-lg-2 bg-dark sidebar py-2" >
+			<button class="btn btn-success" *ngIf="!assigment" (click)="onAssign()">Asignar</button>
+			<button class="btn btn-info" *ngIf="assigment && edit" (click)="onEdit()">Editar</button>
+			<button class="btn btn-danger " *ngIf="assigment && del" (click)="onDelete()">Borrar</button>
+			<h4 class="header my-2"> Palabras Clave</h4>
+			<div>{{model.keys}}</div>
+			<h4 class="header mb-2"> Fechas de la Solicitud</h4>
+			<div class="row">
+				<div class="col-6"><span class="text-secondary">Creado</span></div>
+				<div class="col-6">{{model.creado | date }}</div>
+				<div class="col-6"><span class="text-secondary">Actualizado</span></div>
+				<div class="col-6">{{model.modificado | date }}</div>
+			</div>
+			<h4 class="header mb-2"> Tópicos Relacionados</h4>
+		</div>
+		<div class="col-lg-10" >
+			<div class="container-fluid bg-white mt-3 py-2 border">	
+			<div class="row">
+				<h5 class=" col-12  text-secondary">Caso #{{model.id | number:'3.0'}}</h5>
+				<h2 class="col-12 pb-2">{{model.titulo}}</h2>
+				<div class="col-3">
+					<span class="text-secondary">Prioridad:</span> <br>
+					<span [ngClass]="{'badge-success':model.priorities.id==1,'badge-info':model.priorities.id==2,'badge-warning':model.priorities.id==3,'badge-orange':model.priorities.id==4,'badge-darger':model.priorities.id==5}" class="badge ">{{model.priorities.descripcion}}</span>
+				</div>
+				<div class="col-3">
+					<span class="text-secondary">Estado:</span> <br>
+					{{model.states.descripcion}}
+				</div>
+				<div class="col-3">
+					<span class="text-secondary">Departamento:</span> <br>
+					{{model.departments.descripcion}}
+				</div>
+				<div class="col-3">
+					<span class="text-secondary">Creado por:</span> <br>
+					<span *ngIf="model.user_id == 1">{{model.users.username}}</span>
+					<span *ngIf="model.user_id > 1">{{model.users.nombre}} {{model.users.apellido}}/{{model.users.username}}</span>
+				</div>
+				<h5 class="font-weight-bold col-12 py-2">Datos del solicitante:</h5>
+				<div class="col-3" *ngIf="model.client_id > 1">
+					<span class="text-secondary">Client:</span><br>
+					{{model.clients.nombre}}
+				</div>
+				<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
+					<span class="text-secondary">Correo:</span><br>
+					{{model.email}}
+				</div>
+				<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
+					<span class="text-secondary">Teléfono:</span><br>
+					{{model.telefono}}
+				</div>
+				<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
+					<span class="text-secondary">Célular:</span><br>
+					{{model.celular}}
+				</div>
+				<h5 class="font-weight-bold col-12 py-2">Descripción:</h5>
+				<div class="col-12 py-2"  [innerHTML]="model.content">
+				</div>
+				<h5 class="font-weight-bold col-12 py-2">Archivos:</h5>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>

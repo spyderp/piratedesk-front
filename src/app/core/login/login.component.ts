@@ -2,7 +2,7 @@ import { Component, OnInit,} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
 	selector: 'login',
 	templateUrl: './login.component.html',
@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 		private router: Router,
 		private auth: AuthService,
 		private toastyService:ToastrService, 
+		private loader:NgxSmartLoaderService
 	) {	 }
 
 	ngOnInit() {
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit {
         // Add see all possible types in one shot
 		//this.auth.logout();
 		// get return url from route parameters or default to '/'
+		this.loader.start('appLoader')
 		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inbox';
+		this.loader.stop('appLoader')
 	}
 
 	onSubmit() {

@@ -12,6 +12,9 @@ export class Ticket {
 	titulo:string
 	content:string
 	keys:string
+	email:string
+	telefono:string
+	celular:string
 	creado:string
 	modificado:string
 	clients:any
@@ -23,4 +26,6 @@ export class Ticket {
 	department_id:number
 	state_id:number
 	user_id:number
+	priority_id:number
+	assigments:any[]
 }

@@ -1,29 +1,54 @@
 <div class="container-fluid">
 	<div class="row">
-		<div id="sidebar" class="col-lg-2 bg-dark">
-			
+		<div id="sidebar" class="col-lg-2 bg-dark sidebar py-2" >
 		</div>
 		<div class="col-lg-10" >
-		<div class="container-fluid bg-white mt-4 pb-2">
-				<!-- <form  #addTicketForm="ngForm"  (ngSubmit)="addTicketForm.form.valid && onSubmit()">
-					<h1>{{formTitle}}</h1>
-					<hr>
-					<div class="row">
-						<div class="form-group col-xs-12 col-md-6" [class.has-danger]="titulo.invalid && addTicketname.touched" >
-							<label for="usuario">Usuario</label>
-							<input [class.form-control-danger]="titulo.invalid && addTicketname.touched"  [(ngModel)]="model.titulo" type="text" class=" form-control" placeholder="Usuario" required autofocus name="usuario"  #titulo="ngModel" >
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col-xs-12 col-md-12"  >
-							<quill-editor #editor [style.display]="hide ? 'none' : 'block'" [formControl]="form.controls['model.content']"></quill-editor>
-						</div>
-					</div>
-					<hr>
-					<button class="btn btn-lg btn-primary"  [disabled]="!addTicketForm.form.valid">{{formBtnLabel}}</button>
-					<button class="btn btn-lg btn-primary" (click)="onCancel()"> Cancelar </button>
-				</form> -->
+		<div class="container-fluid bg-white mt-3 py-2 border">	
+			<h1 class="pb-2">Nuevo Caso</h1>
+			<form  #sendTicketForm="ngForm"  (ngSubmit)="sendTicketForm.form.valid && onSubmit()" class="row">
+				<div class="form-group col-12"  >
+					<input autocomplete="off"  [(ngModel)]="model.titulo" type="text" class=" form-control"   name="titulo"   required placeholder="Titulo">
+				</div>
+				<div class="form-group col-6 "   >
+					<label for="">Departamento:</label>
+					<select [(ngModel)]="model.department_id" name="departamento" required>
+						
+						<option value="{{ row.id }}" *ngFor="let row of department" >{{row.text}}</option>
+					</select>
+				</div>
+				<div class="form-group col-6 "   >
+					<label for="">Cliente:</label>
+					<select [(ngModel)]="model.client_id" name="cliente" required (change)="onSelectClient($event.target.value)">
+						
+						<option value="{{ row.id }}" *ngFor="let row of client" >{{row.nombre}}</option>
+					</select>
+				</div>
+				<div class="form-group col-sm-4 col-12" [class.has-danger]="correo.invalid && correo.touched" >
+					<input autocomplete="off" [class.form-control-danger]="correo.invalid && correo.touched"  [(ngModel)]="model.email" type="email" class=" form-control"   name="email"  required placeholder="Correo" #correo="ngModel">
+				</div>
+				<div class="form-group col-sm-4 col-12"  >
+					<input autocomplete="off"   [(ngModel)]="model.telefono" type="text" class=" form-control"   name="telefono"  placeholder="Teléfono">
+				</div>
+				<div class="form-group col-sm-4 col-12"  >
+					<input   autocomplete="off" [(ngModel)]="model.celular" type="text" class=" form-control"   name="celular"  placeholder="Célular">
+				</div>
+				
+				<div class="form-group col-12" [class.has-danger]="cont.invalid && cont.touched" >
+					<quill-editor #cont="ngModel" [style]="{height: '200px'}" [(ngModel)]="model.content" name="platilla"></quill-editor>
+				</div>
+				<div class="form-group col-12 "   >
+					<label for="">Prioridad:</label>
+					<select [(ngModel)]="model.priority_id" name="prioridad" required>
+						
+						<option value="{{ row.id }}" *ngFor="let row of priority" >{{row.text}}</option>
+					</select>
+				</div>
+				<hr>
+				<div class="col-12">
+					<button class="btn btn-lg bg-primary"  [disabled]="!sendTicketForm.form.valid">Crear nuevo caso</button>
+				</div>
+	    </form>
 		</div>
-		</div>
+	</div>
 	</div>
 </div>

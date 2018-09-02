@@ -82,6 +82,7 @@ export class KnowledgesComponent implements OnInit {
   }
   onSearch(event:any){
   	const val = event.target.value.toLowerCase();
+    let temp:any;
   	if (val==''){
   		this.showCategory = true
   	}else{
@@ -90,11 +91,11 @@ export class KnowledgesComponent implements OnInit {
 
     // filter our data
     if(!this.searchOption){
-    	const temp = this.temp.filter(function(d) {
+    	temp = this.temp.filter(function(d) {
       	return d.title.toLowerCase().indexOf(val) !== -1 || !val;
    		});
     }else{
-    	const temp = this.temp.filter(function(d) {
+    	temp = this.temp.filter(function(d) {
       	return d.keys.toLowerCase().indexOf(val) !== -1 || !val;
    		});
     }

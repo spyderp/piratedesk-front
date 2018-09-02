@@ -38,6 +38,15 @@ export class TicketService extends Rest {
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/rickets/' + id);
+		return this.http.delete(this.url+'/tickets/' + id);
+	}
+	/**
+	 * Se manejan 3 caso los cuales son asignar, cambiar estado y subir archvio
+	 * @param {number}    		 id   indice del ticket
+	 * @param {any}       		 data arreglo de datos a enviar.
+	 * @param {number =    0}  type 0 = asignar, 1 = cambio de estado, 2 = subir archivo
+	 */
+	patch(id:number, data:any, type:number = 0){
+		return this.http.patch(this.url+'/tickets/' + id+'?type='+type, data);	
 	}
 }

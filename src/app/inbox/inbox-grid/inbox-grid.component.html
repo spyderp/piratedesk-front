@@ -74,6 +74,10 @@
 		<div id="bodyContent" class="col-lg-10" >
 		<div class="container-fluid bg-white mt-3 pb-2 border">
 			<h1>Bandeja</h1>
+			<div class="text-right datagridAction">
+				<button class="btn btn-info"  [disabled]="!isEdit" (click)="onEdit()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </button>
+				<button *ngIf="del" class="btn btn-danger" [disabled]="!isDel" (click)="onDel()"><i class="fa fa-times-circle " aria-hidden="true"></i> </button>
+			</div>
 			<ngx-datatable
 				[rows]="tickets"
 				[loadingIndicator]="true"
@@ -97,6 +101,11 @@
 				[checkboxable]="true"
 				>
 				</ngx-datatable-column> 
+	   <ngx-datatable-column name="#" prop="id" >
+      	<ng-template let-value="value" ngx-datatable-cell-template >
+           <div class="text-center"> {{value | number:'3.0' }}</div>
+          </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column name="Titulo"  ></ngx-datatable-column>
       <ngx-datatable-column name="Estado" prop="states.descripcion" >
       	<ng-template let-value="value" ngx-datatable-cell-template >
@@ -108,10 +117,14 @@
            <div class="text-center"> {{value}}</div>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Creado" prop="creado" ></ngx-datatable-column> 
+      <ngx-datatable-column name="Creado" prop="creado" >
+      	<ng-template let-value="value" ngx-datatable-cell-template >
+           <div class="text-center"> {{value | date }}</div>
+        </ng-template>
+      </ngx-datatable-column> 
       <ngx-datatable-column name="Prioridad" prop="priorities" >
       	<ng-template let-value="value" ngx-datatable-cell-template >
-           <div class="text-center h5" > <span [ngClass]="{'badge-success':value.id==1,'badge-info':value.id==2,'badge-warning':value.id==3,'badge-orange':value.id==4,'badge-red':value.id==5}" class="badge ">{{value.descripcion}}</span></div>
+           <div class="text-center h5" > <span [ngClass]="{'badge-success':value.id==1,'badge-info':value.id==2,'badge-warning':value.id==3,'badge-orange':value.id==4,'badge-danger':value.id==5}" class="badge ">{{value.descripcion}}</span></div>
           </ng-template>
       </ngx-datatable-column> 
 </ngx-datatable>

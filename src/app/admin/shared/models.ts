@@ -97,6 +97,7 @@ export class User {
 	rol_id:		   number;
 	file_id:	   number=1;
 	rol:			any;
+	clients: 	 any[]=[];
 	departments: 	 any[]=[];
 }
 

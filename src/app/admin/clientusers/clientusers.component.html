@@ -1,0 +1,80 @@
+<div  >
+	<h1>Lista de usuarios por cliente</h1>
+	<datagrid 
+				[data]="users" 
+				[selected]="s" 
+				[column]="col" 
+				(add)="onLoadForm($event, content)" 
+				(edit)="onEdit($event, content)"
+				(del)="onDelete($event)"
+			>	
+			</datagrid>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{formTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	<form  #userForm="ngForm"  (ngSubmit)="userForm.form.valid && onSubmit()">
+		<div class="row">
+		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="username.invalid && username.touched" >
+			<label for="usuario">Usuario</label>
+			<input [class.form-control-danger]="username.invalid && username.touched"  [(ngModel)]="model.username" type="text" class=" form-control" placeholder="Usuario" required autofocus name="usuario"  #username="ngModel" >
+		</div>
+		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="email.invalid && email.touched" >
+			<label for="correo">Correo</label>
+			<input [class.form-control-danger]="email.invalid && email.touched"  [(ngModel)]="model.email" type="email" class=" form-control" placeholder="Ejemplo:correo@correo.com" required autofocus name="correo"  #email="ngModel" >
+		</div>
+		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="password.invalid && password.touched" >
+			<label for="contrasena">Contraseña</label>
+			<input [class.form-control-danger]="password.invalid && password.touched"  [(ngModel)]="model.password" type="password" class=" form-control" [required]="model.id?false:true" placeholder="Coloque la contraseña" autofocus name="contrasena" forbiddenPassword="3" #password="ngModel"  minlength="8">
+			 <div *ngIf="password.errors && (password.touched || password.dirty)" class="alert alert-danger" role="alert">
+				<div [hidden]="!password.errors.forbiddenPassword">
+					<strong>Error</strong> La contraseña debe tener  una mayuscula, una minuscula y un número.
+				</div>
+				<div [hidden]="!password.errors.minlength">
+					<strong>Error</strong> La contraseña debe tener  8 caracteres minimo.
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="repassword.invalid && repassword.touched" >
+			<label for="recontrasena">Validar Contraseña</label>
+			<input [class.form-control-danger]="repassword.invalid && repassword.touched"  [(ngModel)]="model.repassword" type="password" class=" form-control" placeholder="Repita la contraseña"  autofocus name="recontrasena"  #repassword="ngModel"  confirmPassword="contrasena" [required]="model.id || model.password!=null?false:true">
+			 <div *ngIf="repassword.errors && (repassword.touched || repassword.dirty)" class="alert alert-danger" role="alert">
+				<div [hidden]="!repassword.errors.confirmPassword">
+					<strong>Error</strong> No coinciden la contraseña.
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="nombre.invalid && nombre.touched" >
+			<label for="name">Nombre</label>
+			<input [class.form-control-danger]="nombre.invalid && nombre.touched"  [(ngModel)]="model.nombre" type="text" class=" form-control" placeholder="Ejempo:Pablo" required autofocus name="name"  #nombre="ngModel" >
+		</div>
+		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="apellido.invalid && apellido.touched" >
+			<label for="lastname">Apellido</label>
+			<input [class.form-control-danger]="apellido.invalid && apellido.touched"  [(ngModel)]="model.apellido" type="text" class=" form-control" placeholder="Ejemplo: Rodriguez" required autofocus name="lastname"  #apellido="ngModel" >
+		</div>
+		<!-- DEPARTAMENTO -->
+		<div class="col-xs-12 col-md-6">	
+			<div class="form-group">
+				<label for="">Cliente</label>
+				<ng-select  
+						[items]="items"
+			      			bindLabel="text"
+                   			bindValue="id"
+                   			[(ngModel)]="model.clients"
+                   			name="ddd"
+			              	 placeholder="Seleccione sus Departamentos">
+			              </ng-select>
+			</div>
+		</div>
+		</div>
+		<hr>
+		<button class="btn btn-lg btn-aqua"  [disabled]="!userForm.form.valid">{{formBtnLabel}}</button>
+		<button class="btn btn-lg btn-aqua" (click)="c('Close click')"> Cancelar </button>
+    </form>
+  </div>
+</ng-template>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component'
 import { CalendarsComponent} from './calendars/calendars.component'
 import { ClientsComponent} from './clients/clients.component'
+import { ClientusersComponent} from './clientusers/clientusers.component'
 import { DepartmentsComponent} from './departments/departments.component'
 import { EstatesComponent} from './estates/estates.component'
 import {  FaqsComponent} from './faqs/faqs.component'
@@ -20,6 +21,7 @@ const routes: Routes = [
 		{ path: '', component: UsersComponent, pathMatch: 'full' },
 		{ path: 'calendars',  component: CalendarsComponent, canActivate: [AuthGuardService]},
 		{ path: 'clients',  component: ClientsComponent, canActivate: [AuthGuardService]},
+		{ path: 'client_users',  component: ClientusersComponent, canActivate: [AuthGuardService]},
 		{ path: 'departments',  component: DepartmentsComponent, canActivate: [AuthGuardService]},
 		{ path: 'estates',  component: EstatesComponent, canActivate: [AuthGuardService]},
 		{ path: 'faqs',  component: FaqsComponent, canActivate: [AuthGuardService]},

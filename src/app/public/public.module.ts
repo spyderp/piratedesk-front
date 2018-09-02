@@ -11,6 +11,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminModule } from '../admin/admin.module';
 import { InboxModule } from '../inbox/inbox.module';
 import { LoginPublicComponent } from './login-public/login-public.component'
+import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { RECAPTCHA_SETTINGS,RECAPTCHA_LANGUAGE, RecaptchaSettings } from 'ng-recaptcha';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +22,9 @@ import { LoginPublicComponent } from './login-public/login-public.component'
     SharedModule,
     NgbModule,
     AdminModule,
-    InboxModule
+    InboxModule,
+    RecaptchaModule.forRoot(),
+    RecaptchaFormsModule
   ],
   declarations: [
   	PublicComponent,
@@ -27,6 +32,16 @@ import { LoginPublicComponent } from './login-public/login-public.component'
   	FaqComponent,
   	IndexComponent,
   	LoginPublicComponent,
-  ]
+  ],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: '6LeIfmMUAAAAAGii_lgIexRvvrspHfamWtq3m53k' } as RecaptchaSettings,
+    },
+    {
+      provide: RECAPTCHA_LANGUAGE,
+      useValue: 'es', 
+    },
+  ],
 })
 export class PublicModule { }
