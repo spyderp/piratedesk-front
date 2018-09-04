@@ -23,7 +23,6 @@ export class IndexComponent implements OnInit {
 	) {	 }
 
 	ngOnInit() {
-		
 		this.departmentService.getList().subscribe(data=>{this.department=data})
 		this.loader.stop('appLoader')
 	}

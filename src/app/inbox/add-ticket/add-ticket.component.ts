@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Ticket } from '../shared/models'
 import { TicketService } from  '../shared/services/ticket.service'
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,8 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   styleUrls: ['./add-ticket.component.sass']
 })
 export class AddTicketComponent implements OnInit {
+	@Output() close = new EventEmitter();
+	@Output() update = new EventEmitter();
 	public client:any =[];
 	public department:any =[];
 	public priority:any = []
@@ -34,6 +36,9 @@ export class AddTicketComponent implements OnInit {
   	this.model.client_id = 1
   	this.model.user_id = currentUser.id
   }
+  onClose(){
+  	this.close.emit(true)
+  }
   onSubmit(){
 		this.loader.start('appLoader')
 		this.ticketService.create(this.model).subscribe(
@@ -41,6 +46,7 @@ export class AddTicketComponent implements OnInit {
 				this.notificationService.success('Se creo la nueva solicitud')
 				this.model = new Ticket()
 				this.loader.stop('appLoader')
+				this.update.emit(true)
 			},
 			error=>{
 				this.notificationService.error('Ocurrio un error y no se pudo registrar su solicitud intente nuevamente.')

@@ -3,6 +3,7 @@ import { Ticket, Filter } from '../shared/models'
 import { TicketService } from  '../shared/services/ticket.service'
 import { EstateService } from '../../admin/shared/services/estate.service';
 import { DepartmentService } from '../../admin/shared/services/department.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'inbox-grid',
   templateUrl: './inbox-grid.component.html',
@@ -10,22 +11,27 @@ import { DepartmentService } from '../../admin/shared/services/department.servic
 })
 export class InboxGridComponent implements OnInit {
   @Output() edit = new EventEmitter();
-	private tickets:Ticket[]=[];
-  selected = [];
-  isEdit:boolean = false;
-  isDel:boolean = false;
-  public model:Filter = new Filter;
-  estados:any[];
   departamentos:any[];
+  estados:any[];
+  isDel:boolean = false;
+  isEdit:boolean = false;
+  model:Filter = new Filter;
+  selected = [];
   temp = [];
+  tickets:Ticket[]=[];
+  loading: boolean = false
+  private modalReference
   constructor(
-  	private ticketService:TicketService,
+    private ticketService:TicketService,
+    private departmentService:DepartmentService,
     private estateService:EstateService,
-    private departmentService:DepartmentService
+    private modalService: NgbModal 
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.loadAll()
+
   }
   getRowClass(row){
     let clase:string = '';
@@ -46,9 +52,16 @@ export class InboxGridComponent implements OnInit {
   	this.ticketService.getAll().subscribe(data => { 
       this.temp = data;
       this.tickets = data;
+      this.loading = false;
     });
     this.departmentService.getList().subscribe(data=>{ this.departamentos=data; })
      this.estateService.getAll().subscribe(data=>{ this.estados=data; })
+  }
+  onAdd(content){
+    this.modalReference = this.modalService.open(content,{size:'lg'})
+  }
+  onClose(event){
+    this.modalReference.close()
   }
   onFilter(){
     // filter our data
@@ -68,8 +81,11 @@ export class InboxGridComponent implements OnInit {
     this.tickets = this.temp;
   }
   onSelect({ selected }) {
-    if(selected.length>0){
+    if(selected.length>0 && selected.length<2){
       this.isEdit = true;
+      this.isDel  = true;
+    }else if(selected.length>1){
+      this.isEdit = false;
       this.isDel  = true;
     }else if(selected.length==0){
       this.isEdit = false;
@@ -89,5 +105,10 @@ export class InboxGridComponent implements OnInit {
     }
   }
   
+  onUpdate(event){
+    this.loading = true;
+    this.loadAll()
+    this.modalReference.close()
+  }
 
 }

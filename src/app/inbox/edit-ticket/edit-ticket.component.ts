@@ -6,7 +6,6 @@ import { DepartmentService } from '../../admin/shared/services/department.servic
 import { ClientService } from '../../admin/shared/services/client.service'
 import { PriorityService } from '../../admin/shared/services/priority.service'
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
-import { ToastrService } from 'ngx-toastr';
 @Component({
 	selector: 'edit-ticket',
 	templateUrl: './edit-ticket.component.html',

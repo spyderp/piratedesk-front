@@ -7,6 +7,11 @@ $padding-row: .3rem 1.2rem
 		border-bottom: 1px solid rgba(44, 45, 51, 0.58)
 		.datatable-body-cell
 			padding: $padding-row
+		&:hover, &:hover .datatable-row-group
+			background-color: #eee
+			transition-property: background
+			transition-duration: .3s
+			transition-timing-function: linear     
 	.datatable-header 
 		border-bottom: $header
 		border-top: $header
@@ -21,7 +26,37 @@ $padding-row: .3rem 1.2rem
 .striped
 	.datatable-row-odd
 		background: rgba(236,236,236,1);
-
+.datatable-body
+	.progress-linear 
+		display: block
+		position: relative
+		width: 100%
+		height: 5px
+		padding: 0
+		margin: 0
+		position: absolute
+		.container 
+			background-color: rgb(170,209,249)
+			display: block
+			height: 5px
+			margin: 0 0
+			overflow: hidden
+			padding: 0
+			position: relative
+			transform: translate(0,0) scale(1,1)
+			width: 100%
+			max-width: none
+			.bar 
+				transition: all .2s linear
+				animation: query .8s infinite cubic-bezier(.39,.575,.565,1)
+				transition: transform .2s linear
+				background-color: rgb(16,108,200)
+				position: absolute
+				left: 0
+				top: 0
+				bottom: 0
+				width: 100%
+				height: 5px
 
 .datatable-body-row.row-info, .datatable-body-row.row-warning, .datatable-body-row.row-orange, .datatable-body-row.row-danger
   border-bottom: 2px solid
@@ -33,3 +68,11 @@ $padding-row: .3rem 1.2rem
   border-color: $orange
 .datatable-body-row.row-danger
   border-color: $red  
+
+@keyframes query 
+  0% 
+    opacity: 1
+    transform: translateX(35%) scale(.3, 1)
+  100% 
+    opacity: 0
+    transform: translateX(-50%) scale(0, 1)

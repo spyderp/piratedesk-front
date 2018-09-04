@@ -1,27 +1,3 @@
 <navbar ></navbar>
-<ngb-tabset #tabInbox="ngbTabset" >
-  <ngb-tab title="Bandeja">
-    <ng-template ngbTabContent>
-  	<inbox-grid (edit)="setTabEdit($event)"></inbox-grid>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab *ngFor="let row of tabsMenu; let index=index" >
-    <ng-template ngbTabTitle>
-            <span>{{ row.title }} </span>
-            <span
-                class="close" style='margin-left:20px'
-                (click)="onCloseTab(index,$event)">
-                &times;
-            </span>
-        </ng-template>
-    <ng-template ngbTabContent>
-    	<add-ticket *ngIf="row.type=='add'"></add-ticket>
-    	<edit-ticket *ngIf="row.type=='edit'" [ticket]="row.ticket"></edit-ticket> 
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab [disabled]="true" >
-      <ng-template ngbTabTitle >
-        <a (click)="setTabAdd(tabInbox)" ngbPopover="crear nuevo caso" triggers="mouseenter:mouseleave" ><i class="fa fa-plus"></i></a>
-      </ng-template>
-  </ngb-tab>
-</ngb-tabset>
+<inbox-grid (edit)="setTabEdit($event)"></inbox-grid>
+
