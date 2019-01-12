@@ -12,6 +12,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
 import { AdminModule } from '../admin/admin.module';
+import { SharedModule } from '../shared/shared.module';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentsService } from './shared/services/comments.service'
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,9 +25,10 @@ import { AdminModule } from '../admin/admin.module';
     NgxDatatableModule,
     FormsModule,
     NgbModule,
-    AdminModule
+    AdminModule,
+    SharedModule
   ],
-  declarations: [InboxComponent, InboxGridComponent, AddTicketComponent, EditTicketComponent],
-  providers: [TicketService],
+  declarations: [InboxComponent, InboxGridComponent, AddTicketComponent, EditTicketComponent, CommentsComponent],
+  providers: [TicketService, CommentsService],
 })
 export class InboxModule { }

@@ -74,10 +74,9 @@
 		<div id="bodyContent" class="col-lg-10" >
 		<div class="container-fluid bg-white mt-3 pb-2 border">
 			<h1>Bandeja</h1>
-			<div class="text-right datagridAction">
+			<div class="text-right datagridAction pb-1">
 				<button  class="btn btn-success" (click)="onAdd(content)"><i class="fa fa-plus " aria-hidden="true"></i> </button>
-				<button class="btn btn-info"  [disabled]="!isEdit" (click)="onEdit()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </button>
-				<button *ngIf="del" class="btn btn-danger" [disabled]="!isDel" (click)="onDel()"><i class="fa fa-times-circle " aria-hidden="true"></i> </button>
+				<button class="btn btn-danger" [disabled]="!isDel" (click)="onDel()"><i class="fa fa-times-circle " aria-hidden="true"></i> </button>
 			</div>
 			<ngx-datatable
 				[rows]="tickets"
@@ -102,6 +101,7 @@
 				[checkboxable]="true"
 				>
 				</ngx-datatable-column> 
+				
 	   <ngx-datatable-column name="#" prop="id" >
       	<ng-template let-value="value" ngx-datatable-cell-template >
            <div class="text-center"> {{value | number:'3.0' }}</div>
@@ -118,7 +118,7 @@
            <div class="text-center"> {{value}}</div>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Creado" prop="creado" >
+      <ngx-datatable-column name="Creado" prop="creado" [comparator]="sortDate" >
       	<ng-template let-value="value" ngx-datatable-cell-template >
            <div class="text-center"> {{value | date }}</div>
         </ng-template>
@@ -128,6 +128,19 @@
            <div class="text-center h5" > <span [ngClass]="{'badge-success':value.id==1,'badge-info':value.id==2,'badge-warning':value.id==3,'badge-orange':value.id==4,'badge-danger':value.id==5}" class="badge ">{{value.descripcion}}</span></div>
           </ng-template>
       </ngx-datatable-column> 
+      <ngx-datatable-column
+		[width]="80"
+		[sortable]="false"
+		[canAutoResize]="false"
+		[draggable]="false"
+		[resizeable]="false"
+		name=""
+		prop="id"
+		>
+		<ng-template let-value="value" ngx-datatable-cell-template >
+			<div class="text-center"><button class="btn btn-primary btn-sm" (click)="onEdit(value)">Ver</button>	</div>
+		</ng-template>
+	</ngx-datatable-column> 
 </ngx-datatable>
 		</div>
 		</div>

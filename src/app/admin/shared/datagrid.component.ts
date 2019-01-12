@@ -14,6 +14,7 @@ export class DatagridComponent implements OnInit {
   @Input() column = [];
   @Input() selected = [];
   @Input() privilege = [];
+  @Input() loading:boolean = false;
   @Output() add = new EventEmitter();
   @Output() edit = new EventEmitter();
   @Output() del = new EventEmitter();
@@ -39,9 +40,9 @@ export class DatagridComponent implements OnInit {
   onAdd(){
     this.add.emit(true);
   }
-  onEdit(){
-    this.isEdit = false;
-    this.edit.emit(this.selected);
+  onEdit(id){
+    let select = this.data.filter(e=>{return e.id==id})
+    this.edit.emit(select);
     this.selected = [];
   }
   onDel(){

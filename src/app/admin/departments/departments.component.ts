@@ -9,13 +9,14 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 	templateUrl: './departments.component.html',
 })
 export class DepartmentsComponent implements OnInit {
-	modalReference;
 	closeResult: string;
-	private departments:Department[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private list=[];
-	private model:Department = new Department();
+	departments:Department[]=[];
+	formBtnLabel:string;
+	formTitle:string;
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Department = new Department();
 	privi =  localStorage.getItem('currentUser');
 	selected = [];
 	col = [
@@ -34,7 +35,7 @@ export class DepartmentsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll({ offset: 0 });
 		this.loadList();
 		this.loader.stop('appLoader')
@@ -101,6 +102,7 @@ export class DepartmentsComponent implements OnInit {
 	}
 	loadAll(pageInfo){
 		this.departmentService.getAll().subscribe(data => { this.departments = data; 	});
+		this.loading = false;
 	}
 	private loadList(){
 		this.departmentService.getList().subscribe(data => { this.list = data; });

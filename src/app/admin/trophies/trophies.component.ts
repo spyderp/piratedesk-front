@@ -9,13 +9,14 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   templateUrl: './trophies.component.html',
 })
 export class TrophiesComponent implements OnInit {
-private rowsData: Trophy[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:Trophy = new Trophy();;
-	private list=[];
-	modalReference;
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Trophy = new Trophy();;
+	rowsData: Trophy[]=[];
 	selected = [];
 	col = [
 		{ name:'Descripcion', prop:'descripcion'},
@@ -35,7 +36,7 @@ private rowsData: Trophy[]=[];
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
 	}
@@ -97,6 +98,7 @@ private rowsData: Trophy[]=[];
 	}
 	private loadAll(){
 		this.trophyService.getAll().subscribe(data => { this.rowsData = data });
+		this.loading = false;
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear Estado':'Editar Estado';

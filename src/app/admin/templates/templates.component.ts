@@ -11,12 +11,13 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 })
 export class TemplatesComponent implements OnInit {
 private rowsData: Template[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:Template = new Template();;
-	private list=[];
-	modalReference;
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Template = new Template();;
 	selected = [];
 	col = [
 		{ name:'Descripcion', prop:'descripcion'},
@@ -35,7 +36,7 @@ private rowsData: Template[]=[];
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
 	}
@@ -95,6 +96,7 @@ private rowsData: Template[]=[];
 	}
 	private loadAll(){
 		this.templateService.getAll().subscribe(data => { this.rowsData = data });
+		this.loading = false;
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear Estado':'Editar Estado';

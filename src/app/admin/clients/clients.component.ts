@@ -10,13 +10,14 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   templateUrl: './clients.component.html',
 })
 export class ClientsComponent implements OnInit {
-	modalReference;
-	private clients: Client[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:Client = new Client();;
-	private list=[];
+	clients: Client[]=[];
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Client = new Client();;
 	selected = [];
 	col = [
 		{ name:'Nombre', prop:'nombre'},
@@ -35,7 +36,7 @@ export class ClientsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
 	}
@@ -96,6 +97,7 @@ export class ClientsComponent implements OnInit {
 	private loadAll(){
 		this.clientService.getAll().subscribe(data => { this.clients = data; });
 		this.clientService.getAssoc().subscribe(data => { this.list = data; });
+		this.loading = false;
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear departamento':'Editar departamento';

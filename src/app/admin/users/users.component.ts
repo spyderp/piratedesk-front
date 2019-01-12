@@ -11,14 +11,15 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 	styleUrls: ['./users.component.sass'],
 })
 export class UsersComponent implements OnInit {
-	private items:any = []
-	private users:User[]=[];
-	private model:User =  new User();
-	private active:Array<any>=[];
-	private formTitle:string;
-	private formBtnLabel:string;
-	private value:any = {};
+	active:Array<any>=[];
+	formBtnLabel:string;
+	formTitle:string;
+	items:any = []
+	loading: boolean = false
 	modalReference;
+	model:User =  new User();
+	users:User[]=[];
+	value:any = {};
 	s = [];
 	col = [
 		{ name:'Usuario', prop:'username'},
@@ -39,7 +40,7 @@ export class UsersComponent implements OnInit {
 	}
 
 	 public ngOnInit():any {
-	 	this.loader.start('appLoader');
+	 	this.loading = true;
 		this.loadAllUsers();
 		this.userService.associations().subscribe(
 			data=>{
@@ -104,7 +105,7 @@ export class UsersComponent implements OnInit {
 	}
 	private loadAllUsers(){
 		this.userService.getAll().subscribe(data => { this.users = data;});
-		
+		this.loading = false;
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear usuario':'Editar usuario';

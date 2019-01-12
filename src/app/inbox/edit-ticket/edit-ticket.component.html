@@ -1,3 +1,4 @@
+<navbar ></navbar>
 <div class="container-fluid">
 	<div class="row">
 		<div id="sidebar" class="col-lg-2 bg-dark sidebar py-2" >
@@ -16,50 +17,129 @@
 			<h4 class="header mb-2"> Tópicos Relacionados</h4>
 		</div>
 		<div class="col-lg-10" >
-			<div class="container-fluid bg-white mt-3 py-2 border">	
-			<div class="row">
-				<h5 class=" col-12  text-secondary">Caso #{{model.id | number:'3.0'}}</h5>
-				<h2 class="col-12 pb-2">{{model.titulo}}</h2>
-				<div class="col-3">
-					<span class="text-secondary">Prioridad:</span> <br>
-					<span [ngClass]="{'badge-success':model.priorities.id==1,'badge-info':model.priorities.id==2,'badge-warning':model.priorities.id==3,'badge-orange':model.priorities.id==4,'badge-darger':model.priorities.id==5}" class="badge ">{{model.priorities.descripcion}}</span>
+			<div class="container-fluid bg-white mt-3 py-2 border" *ngIf="!formEdit">	
+				<div class="row">
+					<h5 class=" col-12  text-secondary">Caso #{{model.id | number:'3.0'}}</h5>
+					<h2 class="col-12 pb-2">{{model.titulo}}</h2>
+					<div class="col-3">
+						<span class="text-secondary">Prioridad:</span> <br>
+						<span class="badge-pill" [ngClass]="{'badge-success':prioritiesId == 1,'badge-info':prioritiesId==2,'badge-warning':prioritiesId==3,'badge-orange':prioritiesId==4,'badge-danger':prioritiesId==5}" class="badge ">{{pDescription}}</span>
+					</div>
+					<div class="col-3">
+						<span class="text-secondary">Estado:</span> <br>
+						<span *ngIf="!assigment && !edit">{{eDescription}}</span>
+						<span *ngIf="assigment && edit">
+							<select  (change)="onState($event.target.value, $event)">
+								<option  [value]="item.id" [selected]="changeState==item.id" *ngFor="let item of states" >{{item.descripcion}}</option>
+							</select>
+						</span>
+					</div>
+					<div class="col-3">
+						<span class="text-secondary">Departamento:</span> <br>
+						{{dDescription}}
+					</div>
+					<div class="col-3">
+						<span class="text-secondary">Creado por:</span> <br>
+						<span *ngIf="model.user_id == 1">{{model.users.username}}</span>
+						<span *ngIf="model.user_id > 1">{{model.users.nombre}} {{model.users.apellido}}/{{model.users.username}}</span>
+					</div>
+					<h5 class="font-weight-bold col-12 py-2">Datos del solicitante:</h5>
+					<div class="col-3" *ngIf="model.client_id > 1">
+						<span class="text-secondary">Client:</span><br>
+						{{model.clients.nombre}}
+					</div>
+					<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
+						<span class="text-secondary">Correo:</span><br>
+						{{model.email}}
+					</div>
+					<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
+						<span class="text-secondary">Teléfono:</span><br>
+						{{model.telefono}}
+					</div>
+					<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
+						<span class="text-secondary">Célular:</span><br>
+						{{model.celular}}
+					</div>
+					<h5 class="font-weight-bold col-12 py-2">Descripción:</h5>
+					<div class="col-12 py-2"  [innerHTML]="model.content">
+					</div>
+					<h5 class="font-weight-bold col-12 py-2">Archivos:</h5>
+					<dropzone *ngIf="assigment && edit" [config]="config" [message]="'Presione o arrastre el archivo a adjuntar'" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></dropzone>
+					<div *ngIf="model.files && model.files.length>0" class="col-12 col-sm-6">
+					<table class="table">
+						<tr>
+							<th>Nombre</th>
+							<th>Tipo</th>
+							<th>Tamaño</th>
+							<th>Creado</th>
+						</tr>
+						<tr *ngFor="let item of model.files">
+							<td><a href="{{path}}/{{item.filename}}" target="_blank">{{item.filename}}</a></td>
+							<td>{{item.type}}</td>
+							<td>{{item.size}}</td>
+							<td>{{item.creado | date}}</td>
+						</tr>
+					</table>
+					</div>
+					<h6 *ngIf="model.files && model.files.length==0" class="col-12">SIN ARCHIVOS</h6>
 				</div>
-				<div class="col-3">
-					<span class="text-secondary">Estado:</span> <br>
-					{{model.states.descripcion}}
-				</div>
-				<div class="col-3">
-					<span class="text-secondary">Departamento:</span> <br>
-					{{model.departments.descripcion}}
-				</div>
-				<div class="col-3">
-					<span class="text-secondary">Creado por:</span> <br>
-					<span *ngIf="model.user_id == 1">{{model.users.username}}</span>
-					<span *ngIf="model.user_id > 1">{{model.users.nombre}} {{model.users.apellido}}/{{model.users.username}}</span>
-				</div>
-				<h5 class="font-weight-bold col-12 py-2">Datos del solicitante:</h5>
-				<div class="col-3" *ngIf="model.client_id > 1">
-					<span class="text-secondary">Client:</span><br>
-					{{model.clients.nombre}}
-				</div>
-				<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
-					<span class="text-secondary">Correo:</span><br>
-					{{model.email}}
-				</div>
-				<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
-					<span class="text-secondary">Teléfono:</span><br>
-					{{model.telefono}}
-				</div>
-				<div [ngClass]="{'col-4':model.client_id==1,'col-3':model.client_id > 1}">
-					<span class="text-secondary">Célular:</span><br>
-					{{model.celular}}
-				</div>
-				<h5 class="font-weight-bold col-12 py-2">Descripción:</h5>
-				<div class="col-12 py-2"  [innerHTML]="model.content">
-				</div>
-				<h5 class="font-weight-bold col-12 py-2">Archivos:</h5>
 			</div>
-			</div>
+			<comments [assigment]="assigment" [ticketId]="ticketId"></comments>
+			<!-- formulario de edicion -->
+			<div class="container-fluid bg-white mt-3 py-2 border" *ngIf="formEdit">
+				<h1 class="pb-2">Nuevo Caso</h1>
+				<form  #sendTicketForm="ngForm"  (ngSubmit)="sendTicketForm.form.valid && onSubmit()" class="row">
+					<div class="form-group col-12"  >
+						<input autocomplete="off"  [(ngModel)]="model.titulo" type="text" class=" form-control"   name="titulo"   required placeholder="Titulo">
+					</div>
+					<div class="form-group col-4 "   >
+						<label for="">Estado:</label>
+						<select [(ngModel)]="model.state_id" name="estado" required>
+							
+							<option value="{{ row.id }}" *ngFor="let row of states" >{{row.descripcion}}</option>
+						</select>
+					</div>
+					<div class="form-group col-4 "   >
+						<label for="">Departamento:</label>
+						<select [(ngModel)]="model.department_id" name="departamento" required>
+							
+							<option value="{{ row.id }}" *ngFor="let row of department" >{{row.text}}</option>
+						</select>
+					</div>
+					<div class="form-group col-4 "   >
+						<label for="">Cliente:</label>
+						<select [(ngModel)]="model.client_id" name="cliente" required (change)="onSelectClient($event.target.value)">
+							
+							<option value="{{ row.id }}" *ngFor="let row of client" >{{row.nombre}}</option>
+						</select>
+					</div>
+					<div class="form-group col-sm-4 col-12" [class.has-danger]="correo.invalid && correo.touched" >
+						<input autocomplete="off" [class.form-control-danger]="correo.invalid && correo.touched"  [(ngModel)]="model.email" type="email" class=" form-control"   name="email"  required placeholder="Correo" #correo="ngModel">
+					</div>
+					<div class="form-group col-sm-4 col-12"  >
+						<input autocomplete="off"   [(ngModel)]="model.telefono" type="text" class=" form-control"   name="telefono"  placeholder="Teléfono">
+					</div>
+					<div class="form-group col-sm-4 col-12"  >
+						<input   autocomplete="off" [(ngModel)]="model.celular" type="text" class=" form-control"   name="celular"  placeholder="Célular">
+					</div>
+					
+					<div class="form-group col-12" [class.has-danger]="cont.invalid && cont.touched" >
+						<quill-editor #cont="ngModel" [style]="{height: '200px'}" [(ngModel)]="model.content" name="platilla"></quill-editor>
+					</div>
+					<div class="form-group col-12 "   >
+						<label for="">Prioridad:</label>
+						<select [(ngModel)]="model.priority_id" name="prioridad" required>
+							
+							<option value="{{ row.id }}" *ngFor="let row of priority" >{{row.text}}</option>
+						</select>
+					</div>
+					<hr>
+					<div class="col-12">
+						<button class="btn btn-lg btn-aqua"  [disabled]="!sendTicketForm.form.valid">Crear nuevo caso</button>
+						<button class="btn btn-lg btn-aqua" (click)="onCancelEdit()">Cancelar</button>
+					</div>
+				</form>	
+			</div>	
 		</div>
 	</div>
 </div>

@@ -11,14 +11,15 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   templateUrl: './faqs.component.html',
 })
 export class FaqsComponent implements OnInit {
-	modalReference;
-	private rowsData: Faq[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:Faq = new Faq();
-	private list=[];
-	private category:any[] = []
+	category:any[] = []
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Faq = new Faq();
+	rowsData: Faq[]=[];
 	selected = [];
 	col = [
 		{ name:'Titulo', prop:'title'},
@@ -39,7 +40,7 @@ export class FaqsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
 	}
@@ -101,6 +102,7 @@ export class FaqsComponent implements OnInit {
 	private loadAll(){
 		this.faqService.getAll().subscribe(data => { this.rowsData = data });
 		this.categoryService.getAll().subscribe(data => { this.category = data });
+		this.loading = false
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear Faq':'Editar Faq';

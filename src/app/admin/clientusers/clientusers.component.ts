@@ -12,15 +12,16 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   styleUrls: ['./clientusers.component.sass']
 })
 export class ClientusersComponent implements OnInit {
-  private items:any = []
-	private users:User[]=[];
-	private model:User =  new User();
-	private active:Array<any>=[];
-	private formTitle:string;
-	private formBtnLabel:string;
-	private value:any = {};
+	active:Array<any>=[];
+	formBtnLabel:string;
+	formTitle:string;
+	loading: boolean = false
 	modalReference;
+	model:User =  new User();
 	s = [];
+	users:User[]=[];
+	value:any = {};
+  	items:any = []
 	col = [
 		{ name:'Usuario', prop:'username'},
 		{ name:'Nombre', prop:'nombre'},
@@ -37,7 +38,7 @@ export class ClientusersComponent implements OnInit {
   ) { }
 
    public ngOnInit():any {
-	 	this.loader.start('appLoader');
+	 	this.loading = true;
 		this.loadAllUsers();
 	}
 	onDelete(event){
@@ -111,6 +112,7 @@ export class ClientusersComponent implements OnInit {
 		this.clientService.getList().subscribe(data=>{
 				this.items =  data;
 		});
+		this.loading = false;
 		this.loader.stop('appLoader');
 	}
 	private loadForm(add:boolean=true){

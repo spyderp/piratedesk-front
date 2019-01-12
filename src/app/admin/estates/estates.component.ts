@@ -9,13 +9,14 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   templateUrl: './estates.component.html',
 })
 export class EstatesComponent implements OnInit {
-	modalReference;
-	private rowsData: Estate[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:Estate = new Estate();;
-	private list=[];
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Estate = new Estate();;
+	rowsData: Estate[]=[];
 	selected = [];
 	col = [
 		{ name:'Descripcion', prop:'descripcion'},
@@ -29,22 +30,23 @@ export class EstatesComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
+		this.loading = false;
 	}
 	onDelete(event){
 		
 		let id = event[0].id;
 		
-		let index:number = this.rowsData .map((element)=>{return element.id}).indexOf(id);
+		let index:number = this.rowsData.map((element)=>{return element.id}).indexOf(id);
 		delete this.rowsData [index];
 		this.estateService.delete(id).subscribe();
 		
 	}
 	onEdit(event, content){
 		this.loadForm(false);
-		this.model = this.rowsData .filter((client: Estate) => client.id === event[0].id)[0];
+		this.model = this.rowsData.filter((client: Estate) => client.id === event[0].id)[0];
 		this.modalReference = this.modalService.open(content)
 	}
 	onLoadForm(event,content){

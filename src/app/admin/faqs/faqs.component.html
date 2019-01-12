@@ -1,11 +1,10 @@
 <div>
 	<h1>Listado de Preguntas Frecuentes</h1>
-	
-
 			<datagrid  
 			[data]="rowsData" 
 			[selected]="selected" 
 			[column]="col" 
+			[loading]="loading"
 			(add)="onLoadForm($event, content)" 
 			(edit)="onEdit($event, content)"
 			(del)="onDelete($event)"

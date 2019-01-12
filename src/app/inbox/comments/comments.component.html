@@ -1,0 +1,15 @@
+<div class="container-fluid bg-white mt-3 py-2 border">
+	<div class="row">
+		<div class="col-11 form-group" *ngIf="assigment">
+			<textarea class="form-control" [ngModel]="messageContent" ></textarea>
+		</div>
+		<div class="col-1"><button class="btn btn-success btn-lg" (click)="onSend()">Enviar</button></div>
+	</div>
+	<div class="commentBox p-2">
+		<ul class="comment">
+			<li class="border bg-white p-1" *ngFor="let item of messages">item.message</li>
+			<li class="border bg-white p-1"> era se una vez una linda princesa</li>
+		</ul>
+	</div>
+</div>
+

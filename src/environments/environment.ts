@@ -5,6 +5,5 @@
 
 export const environment = {
   production: false,
-  apiServer: 'http://192.168.32.143:5000',
-  apiUpload:'http://192.168.32.143:5000/files'
+  apiServer: 'http://192.168.32.145:5000',
 };

@@ -9,13 +9,14 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   templateUrl: './categoryfaqs.component.html',
 })
 export class CategoryfaqsComponent implements OnInit {
-	modalReference;
-	private rowsData: CategoryFaq[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:CategoryFaq = new CategoryFaq();
-	private list=[];
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:CategoryFaq = new CategoryFaq();
+	rowsData: CategoryFaq[]=[];
 	selected = [];
 	col = [
 		{ name:'Nombre', prop:'name'},
@@ -30,7 +31,7 @@ export class CategoryfaqsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader');
 	}
@@ -91,6 +92,7 @@ export class CategoryfaqsComponent implements OnInit {
 	}
 	private loadAll(){
 		this.categoryFaqService.getAll().subscribe(data => { this.rowsData = data });
+		this.loading = false;
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear Estado':'Editar Estado';

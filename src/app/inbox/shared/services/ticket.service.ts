@@ -21,8 +21,8 @@ export class TicketService extends Rest {
 		return this.http.get<Ticket[]>(this.url+'/tickets'+filtros);
 	}
 
-	getById(id: number) {
-		return this.http.get(this.url+'/tickets/' + id);
+	getById(id: number):Observable<Ticket>{
+		return this.http.get<Ticket>(this.url+'/tickets/' + id);
 	}
 
 	getList() {
@@ -34,7 +34,7 @@ export class TicketService extends Rest {
 	}
 
 	update(ticket: Ticket):Observable<Ticket> {
-		return this.http.put<Ticket>(this.url+'/tickets' + ticket.id, ticket);
+		return this.http.put<Ticket>(this.url+'/tickets/' + ticket.id, ticket);
 	}
 
 	delete(id: number) {

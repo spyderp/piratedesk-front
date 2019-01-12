@@ -33,6 +33,8 @@ export class AuthGuardService implements CanActivate {
 
    private __privigele(path:string):boolean{
       let user = this.auth.getUser();
+      let result = path.split(';')
+      path = result[0]
       if(user.search(path)>0){
         return true;
       }else{

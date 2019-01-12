@@ -11,7 +11,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { environment} from '../../environments/environment';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
  // Change this to your upload POST address:
-  url: environment.apiUpload,
+  url: environment.apiServer+'/files',
   maxFilesize: 50,
   acceptedFiles: 'image/*'
 };

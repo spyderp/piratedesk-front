@@ -28,4 +28,16 @@ export class Ticket {
 	user_id:number
 	priority_id:number
 	assigments:any[]
+	files:any[]
+}
+
+export enum Event {
+    CONNECT = 'connect',
+    DISCONNECT = 'disconnect',
+    TYPING = 'typing'
+}
+
+export class Message {
+	username:string
+	message:string
 }

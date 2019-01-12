@@ -10,17 +10,18 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 })
 export class FestivesComponent implements OnInit {
 	editing = {};
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
 	isDel = false;
+	list=[];
+	loading: boolean = false
 	modalReference;
+	model:Festive = new Festive();
+	modelf:any;
+	rowsData: Festive[]=[];
 	selected = []
 	temp = [];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private list=[];
-	private model:Festive = new Festive();
-	private modelf:any;
-	private rowsData: Festive[]=[];
 	constructor(
 		private toastyService:ToastrService, 
 		private festiveService: FestiveService,
@@ -33,7 +34,7 @@ export class FestivesComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
 	}
@@ -117,6 +118,7 @@ export class FestivesComponent implements OnInit {
 		this.festiveService.getAll().subscribe(data => { 
 			this.temp = [...data];
 			this.rowsData = data });
+		this.loading = false;
 	}
 
 }

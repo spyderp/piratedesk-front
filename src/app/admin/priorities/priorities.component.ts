@@ -9,13 +9,14 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
   templateUrl: './priorities.component.html',
 })
 export class PrioritiesComponent implements OnInit {
-	private rowsData: Priority[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private model:Priority = new Priority();;
-	private list=[];
-	modalReference;
+	formBtnLabel:string;
+	formTitle:string;
 	isDataLoaded = false
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Priority = new Priority();;
+	rowsData: Priority[]=[];
 	selected = [];
 	col = [
 		{ name:'Descripcion', prop:'descripcion'},
@@ -31,7 +32,7 @@ export class PrioritiesComponent implements OnInit {
 	) { 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.loader.stop('appLoader')
 	}
@@ -92,6 +93,7 @@ export class PrioritiesComponent implements OnInit {
 	}
 	private loadAll(){
 		this.priorityService.getAll().subscribe(data => { this.rowsData = data });
+		this.loading = false;
 	}
 	private loadForm(add:boolean=true){
 		this.formTitle = (add)?'Crear Estado':'Editar Estado';

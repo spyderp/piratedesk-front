@@ -4,6 +4,7 @@ import { TicketService } from  '../shared/services/ticket.service'
 import { EstateService } from '../../admin/shared/services/estate.service';
 import { DepartmentService } from '../../admin/shared/services/department.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Router} from '@angular/router';
 @Component({
   selector: 'inbox-grid',
   templateUrl: './inbox-grid.component.html',
@@ -20,12 +21,13 @@ export class InboxGridComponent implements OnInit {
   temp = [];
   tickets:Ticket[]=[];
   loading: boolean = false
-  private modalReference
+  modalReference
   constructor(
-    private ticketService:TicketService,
     private departmentService:DepartmentService,
     private estateService:EstateService,
-    private modalService: NgbModal 
+    private modalService: NgbModal,
+    private router: Router,
+    private ticketService:TicketService
   ) { }
 
   ngOnInit() {
@@ -57,6 +59,15 @@ export class InboxGridComponent implements OnInit {
     this.departmentService.getList().subscribe(data=>{ this.departamentos=data; })
      this.estateService.getAll().subscribe(data=>{ this.estados=data; })
   }
+  /**
+   * [sortDate description] Permite ordenar la fecha
+   */
+  sortDate(valueA, valueB, rowA, rowB, sortDirection) {
+    let a = new Date(valueA);
+    let b = new Date(valueB);
+    return a>b ? -1 : a<b ? 1 : 0;
+  }
+
   onAdd(content){
     this.modalReference = this.modalService.open(content,{size:'lg'})
   }
@@ -92,15 +103,27 @@ export class InboxGridComponent implements OnInit {
       this.isDel  = false;
     }
   }
-  onEdit(){
+  onEdit(id){
     this.isEdit = false;
-    this.edit.emit(this.selected);
+    this.router.navigate(['/inbox/edit',{id:id}]);
     this.selected = [];
   }
   onDel(){
     let msg = this.selected.length>1?'Esta seguro que desea Borrar los registros seleccionados':'Esta seguro que desea Borrar el registro seleccionado';
     if(confirm(msg)){
-      //this.del.emit(this.selected);
+      let index:number
+      if(this.selected.length==1){
+        index = this.tickets.map((element)=>{return element.id}).indexOf(this.selected[0].id);
+        delete this.tickets[index];
+        this.ticketService.delete(this.selected[0].id).subscribe()
+      }else{
+        this.selected.forEach(e=>{
+          index = this.tickets.map((element)=>{return element.id}).indexOf(e.id);
+          delete this.tickets[index];
+          this.ticketService.delete(e.id).subscribe()
+        });
+      }
+      
       this.isDel  = false;
     }
   }

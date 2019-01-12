@@ -10,19 +10,20 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 })
 export class CalendarsComponent implements OnInit {
 	closeResult: string;
-	modalReference;
-	private items:any = [];
-	private rowsData: Calendar[]=[];
-	private formBtnLabel:string;
-	private formTitle:string;
-	private daysWeek = []
-	private model:Calendar = new Calendar();;
-	private list=[];
+	daysWeek = []
+	entrada;
+	formBtnLabel:string;
+	formTitle:string;
 	invento = [1]
 	isDataLoaded = false
-	selected = [];
-	entrada;
+	items:any = [];
+	list=[];
+	loading: boolean = false
+	modalReference;
+	model:Calendar = new Calendar();;
+	rowsData: Calendar[]=[];
 	salida;
+	selected = [];
 	col = [
 		{ name:'Descripcion', prop:'descripcion'},
 		{ name:'D. Semana', prop:'dias'},
@@ -39,7 +40,7 @@ export class CalendarsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loader.start('appLoader');
+		this.loading = true;
 		this.loadAll();
 		this.calendarService.associations().subscribe(data => { this.items =  data; });
 		this.loader.stop('appLoader')
@@ -134,6 +135,7 @@ export class CalendarsComponent implements OnInit {
 
 	private loadAll(){
 		this.calendarService.getAll().subscribe(data => { this.rowsData = data });
+		this.loading = false;
 		
 	}
 	private loadForm(add:boolean=true){
