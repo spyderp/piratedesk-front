@@ -1,27 +1,49 @@
 # PiratedeskFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
+Mesa de ayuda de software libre.  (FRONTEND)
+Debido a la necesidad de tener una opción de sofware libre que use las nuevas tendencia se ha desarrollado este proyecto. 
 
-## Development server
+Si deseas colaborar solo revisa los issue. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Caracteisticas
 
-## Code scaffolding
+ - Administración de usuarios.
+ - Manejo calendario de trabajo.
+ - Adminsitración de clientes.
+ - Admkinsitración de Departamento
+ - Manejo de caso por estados.
+ - Configurar días festivos.
+ - Gamificación
+ - Creación de plantilla para maenejo de casos. 
+ - Base de Datos de conocimiento (Knowledges DB)
+ - Bandeja de Entrada
+ - Seguimiento de caso, chat en tiempo real  
+ - Creación y administración de FAQ
+ - Configuración
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Caracteristicas técnicas
 
-## Build
+ - Creado en Angular
+ - Uso de SASS 
+ - CORS 
+ - Uso webtoken
+ - Configuración  Para acceso a **backend** RESTFULL
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Configuración 
 
-## Running unit tests
+ 1. Acceder al archivo **enviroment.ts** dentro de la carpeta *src/enviroments* y cambiar la ruta de su  **ApiServer**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+export const environment = {
+  production: false,
+  apiServer: 'http://1.1.1.1:5000', #modificar
+};
+```
+**Nota:** El archivo *enviroment.prod.ts* es la configuración del archivo para puesta en producción
 
-## Running end-to-end tests
+ 2. Inicia el servidor.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```bash
+ng serve --open
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
