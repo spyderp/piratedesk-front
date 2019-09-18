@@ -24,7 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.1.2",
     "@ng-select/ng-select": "^0.36.2",
     "@swimlane/ngx-datatable": "^11.3.2",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.7",
     "font-awesome": "^4.7.0",
     "ng-recaptcha": "^3.0.5",
