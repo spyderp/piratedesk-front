@@ -4,11 +4,11 @@ import { LoginComponent } from './core/login/login.component'
 import { ForgotPasswordComponent } from './core/forgot-password/forgot-password.component'
 
 const routes: Routes = [
-	{ path: '', loadChildren: 'app/public/public.module#PublicModule' },
-	{ path:'admin',  loadChildren: 'app/admin/admin.module#AdminModule'},
+	{ path: '', loadChildren: () => import('app/public/public.module').then(m => m.PublicModule) },
+	{ path:'admin',  loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule)},
 	{ path: 'forgot_password', component:ForgotPasswordComponent},
-	{ path:'inbox',   loadChildren: 'app/inbox/inbox.module#InboxModule'},
-	{ path:'know',   loadChildren: 'app/knowledges/knowledges.module#KnowledgesModule'},
+	{ path:'inbox',   loadChildren: () => import('app/inbox/inbox.module').then(m => m.InboxModule)},
+	{ path:'know',   loadChildren: () => import('app/knowledges/knowledges.module').then(m => m.KnowledgesModule)},
 	{ path:'login', component:LoginComponent, }
 ];
 

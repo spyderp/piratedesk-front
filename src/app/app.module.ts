@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderModule, NgxSmartLoaderService } from 'ngx-smart-loader';
 import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule, } from 'ngx-toastr';
+
 registerLocaleData(localeEs, 'es');
 @NgModule({
   declarations: [
