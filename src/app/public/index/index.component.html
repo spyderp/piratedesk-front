@@ -13,30 +13,3 @@
 			</div>
 			<div class="form-group" [class.has-danger]="correo.invalid && correo.touched" >
 				<input autocomplete="off" [class.form-control-danger]="correo.invalid && correo.touched"  [(ngModel)]="model.email" type="email" class=" form-control"   name="email"  required placeholder="Correo" #correo="ngModel">
-			</div>
-			<div class="form-group"  >
-				<input autocomplete="off"   [(ngModel)]="model.telefono" type="text" class=" form-control"   name="telefono"  placeholder="Teléfono">
-			</div>
-			<div class="form-group"  >
-				<input   autocomplete="off" [(ngModel)]="model.celular" type="text" class=" form-control"   name="celular"  placeholder="Célular">
-			</div>
-			<div class="form-group"  >
-				<input autocomplete="off"  [(ngModel)]="model.titulo" type="text" class=" form-control"   name="titulo"   required placeholder="Titulo">
-			</div>
-			<div class="form-group"   >
-				<label for="">Departamento:</label>
-				<select [(ngModel)]="model.department_id" name="departamento" required>
-					
-					<option value="{{ row.id }}" *ngFor="let row of department" >{{row.text}}</option>
-				</select>
-			</div>
-			<div class="form-group" [class.has-danger]="cont.invalid && cont.touched" >
-				<textarea #cont="ngModel" class=" form-control" [(ngModel)]="model.content" id="" cols="40" rows="5" name="content" required placeholder="Mensaje"></textarea>
-			</div>
-			<re-captcha  [(ngModel)]="captcha" name="cap" required></re-captcha>
-			<hr>
-			<button class="btn btn-lg bg-primary"  [disabled]="!sendTicketForm.form.valid">Enviar Ticket</button>
-	    </form>
-		</div></div>
-	</div>
-</div>

@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
 import { environment} from '../../environments/environment';
 @Injectable()
 export class AuthService {
@@ -16,90 +18,88 @@ export class AuthService {
 	getUser(){
 		return localStorage.getItem('current.user');
 	}
-	getRefresh(){
-		let httpOptions = {
+	getRefresh() {
+		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
 				'Authorization': 'Bearer '+localStorage.getItem('current.refresh'),
 			})
 		};
 		this.http.post(this.url+'/token/refresh', { }, httpOptions)
-        .subscribe( (data:any) => {
-            // login successful if there's a jwt token in the response
-            if (data && data.access_token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('current.token', data.access_token);
-                localStorage.setItem('current.expired', data.expired_token);
-            }
-            //return data.access_token;
-        });
-		
-		 
+				.subscribe( (data:any) => {
+						// login successful if there's a jwt token in the response
+						if (data && data.access_token) {
+								// store user details and jwt token in local storage to keep user logged in between page refreshes
+								localStorage.setItem('current.token', data.access_token);
+								localStorage.setItem('current.expired', data.expired_token);
+						}
+						// return data.access_token;
+				});
+
 	}
 
-	getToken():string{
+	getToken(): string {
 		return localStorage.getItem('current.token');
 	}
 
-	getExpired():boolean{
-		let expired = Number(localStorage.getItem('current.expired'));
+	getExpired(): boolean {
+		const expired = Number(localStorage.getItem('current.expired'));
 		return expired <= (Date.now()/1000);
 	}
 
-	
 	login(username: string, password: string) {
-		let httpOptions = {
-		  headers: new HttpHeaders({
-		    'Content-Type':  'application/json',
-		  })
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+			})
 		};
-	    return this.http.post(this.url+'/login', JSON.stringify({ username: username, password: password }), httpOptions)
-	        .map( (data:any) => {
-	            // login successful if there's a jwt token in the response
-	            if (data && data.access_token) {
-	                // store user details and jwt token in local storage to keep user logged in between page refreshes
-	                localStorage.setItem('current.user', JSON.stringify(data.user));
-	                localStorage.setItem('current.token', data.access_token);
-	                localStorage.setItem('current.refresh', data.refresh_token);
-	                localStorage.setItem('current.expired', data.expired_token);
-	            }
-	            this.refresh();
-	            return data;
-	        });
+			return this.http.post(this.url + '/login', JSON.stringify({ username: username, password: password }), httpOptions).pipe(
+					map( (data:any) => {
+							// login successful if there's a jwt token in the response
+							if (data && data.access_token) {
+									// store user details and jwt token in local storage to keep user logged in between page refreshes
+									localStorage.setItem('current.user', JSON.stringify(data.user));
+									localStorage.setItem('current.token', data.access_token);
+									localStorage.setItem('current.refresh', data.refresh_token);
+									localStorage.setItem('current.expired', data.expired_token);
+							}
+							this.refresh();
+							return data;
+					}));
 	}
 	loginPublic(client:number, username: string, password: string) {
-		let httpOptions = {
-		  headers: new HttpHeaders({
-		    'Content-Type':  'application/json',
-		  })
+		const  httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+			})
 		};
-	    return this.http.post(this.url+'/login_public', JSON.stringify({ clienteID:client,username: username, password: password }), httpOptions)
+			return this.http.post(this.url+'/login_public', JSON.stringify({ clienteID:client,username: username, password: password }), httpOptions)
 	}
 	
 	logout() {
-		let httpOptionsLogout = {
+		const httpOptionsLogout = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
 				'Authorization': 'Bearer '+localStorage.getItem('current.token'),
 			})
 		};
-		let httpOptionsRefresh = {
+		const httpOptionsRefresh = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
 				'Authorization': 'Bearer '+localStorage.getItem('current.refresh'),
 			})
 		};
 		clearInterval(this.refreshInterval);
-	    this.http.post(this.url+'/logout/access',{},httpOptionsLogout).subscribe(data=>{});
-	    this.http.post(this.url+'/logout/refresh',{},httpOptionsRefresh).subscribe(data=>{});
-	    localStorage.removeItem('current.user');
-	    localStorage.removeItem('current.token');
-	    localStorage.removeItem('current.refresh');
-	    localStorage.removeItem('current.expired');
+			this.http.post(this.url+'/logout/access',{},httpOptionsLogout).subscribe(data=>{});
+			this.http.post(this.url+'/logout/refresh',{},httpOptionsRefresh).subscribe(data=>{});
+			localStorage.removeItem('current.user');
+			localStorage.removeItem('current.token');
+			localStorage.removeItem('current.refresh');
+			localStorage.removeItem('current.expired');
 	}
 
 	private refresh(){
-		let httpOptions = {
+		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
 				'Authorization': 'Bearer '+localStorage.getItem('current.refresh'),
@@ -107,32 +107,32 @@ export class AuthService {
 		};
 		this.refreshInterval= setInterval(()=>{
 			this.http.post(this.url+'/token/refresh', { }, httpOptions)
-	        .subscribe( (data:any) => {
-	            // login successful if there's a jwt token in the response
-	            if (data && data.access_token) {
-	                // store user details and jwt token in local storage to keep user logged in between page refreshes
-	                localStorage.setItem('current.token', data.access_token);
-	                localStorage.setItem('current.expired', data.expired_token);
-	            }
-	            //return data.access_token;
-	        });
+					.subscribe( (data:any) => {
+							// login successful if there's a jwt token in the response
+							if (data && data.access_token) {
+									// store user details and jwt token in local storage to keep user logged in between page refreshes
+									localStorage.setItem('current.token', data.access_token);
+									localStorage.setItem('current.expired', data.expired_token);
+							}
+							//return data.access_token;
+					});
 		},15*60*1000);
 		 
 	}
 	forgot(email:string){
-		let httpOptions = {
-		  headers: new HttpHeaders({
-		    'Content-Type':  'application/json'
-		  })
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json'
+			})
 		};
 		return this.http.post(this.url+'/reset/password', JSON.stringify({ email: email}), httpOptions)
 	}
 
 	reset(token:string){
-		let httpOptions = {
-		  headers: new HttpHeaders({
-		    'Content-Type':  'application/json'
-		  })
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json'
+			})
 		};
 		return this.http.get(this.url+'/reset/token/'+token, httpOptions)
 	}

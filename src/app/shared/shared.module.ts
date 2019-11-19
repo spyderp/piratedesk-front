@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from './auth.service'
-import { AuthGuardService } from './auth-guard.service'
+import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
 import { ConfirmPasswordDirective } from './confirm-password.directive';
 import { ForbiddenPasswordDirective } from './forbidden-password.directive';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';

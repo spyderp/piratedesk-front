@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TicketService } from '../../inbox/shared/services/ticket.service';
-import { DepartmentService } from '../../admin/shared/services/department.service'
+// import { TicketService } from '../../inbox/shared/services/ticket.service';
+import { DepartmentService } from '../../admin/shared/services/department.service';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 import { Ticket } from '../../inbox/shared/models';
 @Component({
@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
 		private departmentService:DepartmentService,
 		private loader:NgxSmartLoaderService,
 		private notificationService:ToastrService,
-		private ticketService:TicketService
+		// private ticketService:TicketService
 	) {	 }
 
 	ngOnInit() {
@@ -27,21 +27,21 @@ export class IndexComponent implements OnInit {
 		this.loader.stop('appLoader')
 	}
 	onSubmit(){
-      	let isLogin = sessionStorage.getItem('public.isLogin')
+		const isLogin = sessionStorage.getItem('public.isLogin')
 		if(isLogin!='true'){
-			this.model.user_id = 1
-			this.model.client_id = 1
+			this.model.user_id = 1;
+			this.model.client_id = 1;
 		}else{
-			let userId:string = sessionStorage.getItem('public.userId')
-      		let clientId:string = sessionStorage.getItem('public.clientId')
-      		this.model.user_id = parseInt(userId)
+			const userId: string = sessionStorage.getItem('public.userId')
+			const clientId: string = sessionStorage.getItem('public.clientId')
+			this.model.user_id = parseInt(userId)
 			this.model.client_id = parseInt(clientId)
 		}
 		this.model.priority_id = 1
 		this.lastContent = this.model.content
 		this.model.content = '<p><strong>Nombre del soliticitante</strong>:'+this.nombretemp+'</p>'+'<p>'+this.model.content+'</p>'
 		this.loader.start('appLoader')
-		this.ticketService.create(this.model).subscribe(
+		/* this.ticketService.create(this.model).subscribe(
 			data=>{
 				this.notificationService.success('Se envio su solicitud')
 				this.model = new Ticket()
@@ -54,8 +54,7 @@ export class IndexComponent implements OnInit {
 				this.model.content = this.lastContent
 				this.loader.stop('appLoader')
 			}
-		);
+		);*/
 
 	}
-	
 }

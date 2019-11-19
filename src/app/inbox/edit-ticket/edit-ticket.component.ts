@@ -41,7 +41,7 @@ export class EditTicketComponent implements OnInit {
 	tempContent:string = '';
 	ticketId:string;
 	private __currentUser:any;
-	@ViewChild(DropzoneComponent) componentRef?: DropzoneComponent;
+	@ViewChild(DropzoneComponent, { static: false }) componentRef?: DropzoneComponent;
 	constructor(
 		private clientService:ClientService,
 		private departmentService:DepartmentService,

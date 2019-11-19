@@ -101,3 +101,8 @@ export class User {
 	departments: 	 any[]=[];
 }
 
+export enum Role {
+	Admin = 'administrador',
+	Agent = 'agente',
+	Supervisor = 'Ssupervisor'
+}

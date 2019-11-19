@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild  } from '@ang
   styleUrls: ['./datagrid.component.sass']
 })
 export class DatagridComponent implements OnInit {
-  @ViewChild('dataGrid') dataGrid;
+  @ViewChild('dataGrid', { static: false }) dataGrid;
 	@Input() headerH:number =40;
   @Input() footerH:number =50;
   @Input() rowH:number =40;

@@ -23,7 +23,8 @@
     "import-spacing": true,
     "indent": [
       true,
-      "spaces"
+      "tabs",
+      2
     ],
     "interface-over-type-literal": true,
     "label-position": true,
@@ -90,7 +91,7 @@
     "radix": true,
     "semicolon": [
       true,
-      "always"
+      "never"
     ],
     "triple-equals": [
       true,

@@ -5,12 +5,11 @@ $border-radius-lg:       0
 $border-radius-sm:       0 
 @import assets/css/theme
 @import "node_modules/bootstrap/scss/bootstrap"
-$fa-font-path: "~font-awesome/fonts";
+$fa-font-path: "~font-awesome/fonts"
 @import "~font-awesome/scss/font-awesome"
-@import assets/css/toasty
 @import assets/css/ngxdatatable
-@import '~@swimlane/ngx-datatable/release/index.css'
-@import '~@swimlane/ngx-datatable/release/assets/icons.css'
+@import '~@swimlane/ngx-datatable/index.scss'
+@import '~@swimlane/ngx-datatable/assets/icons.css'
 @import "~@ng-select/ng-select/themes/default.theme.css"
 @import assets/css/loader
 @import "~ngx-toastr/toastr-bs4-alert"
@@ -19,35 +18,35 @@ $fa-font-path: "~font-awesome/fonts";
 body
 	background: #F1F1F1
 .card-header
-  font-weight: bold
-  color: $gray-600
-  border-bottom: #eef4d7 solid
+	font-weight: bold
+	color: $gray-600
+	border-bottom: #eef4d7 solid
 
 .modal-header
-  background: $darkAqua
-  color: $white  
+	background: $darkAqua
+	color: $white  
 .modal-header .close
-  color: #ccc
-  &:hover
-    color: $white
+	color: #ccc
+	&:hover
+		color: $white
 #sidebar
-	color: $olivo;
+	color: $olivo
 	height: 93vh
 .open>.dropdown-menu
 	display: block
 
 .toast-success, .toast-error, .toast-info,.toast-warning
-  color: $white
+	color: $white
 .toast-success
-  background-color: theme-color-level('success')
-  border: 1px solid theme-color-level('success', -2)
+	background-color: theme-color-level('success')
+	border: 1px solid theme-color-level('success', -2)
 .toast-error
-  background-color: theme-color-level('danger')
-  border: 1px solid theme-color-level('danger', -2)
+	background-color: theme-color-level('danger')
+	border: 1px solid theme-color-level('danger', -2)
 .toast-info
-  background-color: theme-color-level('info')
-  border: 1px solid theme-color-level('info', -2)
+	background-color: theme-color-level('info')
+	border: 1px solid theme-color-level('info', -2)
 .toast-warning
-  color: $black
-  background-color: theme-color-level('warning')
-  border: 1px solid theme-color-level('warning', -2)
+	color: $black
+	background-color: theme-color-level('warning')
+	border: 1px solid theme-color-level('warning', -2)

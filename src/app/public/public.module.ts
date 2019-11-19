@@ -9,11 +9,10 @@ import { FaqComponent } from './faq/faq.component';
 import { IndexComponent } from './index/index.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminModule } from '../admin/admin.module';
-import { InboxModule } from '../inbox/inbox.module';
-import { LoginPublicComponent } from './login-public/login-public.component'
-import { RecaptchaModule } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
-import { RECAPTCHA_SETTINGS,RECAPTCHA_LANGUAGE, RecaptchaSettings } from 'ng-recaptcha';
+// import { InboxModule } from '../inbox/inbox.module';
+import { LoginPublicComponent } from './login-public/login-public.component';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { RECAPTCHA_SETTINGS, RECAPTCHA_LANGUAGE, RecaptchaSettings } from 'ng-recaptcha';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,8 +21,8 @@ import { RECAPTCHA_SETTINGS,RECAPTCHA_LANGUAGE, RecaptchaSettings } from 'ng-rec
     SharedModule,
     NgbModule,
     AdminModule,
-    InboxModule,
-    RecaptchaModule.forRoot(),
+//    InboxModule,
+    RecaptchaModule,
     RecaptchaFormsModule
   ],
   declarations: [

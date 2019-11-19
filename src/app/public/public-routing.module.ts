@@ -5,12 +5,12 @@ import { FaqComponent } from './faq/faq.component';
 import { IndexComponent } from './index/index.component';
 import { PublicComponent } from './public.component';
 const routes: Routes = [
-	{ path:'', component:PublicComponent,
+	{ path: '', component: PublicComponent,
 		children:[
-			{ path:'', component:IndexComponent,},
-			{ path:'faq', component:FaqComponent,},
-			{ path:'faq/:category', component:FaqComponent,},
-			{ path:'contact', component:ContactComponent,},
+			{ path: '', component: IndexComponent,},
+			{ path: 'faq', component: FaqComponent,},
+			{ path: 'faq/:category', component: FaqComponent,},
+			{ path: 'contact', component: ContactComponent,},
 		]
 	}
 ];

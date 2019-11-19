@@ -5,12 +5,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es'
-import { JwtInterceptor } from './shared/jwt.interceptor'
+import localeEs from '@angular/common/locales/es';
+import { JwtInterceptor } from './shared/jwt.interceptor';
 import { SharedModule } from './shared/shared.module';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderModule, NgxSmartLoaderService } from 'ngx-smart-loader';
 import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule, } from 'ngx-toastr';
 
@@ -26,7 +26,7 @@ registerLocaleData(localeEs, 'es');
     CoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot(),
+    NgbModule,
     NgxSmartLoaderModule,
    ToastNoAnimationModule,
      ToastrModule.forRoot({
