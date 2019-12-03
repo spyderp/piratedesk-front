@@ -1,15 +1,5 @@
 
 
-export class Calendar {
-	id: number;
-	descripcion: string;
-	dias:string;
-	hora_inicio:string;
-	hora_final:string;
-	fulltime:number;
-	festives=[];
-}
-
 export class Client {
 	id:           number;
 	nombre:  string;
@@ -31,27 +21,8 @@ export class Estate {
 	descripcion: string;
 }
 
-export class Faq {
-	id:number;
-	title: string;
-	content: string;
-	orden:number;
-	creado:string;
-	modificado:string;
-	category_id:number;
-}
 
-export class CategoryFaq {
-	id:number;
-	name: string;
-	descripcion: string;
-}
 
-export class Festive {
-	id:number;
-	descripcion:string;
-	fecha:string;
-}
 
 export class Priority {
 	id:number;
@@ -73,14 +44,7 @@ export class Template {
 	modificado:string;
 }
 
-export class Trophy {
-	id:number;
-	descripcion:string;
-	puntos:number;
-	creado:string;
-	modificado:string;
-	file_id:number=1;
-}
+
 
 export class User {
 	id:            number;
@@ -101,8 +65,4 @@ export class User {
 	departments: 	 any[]=[];
 }
 
-export enum Role {
-	Admin = 'administrador',
-	Agent = 'agente',
-	Supervisor = 'Ssupervisor'
-}
+

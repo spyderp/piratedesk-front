@@ -67,14 +67,6 @@ export class AuthService {
 							return data;
 					}));
 	}
-	loginPublic(client:number, username: string, password: string) {
-		const  httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-			})
-		};
-			return this.http.post(this.url+'/login_public', JSON.stringify({ clienteID:client,username: username, password: password }), httpOptions)
-	}
 	
 	logout() {
 		const httpOptionsLogout = {
@@ -102,7 +94,7 @@ export class AuthService {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
-				'Authorization': 'Bearer '+localStorage.getItem('current.refresh'),
+				'Authorization': 'Bearer ' + localStorage.getItem('current.refresh'),
 			})
 		};
 		this.refreshInterval= setInterval(()=>{
@@ -116,7 +108,7 @@ export class AuthService {
 							}
 							//return data.access_token;
 					});
-		},15*60*1000);
+		},24*60*60*1000);
 		 
 	}
 	forgot(email:string){

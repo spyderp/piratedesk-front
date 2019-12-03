@@ -8,7 +8,6 @@ const routes: Routes = [
 	{ path: 'admin',  loadChildren: './admin/admin.module#AdminModule' },
 	{ path: 'forgot_password', component: ForgotPasswordComponent},
 	{ path: 'inbox',   loadChildren: './inbox/inbox.module#InboxModule' },
-	{ path: 'know',   loadChildren: './knowledges/knowledges.module#KnowledgesModule' },
 	{ path: 'login', component: LoginComponent }
 ];
 

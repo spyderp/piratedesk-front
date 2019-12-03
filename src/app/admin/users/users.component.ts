@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../shared/models';
 import { UserService  } from '../shared/services/user.service'
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 
 @Component({
@@ -11,16 +11,16 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 	styleUrls: ['./users.component.sass'],
 })
 export class UsersComponent implements OnInit {
-	active:Array<any>=[];
-	formBtnLabel:string;
-	formTitle:string;
-	items:any = []
+	active:Array<any> = []
+	formBtnLabel: string
+	formTitle: string
+	items: any = []
 	loading: boolean = false
-	modalReference;
-	model:User =  new User();
-	users:User[]=[];
-	value:any = {};
-	s = [];
+	modalReference
+	model:User =  new User()
+	users:User[]=[]
+	value:any = {}
+	s = []
 	col = [
 		{ name:'Usuario', prop:'username'},
 		{ name:'Nombre', prop:'nombre'},
@@ -34,9 +34,6 @@ export class UsersComponent implements OnInit {
 		private modalService: NgbModal, 
 		public loader: NgxSmartLoaderService
 	) { 
-		
-		
-		
 	}
 
 	 public ngOnInit():any {
