@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { InboxComponent } from './inbox.component'
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component'
-import { AuthGuardService } from '../shared/auth-guard.service'
+import { AuthGuard } from '../shared/auth.guard'
 
 const routes: Routes = [
-	{ path: '', component: InboxComponent,  canActivate: [AuthGuardService], data: { roles: ['administrador'] }},
-	{ path: 'edit', component: EditTicketComponent,  canActivate: [AuthGuardService], },
+	{ path: '', component: InboxComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+	{ path: 'edit', component: EditTicketComponent, canActivate: [AuthGuard], },
 ]
 
 @NgModule({

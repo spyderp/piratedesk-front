@@ -4,7 +4,7 @@ import { NgxSmartLoaderService } from 'ngx-smart-loader';
 import { Router} from '@angular/router';
 import { User } from '../../admin/shared/models';
 import { UserService  } from '../../admin/shared/services/user.service'
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 @Component({
 	selector: 'navbar',
@@ -63,16 +63,16 @@ export class NavbarComponent implements OnInit {
 	}
 
 	sidebarOpen() {
-		let sidebar = document.getElementById('sidebar');
-		let bodyContent = document.getElementById('bodyContent');
+		const sidebar = document.getElementById('sidebar');
+		const bodyContent = document.getElementById('bodyContent');
 		sidebar.classList.remove('d-none');
 		bodyContent.classList.remove('col-lg-12')
 		bodyContent.classList.add('col-lg-10')
 		this.sidebarVisible = true;
 	};
 	sidebarClose() {
-		let  sidebar = document.getElementById('sidebar');
-		let bodyContent = document.getElementById('bodyContent');
+		const  sidebar = document.getElementById('sidebar');
+		const bodyContent = document.getElementById('bodyContent');
 		this.sidebarVisible = false;
 		sidebar.classList.add('d-none');
 		bodyContent.classList.remove('col-lg-10')

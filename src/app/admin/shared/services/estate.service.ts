@@ -11,23 +11,23 @@ export class EstateService extends Rest {
 	}
 
 	getAll():Observable<Estate[]> {
-		return this.http.get<Estate[]>(this.url+'/states');
+		return this.http.get<Estate[]>(this.url + '/states');
 	}
 
 	getById(id: number) {
-		return this.http.get(this.url+'/states/' + id);
+		return this.http.get(this.url + '/states/' + id);
 	}
 
-	create(model: Estate) {
-		return this.http.post<Estate>(this.url+'/states', model);
+	create(model: any) {
+		return this.http.post<Estate>(this.url + '/states', model);
 	}
 
 	update(model: Estate):Observable<Estate> {
-		return this.http.put<Estate>(this.url+'/states/' + model.id, model);
+		return this.http.put<Estate>(this.url + '/states/' + model.id, model);
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/states/' + id);
+		return this.http.delete(this.url + '/states/' + id);
 	}
 
 }

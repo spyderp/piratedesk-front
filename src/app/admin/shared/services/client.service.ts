@@ -19,13 +19,10 @@ export class ClientService extends Rest {
 	}
 
 	getList(){
-		return this.http.get(this.url+'/clients/?type=list');
-	}
-	getAssoc() {
-		return this.http.get<any[]>(this.url+'/calendars?type=list');
+		return this.http.get(this.url+'/clients?type=list');
 	}
 
-	create(client: Client) {
+	create(client: any) {
 		return this.http.post<Client>(this.url+'/clients', client);
 	}
 
@@ -34,7 +31,7 @@ export class ClientService extends Rest {
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/clients/' + id);
+		return this.http.delete(this.url + '/clients/' + id);
 	}
 
 }

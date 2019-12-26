@@ -16,12 +16,12 @@ export class RolService extends Rest {
 		return this.http.get(this.url+'/rols/' + id);
 	}
 
-	create(rol: Rol) {
+	create(rol: any) {
 		return this.http.post(this.url+'/rols', rol);
 	}
 
 	update(rol: Rol) {
-		return this.http.put(this.url+'/rols' + rol.id, rol);
+		return this.http.put(this.url+'/rols/' + rol.id, rol);
 	}
 
 	delete(id: number) {

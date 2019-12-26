@@ -8,21 +8,21 @@ import { EstatesComponent} from './estates/estates.component'
 import { PrioritiesComponent} from './priorities/priorities.component'
 import { TemplatesComponent} from './templates/templates.component'
 import { UsersComponent} from './users/users.component'
-import { AuthGuardService } from '../shared/auth-guard.service'
+import { AuthGuard } from '../shared/auth.guard'
 import { Role } from '../shared/role.model'
 const routes: Routes = [
-	{ path: '', component: AdminComponent, canActivate: [AuthGuardService], data: { roles: [Role.Admin, Role.Supervisor] },
+	{ path: '', component: AdminComponent, canActivate: [ AuthGuard ], data: { roles: [Role.Admin, Role.Supervisor] },
 	children: [
 		{ path: '', component: UsersComponent, pathMatch: 'full', data: { roles: [Role.Admin, Role.Supervisor] }},
-		{ path: 'clients',  component: ClientsComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin, Role.Supervisor] }},
-		{ path: 'client_users',  component: ClientusersComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin,
+		{ path: 'clients',  component: ClientsComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin, Role.Supervisor] }},
+		{ path: 'client_users',  component: ClientusersComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin,
 			Role.Supervisor] }},
-		{ path: 'departments',  component: DepartmentsComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin,
+		{ path: 'departments',  component: DepartmentsComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin,
 			 Role.Supervisor] }},
-		{ path: 'estates',  component: EstatesComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin, Role.Supervisor] }},
-		{ path: 'priorities',  component: PrioritiesComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin, Role.Supervisor] }},
-		{ path: 'templates',  component: TemplatesComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin, Role.Supervisor] }},
-		{ path: 'users',  component: UsersComponent, canActivate: [AuthGuardService], data: { roles: [ Role.Admin, Role.Supervisor] }},
+		{ path: 'estates',  component: EstatesComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin, Role.Supervisor] }},
+		{ path: 'priorities',  component: PrioritiesComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin, Role.Supervisor] }},
+		{ path: 'templates',  component: TemplatesComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin, Role.Supervisor] }},
+		{ path: 'users',  component: UsersComponent, canActivate: [ AuthGuard ], data: { roles: [ Role.Admin, Role.Supervisor] }},
 	]},
 ];
 

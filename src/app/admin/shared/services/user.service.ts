@@ -17,9 +17,9 @@ export class UserService extends Rest{
 		return this.http.get<User>(this.url+'/users/' + id);
 	}
 
-	create(user: User):Observable<User> {
+	create(user: any):Observable<User> {
 		return this.http.post<User>(this.url+'/users', user);
-	}any
+	}
 
 	update(user: User):Observable<User> {
 		return this.http.put<User>(this.url+'/users/' + user.id, user);

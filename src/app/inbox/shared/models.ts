@@ -38,6 +38,11 @@ export enum Event {
 }
 
 export class Message {
-	username:string
-	message:string
+	id: number
+	body: string
+	creado: Date
+	privado: boolean
+	ticket_id: number
+	from_user_id: number
+	to_user_id: number
 }

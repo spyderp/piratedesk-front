@@ -18,7 +18,7 @@ export class TemplateService  extends Rest {
 		return this.http.get(this.url+'/templates/' + id);
 	}
 
-	create(model: Template) {
+	create(model: any) {
 		return this.http.post<Template>(this.url+'/templates', model);
 	}
 
