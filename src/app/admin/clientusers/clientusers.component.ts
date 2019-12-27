@@ -32,7 +32,7 @@ export class ClientusersComponent implements OnInit {
   constructor(
   	private toastyService:ToastrService, 
 		private userService: UserService,
-		private clientService:ClientService,
+		private clientService: ClientService,
 		private modalService: NgbModal, 
 		public loader: NgxSmartLoaderService
   ) { }
@@ -62,9 +62,9 @@ export class ClientusersComponent implements OnInit {
 					this.loadAllUsers();
 					this.modalReference.close()
 				}else{
-		           		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
-		        }
-		        this.loader.stop('appLoader')	
+				   		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
+				}
+				this.loader.stop('appLoader')	
 			},
 			error => {
 				if(error.name=='HttpErrorResponse'){
@@ -126,8 +126,8 @@ export class ClientusersComponent implements OnInit {
   	}
 
  	public onUploadSuccess(args: any): void {
-    	this.model.file_id = args[1].id;
-    	
+		this.model.file_id = args[1].id;
+		
   }
 
 }

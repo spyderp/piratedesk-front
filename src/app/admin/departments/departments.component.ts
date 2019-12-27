@@ -41,12 +41,13 @@ export class DepartmentsComponent implements OnInit {
 		this.loader.stop('appLoader')
 	}
 	onDelete(event){
-		let id = event[0].id;
-		
-		let index:number = this.departments.map((element)=>{return element.id}).indexOf(id);
-		delete this.departments[index];
-		this.departmentService.delete(id).subscribe();
-		
+		const id = event[0].id;
+		this.departmentService.delete(id).subscribe(() => {
+			const index:number = this.departments.map((element) => element.id ).indexOf(id)
+			delete this.departments[index]
+		}, error => {
+			this.toastyService.error('Ocurrio un error y no se pudo borrar el registro.')
+		})
 	}
 	onEdit(event, content){
 		this.loadForm(false);

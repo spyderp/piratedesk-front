@@ -42,13 +42,13 @@ export class ClientsComponent implements OnInit {
 
 	onDelete(event) {
 		const id = event[0].id
-		this.formTitle = 'hola'
 		this.clientService.delete(id).subscribe( response => {
 			const index: number = this.clients.map((element) => element.id).indexOf(id)
 			delete this.clients[index]
 		},
 		error => {
 			this.toastyService.error('Ocurrio un error y no se pudo borrar el registro.')
+			return 'Invalid request parameters'
 		});
 	}
 
@@ -84,8 +84,8 @@ export class ClientsComponent implements OnInit {
 				data => {
 					if(data) {
 						this.toastyService.success('Nuevo registro creado con exito');
-						this.clients= this.clients.concat(data);
-						this.modalReference.close()
+						this.clients = this.clients.concat(data);
+					    this.modalReference.close()
 					} else {
 						this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
 					}

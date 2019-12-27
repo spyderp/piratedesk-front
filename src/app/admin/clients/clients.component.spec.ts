@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { By } from '@angular/platform-browser'
 import { Client } from '../shared/models'
 import { environment } from '../../../environments/environment'
+import { of } from 'rxjs'
 class ToastrServiceStub {
 	success(msg: string) {
 		return true
@@ -28,13 +29,23 @@ class NgxSmartLoaderServiceStub {
 		return true
 	}
 }
+
+class MockModalOpen {
+	close(): void {
+
+	}
+}
 class MockModalService {
 	open(object: any) {
-		return object
+		return new MockModalOpen()
 	}
 
+
+
 }
-fdescribe('ClientsComponent', () => {
+
+
+describe('ClientsComponent', () => {
 	let component: ClientsComponent
 	let fixture: ComponentFixture<ClientsComponent>
 	let service: ClientService
@@ -64,6 +75,11 @@ fdescribe('ClientsComponent', () => {
 		
 	})
 
+	afterAll(() => {
+		service = null
+		httpMock = null
+		fixture = null
+	})
 	it('should be created', () => {
 		expect(component).toBeTruthy()
 	})
@@ -93,7 +109,7 @@ fdescribe('ClientsComponent', () => {
 		req.flush(expectReturn)
 		httpMock.verify()
 		component.onLoadForm(event, 'prueba')
-		expect(component.modalReference).toEqual('prueba', 'modalRefereren call')
+		expect(component.modalReference).toEqual(new MockModalOpen(), 'modalRefereren call')
 		expect(component.formTitle).toEqual('Crear departamento', 'change FormTitle')
 		expect(component.formBtnLabel).toEqual('Guardar', 'change FormTitle')
 		expect(component.model).toEqual(new Client(), 'change FormTitle')
@@ -134,6 +150,40 @@ fdescribe('ClientsComponent', () => {
 		expect(component.clients[0]).toBeUndefined()
 	})
 
+	it('#onDelete should error', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const event = new Event('click')
+		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		const e = [{ id: 1 }]
+		component.onDelete(e)
+		req = httpMock.expectOne(url + '/clients/1', 'call to DELETE')
+		expect(req.request.method).toBe('DELETE')
+		req.flush(3, mockErrorResponse)
+		httpMock.verify()
+	})
+
+
 	it('#onEdit should', () => {
 		const expectReturn: Client[] = [
 			{
@@ -153,15 +203,278 @@ fdescribe('ClientsComponent', () => {
 				email: 'dsfdsf',
 			},
 		]
-		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		const req = httpMock.expectOne(url + '/clients', 'call to get')
 		expect(req.request.method).toBe('GET')
 		req.flush(expectReturn)
 		httpMock.verify()
 		const e = [{ id: 1 }]
 		component.onEdit(e, 'editar')
-		expect(component.modalReference).toEqual('editar', 'modalRefereren call')
+		expect(component.modalReference).toEqual(new MockModalOpen(), 'modalRefereren call')
 		expect(component.formTitle).toEqual('Editar departamento', 'change FormTitle')
 		expect(component.formBtnLabel).toEqual('Actualizar', 'change formBtnLabel')
 		expect(component.model).toEqual(expectReturn[0], 'equal model')
+	})
+	
+	
+	it('#onSubmit (create) should', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const newData: any = {
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		}
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/clients', 'call to post')
+		expect(req.request.method).toBe('POST')
+		req.flush({
+			id: 3,
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		})
+		httpMock.verify()
+		expect(component.clients[2]).toBeTruthy()
+		expect(component.clients[2].nombre).toEqual('RICARDO PORTILLO')
+	})
+	
+
+	it('#onSubmit (create) should null data', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const newData: any = {
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		}
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/clients', 'call to post')
+		expect(req.request.method).toBe('POST')
+		req.flush(null)
+		httpMock.verify()
+		expect(component.clients[2]).toBeUndefined()
+	})
+
+	it('#onSubmit (create) should error', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const newData: any = {
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		}
+		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/clients', 'call to post')
+		expect(req.request.method).toBe('POST')
+		req.flush(1, mockErrorResponse)
+		httpMock.verify()
+		expect(component.clients[2]).toBeUndefined()
+	})
+
+	it('#onSubmit (edit) should', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const newData: Client = {
+			id: 2,
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		}
+		const loadAll = spyOn((<any>component), 'loadAll')
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/clients/2', 'call to post')
+		expect(req.request.method).toBe('PUT')
+		req.flush({id: 2})
+		httpMock.verify()
+		expect(loadAll).toHaveBeenCalled()
+	})
+	
+
+	it('#onSubmit (edit) should null data', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const newData: Client = {
+			id: 2,
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		}
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/clients/2', 'call to post')
+		expect(req.request.method).toBe('PUT')
+		req.flush(null)
+		httpMock.verify()
+		expect(component.clients[2]).toBeUndefined()
+	})
+
+	it('#onSubmit (edit) should error', () => {
+		const expectReturn: Client[] = [
+			{
+				id: 1,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+			{
+				id: 2,
+				nombre: 'dsfdsf',
+				direccion: 'dsfdsf',
+				telefono: 'dsfdsf',
+				celular: 'dsfdsf',
+				email: 'dsfdsf',
+			},
+		]
+		const newData: Client = {
+			id: 2,
+			nombre: 'RICARDO PORTILLO',
+			direccion: 'dsfdsf',
+			telefono: '2666055',
+			celular: '62334384',
+			email: 'dsfdsf'
+		}
+		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+		let req = httpMock.expectOne(url + '/clients', 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/clients/2', 'call to post')
+		expect(req.request.method).toBe('PUT')
+		req.flush(1, mockErrorResponse)
+		httpMock.verify()
+		expect(component.clients[2]).toBeUndefined()
 	})
 })
