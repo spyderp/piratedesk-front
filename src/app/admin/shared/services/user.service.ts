@@ -26,14 +26,14 @@ export class UserService extends Rest{
 	}
 
 	delete(id: number) {
-		return this.http.delete(this.url+'/users/' + id);
+		return this.http.delete(this.url + '/users/' + id);
 	}
 
-	patch(id:number,data:any){
-		return this.http.patch(this.url+'/users/' + id, data);	
+	patch(id: number,data:any){
+		return this.http.patch(this.url + '/users/' + id, data)
 	}
 
 	associations() {
-		return this.http.get(this.url+'/departments?type=list');
+		return this.http.get(this.url + '/departments?type=list');
 	}
 }

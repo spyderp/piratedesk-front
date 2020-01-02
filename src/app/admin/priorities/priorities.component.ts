@@ -32,20 +32,21 @@ export class PrioritiesComponent implements OnInit {
 	) { 	}
 
 	ngOnInit() {
-		this.loading = true;
-		this.loadAll();
+		this.loading = true
+		this.loadAll()
 		this.loader.stop('appLoader')
 	}
-	onDelete(event){
-		let id = event[0].id;
-		
-		let index:number = this.rowsData .map((element)=>{return element.id}).indexOf(id);
-		delete this.rowsData [index];
-		this.priorityService.delete(id).subscribe();
-		
+	onDelete(event) {
+		const id = event[0].id;
+		this.priorityService.delete(id).subscribe(()=>{
+			const index: number = this.rowsData.map((element) => element.id ).indexOf(id);
+			delete this.rowsData[index]
+		}, error => {
+			this.toastyService.error('Ocurrrio un error, intente nuevamente')
+		})
 	}
-	onEdit(event, content){
-		this.loadForm(false);
+	onEdit(event, content) {
+		this.loadForm(false)
 		this.model = this.rowsData .filter((client: Priority) => client.id === event[0].id)[0];
 		this.modalReference = this.modalService.open(content)
 	}
@@ -91,14 +92,14 @@ export class PrioritiesComponent implements OnInit {
 		 }
 		 
 	}
-	private loadAll(){
+	private loadAll() {
 		this.priorityService.getAll().subscribe(data => { this.rowsData = data });
-		this.loading = false;
+		this.loading = false
 	}
-	private loadForm(add:boolean=true){
-		this.formTitle = (add)?'Crear Estado':'Editar Estado';
-		this.formBtnLabel = (add)?'Guardar':'Actualizar';
-		this.model = new Priority();
+	private loadForm(add:boolean = true) {
+		this.formTitle = (add) ? 'Crear Prioridad' : 'Editar Prioridad'
+		this.formBtnLabel = (add) ? 'Guardar' : 'Actualizar'
+		this.model = new Priority()
 	}
 
 

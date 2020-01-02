@@ -44,12 +44,12 @@ class MockModalService {
 }
 
 
-fdescribe('EstatesComponent', () => {
+describe('EstatesComponent', () => {
 	let component: EstatesComponent;
 	let fixture: ComponentFixture<EstatesComponent>;
 	let service: EstateService
 	let httpMock: HttpTestingController
-	const url = environment.apiServer + '/estates'
+	const url = environment.apiServer + '/states'
 	const expectReturn: Estate[] = [
 		{
 			id: 1,
@@ -91,5 +91,184 @@ fdescribe('EstatesComponent', () => {
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
-	});
-});
+	})
+
+	it('#onLoadForm ', () => {
+		const event = new Event('click')
+		component.onLoadForm(event, 'prueba')
+		expect(component.modalReference).toEqual(new MockModalOpen(), 'modalRefereren call')
+		expect(component.formTitle).toEqual('Crear Estado', 'change FormTitle')
+		expect(component.formBtnLabel).toEqual('Guardar', 'change FormTitle')
+		expect(component.model).toEqual(new Estate(), 'change FormTitle')
+	})
+
+	it('#onDelete should', () => {
+		const event = new Event('click')
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		const e = [{ id: 1 }]
+		component.onDelete(e)
+		req = httpMock.expectOne(url + '/1', 'call to DELETE')
+		expect(req.request.method).toBe('DELETE')
+		req.flush(3)
+		httpMock.verify()
+		expect(component.rowsData[0]).toBeUndefined()
+	})
+
+	it('#onDelete should error', () => {
+		const event = new Event('click')
+		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		const e = [{ id: 1 }]
+		component.onDelete(e)
+		req = httpMock.expectOne(url + '/1', 'call to DELETE')
+		expect(req.request.method).toBe('DELETE')
+		req.flush(3, mockErrorResponse)
+		httpMock.verify()
+		expect(component.rowsData).toEqual(expectReturn)
+	})
+
+	it('#onEdit should', () => {
+		const req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		const e = [{ id: 1 }]
+		component.onEdit(e, 'editar')
+		expect(component.modalReference).toEqual(new MockModalOpen(), 'modalRefereren call')
+		expect(component.formTitle).toEqual('Editar Estado', 'change FormTitle')
+		expect(component.formBtnLabel).toEqual('Actualizar', 'change formBtnLabel')
+		expect(component.model).toEqual(expectReturn[0], 'equal model')
+	})
+
+	it('#onSubmit (create) should', () => {
+		const newData: any = {
+			descripcion: 'nuevo'
+		}
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url, 'call to post')
+		expect(req.request.method).toBe('POST')
+		req.flush({
+			id: 3,
+			descripcion: 'nuevo'
+		})
+		httpMock.verify()
+		expect(component.rowsData[2]).toBeTruthy()
+		expect(component.rowsData[2].descripcion).toEqual('nuevo')
+	})
+
+	it('#onSubmit (create) should nulll ', () => {
+		const newData: any = {
+			descripcion: 'nuevo'
+		}
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url, 'call to post')
+		expect(req.request.method).toBe('POST')
+		req.flush(null)
+		httpMock.verify()
+		expect(component.rowsData[2]).toBeUndefined()
+	})
+
+	it('#onSubmit (create) should error ', () => {
+		const newData: any = {
+			descripcion: 'nuevo'
+		}
+		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url, 'call to post')
+		expect(req.request.method).toBe('POST')
+		req.flush(1, mockErrorResponse)
+		httpMock.verify()
+		expect(component.rowsData[2]).toBeUndefined()
+	})
+
+	it('#onSubmit (edit) should', () => {
+		const newData: Estate = {
+			id: 2,
+			descripcion: 'nuevo'
+		}
+		const loadAll = spyOn((<any>component), 'loadAll')
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/2', 'call to put')
+		expect(req.request.method).toBe('PUT')
+		req.flush({ id: 2 })
+		httpMock.verify()
+		expect(loadAll).toHaveBeenCalled()
+	})
+
+	it('#onSubmit (edit) should null data', () => {
+		const newData: Estate = {
+			id: 2,
+			descripcion: 'nuevo'
+		}
+		const loadAll = spyOn((<any>component), 'loadAll')
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/2', 'call to put')
+		expect(req.request.method).toBe('PUT')
+		req.flush(null)
+		httpMock.verify()
+		expect(component.rowsData[2]).toBeUndefined()
+	})
+
+	it('#onSubmit (edit) should edit', () => {
+		const newData: Estate = {
+			id: 2,
+			descripcion: 'nuevo'
+		}
+		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+		const loadAll = spyOn((<any>component), 'loadAll')
+		let req = httpMock.expectOne(url, 'call to get')
+		expect(req.request.method).toBe('GET')
+		req.flush(expectReturn)
+		httpMock.verify()
+		component.model = newData
+		const e = [{ id: 1 }]
+		component.modalReference = new MockModalOpen()
+		component.onSubmit()
+		req = httpMock.expectOne(url + '/2', 'call to put')
+		expect(req.request.method).toBe('PUT')
+		req.flush(1, mockErrorResponse)
+		httpMock.verify()
+		expect(component.rowsData[2]).toBeUndefined()
+	})
+})

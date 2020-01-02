@@ -5,8 +5,8 @@ import { EstateService } from '../shared/services/estate.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartLoaderService } from 'ngx-smart-loader';
 @Component({
-  selector: 'app-estates',
-  templateUrl: './estates.component.html',
+	selector: 'app-estates',
+	templateUrl: './estates.component.html',
 })
 export class EstatesComponent implements OnInit {
 	formBtnLabel:string;
@@ -36,13 +36,13 @@ export class EstatesComponent implements OnInit {
 		this.loading = false;
 	}
 	onDelete(event){
-		
-		let id = event[0].id;
-		
-		let index:number = this.rowsData.map((element)=>{return element.id}).indexOf(id);
-		delete this.rowsData [index];
-		this.estateService.delete(id).subscribe();
-		
+		const id = event[0].id;
+		this.estateService.delete(id).subscribe(() =>{
+			const index: number = this.rowsData.map((element) => { return element.id }).indexOf(id);
+			delete this.rowsData[index];
+		}, error => {
+			this.toastyService.error('ocurrio un error')
+		})
 	}
 	onEdit(event, content){
 		this.loadForm(false);
@@ -55,31 +55,30 @@ export class EstatesComponent implements OnInit {
 	}
 	onSubmit() {
 		this.loader.start('appLoader');
-		if(this.model.id){
+		if(this.model.id) {
 			 this.estateService.update(this.model).subscribe(data => {
-				if(data){
+				if(data) {
 					this.toastyService.success('Registro Actualizado');
 					this.loadAll();
 					//this.rowsData .push(this.model);
 					this.modalReference.close()
-				}else{
-		           		this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
-		        	}
-		        	this.loader.stop('appLoader')	
+				} else {
+					this.toastyService.error('El registro no se pudo actualizar corregir e intente nuevamente');
+				}
+					this.loader.stop('appLoader')
 			},
 			error => {
 				this.toastyService.error(error);
 				//this.loading = false;
 			});
-		 }else{
+		 } else {
 			 this.estateService.create(this.model).subscribe(
 				data => {
-					if(data){
-						this.toastyService.success('Nuevo registro creado con exito');
-						this.rowsData = this.rowsData .concat(data);
-
+					if(data) {
+						this.toastyService.success('Nuevo registro creado con exito')
+						this.rowsData = this.rowsData .concat(data)
 						this.modalReference.close()
-					}else{
+					} else {
 						this.toastyService.error('El registro no se pudo guardar corregir e intente nuevamente');
 					}
 					this.loader.stop('appLoader')
@@ -91,13 +90,13 @@ export class EstatesComponent implements OnInit {
 		 }
 		 
 	}
-	private loadAll(){
+	private loadAll() {
 		this.estateService.getAll().subscribe(data => { this.rowsData = data });
 	}
-	private loadForm(add:boolean=true){
-		this.formTitle = (add)?'Crear Estado':'Editar Estado';
-		this.formBtnLabel = (add)?'Guardar':'Actualizar';
-		this.model = new Estate();
+	private loadForm(add: boolean = true) {
+		this.formTitle = (add) ? 'Crear Estado' : 'Editar Estado'
+		this.formBtnLabel = (add) ? 'Guardar' : 'Actualizar'
+		this.model = new Estate()
 	}
 
 }
