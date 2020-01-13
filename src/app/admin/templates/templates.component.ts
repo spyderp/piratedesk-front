@@ -39,7 +39,7 @@ export class TemplatesComponent implements OnInit {
 	onDelete(event) {
 		const id = event[0].id
 		this.templateService.delete(id).subscribe(() => {
-			const index: number = this.rowsData.map((element) => { return element.id }).indexOf(id)
+			const index: number = this.rowsData.map((element) => element.id).indexOf(id)
 			delete this.rowsData[index]
 		}, error => {
 			this.toastyService.error('Ocurrio un error intente de nuevo')
