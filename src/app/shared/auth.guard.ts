@@ -36,7 +36,8 @@ export class AuthGuard implements CanActivate {
 
 	private __privigele(route: any): boolean {
 		const user: any = this.auth.getUser()
-		if (route.data.roles && route.data.roles.indexOf(user.role) === -1) {
+		console.log(user.role, route.data.roles.indexOf(user.role), route.data.roles)
+		if (route.data.roles && route.data.roles.indexOf(user.role) > -1) {
 			return true
 		} else {
 			this.toastyService.info('No tiene permisos de accesos a esta sección')
