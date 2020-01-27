@@ -6,23 +6,22 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TicketService extends Rest {
 
-  constructor(http: HttpClient) { 
-		super(http);
+	constructor(http: HttpClient) {
+		super(http)
 	}
-	getAll(filter: any = null, page = 0):Observable<Ticket[]> {
+	getAll(filter: any = null, page = 0): Observable<Ticket[]> {
 		let filtros = ''
-		if (page > 0 || !!filter ){
+		if (page > 0 || !!filter ) {
 			filtros = '?'
 		}
 		if (page > 0) {
 			filtros = filtros + 'page=' + page;
 		}
-		if (!!filter) {
+		if (filter) {
 			filtros =  page > 0 ? filtros + '&' : filtros + ''
 			filtros = filtros + 'find=' + JSON.stringify(filter)
 
 		}
-
 		return this.http.get<Ticket[]>(this.url + '/tickets' + filtros);
 	}
 

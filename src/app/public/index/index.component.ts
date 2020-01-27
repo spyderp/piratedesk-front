@@ -1,37 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-// import { TicketService } from '../../inbox/shared/services/ticket.service';
-import { DepartmentService } from '../../admin/shared/services/department.service';
-import { NgxSmartLoaderService } from 'ngx-smart-loader';
-import { Ticket } from '../../inbox/shared/models';
+import { Component, OnInit } from '@angular/core'
+import { ToastrService } from 'ngx-toastr'
+// import { TicketService } from '../../inbox/shared/services/ticket.service'
+import { DepartmentService } from '../../admin/shared/services/department.service'
+import { NgxSmartLoaderService } from 'ngx-smart-loader'
+import { Ticket } from '../../inbox/shared/models'
 @Component({
 	selector: 'app-index',
 	templateUrl: './index.component.html',
 	styleUrls: ['../../../assets/css/_public.sass']
 })
 export class IndexComponent implements OnInit {
-	public model:Ticket = new Ticket();
-	public department:any =[];
-	public nombretemp;
-	private lastContent:string = ''
-	captcha:any;
+	public model: Ticket = new Ticket()
+	public department: any =[]
+	public nombretemp
+	private lastContent = ''
+	captcha: any
 	constructor(
-		private departmentService:DepartmentService,
-		private loader:NgxSmartLoaderService,
-		private notificationService:ToastrService,
-		// private ticketService:TicketService
+		private departmentService: DepartmentService,
+		private loader: NgxSmartLoaderService,
+		private notificationService: ToastrService,
+		// private ticketService: TicketService 
 	) {	 }
 
 	ngOnInit() {
-		this.departmentService.getList().subscribe(data=>{this.department=data})
+		this.departmentService.getList().subscribe(data => { this.department = data})
 		this.loader.stop('appLoader')
 	}
-	onSubmit(){
+	onSubmit() {
 		const isLogin = sessionStorage.getItem('public.isLogin')
-		if(isLogin!='true'){
-			this.model.user_id = 1;
-			this.model.client_id = 1;
-		}else{
+		if (isLogin !== 'true') {
+			this.model.user_id = 1
+			this.model.client_id = 1
+		} else {
 			const userId: string = sessionStorage.getItem('public.userId')
 			const clientId: string = sessionStorage.getItem('public.clientId')
 			this.model.user_id = parseInt(userId)
@@ -54,7 +54,7 @@ export class IndexComponent implements OnInit {
 				this.model.content = this.lastContent
 				this.loader.stop('appLoader')
 			}
-		);*/
+		)*/
 
 	}
 }

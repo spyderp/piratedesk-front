@@ -60,7 +60,7 @@ class LoaderStub {
 
 
 
-fdescribe('NavbarComponent', () => {
+describe('NavbarComponent', () => {
 	let component: NavbarComponent;
 	let fixture: ComponentFixture<NavbarComponent>;
 
@@ -152,5 +152,18 @@ fdescribe('NavbarComponent', () => {
 		const toastr = spyOn((<any>component).toastyService, 'error')
 		component.onSubmit()
 		expect(toastr).toHaveBeenCalled()
+	})
+	it('should sidebarToggle', () => {
+		component.sidebarToggle()
+		expect((<any>component).sidebarVisible).toBeFalsy()
+	})
+
+	it('should sidebarToggle sidebar (false)', () => {
+		(<any>component).sidebarVisible = false
+		component.sidebarToggle()
+		expect((<any>component).sidebarVisible).toBeTruthy()
+	})
+	it('should logout', () => {
+		component.logout()
 	})
 })

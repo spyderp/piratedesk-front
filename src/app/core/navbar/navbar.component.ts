@@ -55,24 +55,32 @@ export class NavbarComponent implements OnInit {
 			},
 			error => {
 				this.toastyService.error('Ocurrio un error y no se pudo guardar, corregir e intente nuevamente')
-			})
+		})
 	}
 
 	sidebarOpen() {
 		const sidebar = document.getElementById('sidebar')
 		const bodyContent = document.getElementById('bodyContent')
-		sidebar.classList.remove('d-none')
-		bodyContent.classList.remove('col-lg-12')
-		bodyContent.classList.add('col-lg-10')
+		if (sidebar && sidebar.classList.contains('d-none')) {
+			sidebar.classList.remove('d-none')	
+		}
+		if (bodyContent && bodyContent.classList.contains('col-lg-12')) {
+			bodyContent.classList.remove('col-lg-12')
+			bodyContent.classList.add('col-lg-10')
+		}
 		this.sidebarVisible = true
 	}
 	sidebarClose() {
 		const  sidebar = document.getElementById('sidebar')
 		const bodyContent = document.getElementById('bodyContent')
 		this.sidebarVisible = false
-		sidebar.classList.add('d-none')
-		bodyContent.classList.remove('col-lg-10')
-		bodyContent.classList.add('col-lg-12')
+		if (sidebar) {
+			sidebar.classList.add('d-none')	
+		}
+		if (bodyContent && bodyContent.classList.contains('col-lg-10')) {
+			bodyContent.classList.remove('col-lg-10')
+			bodyContent.classList.add('col-lg-12')
+		}
 	}
 	sidebarToggle() {
 		if (this.sidebarVisible === false) {

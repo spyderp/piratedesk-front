@@ -10,7 +10,7 @@ export class EstateService extends Rest {
 		super(http);
 	}
 
-	getAll():Observable<Estate[]> {
+	getAll(): Observable<Estate[]> {
 		return this.http.get<Estate[]>(this.url + '/states');
 	}
 
