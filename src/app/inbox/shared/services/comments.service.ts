@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+ import { Injectable } from '@angular/core'
 import { Observable ,  Observer } from 'rxjs'
 import { Message } from '../models'
 import { Rest } from '../../../shared/rest';
@@ -13,11 +13,17 @@ export class CommentsService extends Rest {
 	getAll():Observable<Message[]>{
 		return this.http.get<Message[]>(this.url + '/messages')
 	}
+	getMsgForTiccke(ticketId: number): Observable<Message[]> {
+		return this.http.get<Message[]>(this.url + '/messages?find=' + ticketId)
+	}
+	getLastUpdate(ticketId: number, lastId: number): Observable<Message[]> {
+		return this.http.get<Message[]>(this.url + '/messages?find=' + ticketId + '&last=' + lastId)
+	}
 	getById(id:number) {
 		return this.http.get(this.url + '/messages/' + id)
 	}
 
-	create(message: any){
+	create(message: any) {
 		return this.http.post<Message>(this.url + '/messages', message)
 	}
 

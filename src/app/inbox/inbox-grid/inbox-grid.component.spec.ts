@@ -13,6 +13,8 @@ import { environment } from '../../../environments/environment'
 import { FormsModule } from '@angular/forms'
 import { Filter } from '../shared/models'
 import { on } from 'cluster'
+import { PriorityService } from 'src/app/admin/shared/services/priority.service'
+import { of } from 'rxjs'
 class ToastrServiceStub {
 	success(msg: string) {
 		return true
@@ -42,7 +44,13 @@ class MockModalService {
 		return new MockModalOpen()
 	}
 }
-
+class MockPriorityService{
+	getAll(){
+		return of([
+			{id: 1, descripcion: 'test'}
+		])
+	}
+}
 describe('InboxGridComponent', () => {
 	let component: InboxGridComponent
 	let fixture: ComponentFixture<InboxGridComponent>
@@ -60,6 +68,7 @@ describe('InboxGridComponent', () => {
 				DepartmentService,
 				EstateService,
 				TicketService,
+				{ provide: PriorityService, useClass: MockPriorityService}
 				{ provide: NgbModal, useClass: MockModalService},
 				{ provide: Router, useClass: RouterStub}
 			],

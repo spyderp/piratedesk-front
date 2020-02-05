@@ -1,15 +1,29 @@
-<div class="container-fluid bg-white mt-3 py-2 border">
-	<div class="row">
-		<div class="col-11 form-group" *ngIf="assigment">
-			<textarea class="form-control" [ngModel]="messageContent" ></textarea>
+<div class="container-fluid bg-white mt-3 py-2 border" >
+	<div class="row" *ngIf="assigment && status !== 4">
+		<div class="col-11 form-group" >
+			<textarea class="form-control" style="height: 45px;" [(ngModel)]="messageContent" ></textarea>
 		</div>
 		<div class="col-1"><button class="btn btn-success btn-lg" (click)="onSend()">Enviar</button></div>
 	</div>
-	<div class="commentBox p-2">
+	<div #commentBox class="commentBox p-2">
+		
 		<ul class="comment">
-			<li class="border bg-white p-1" *ngFor="let item of messages">item.message</li>
-			<li class="border bg-white p-1"> era se una vez una linda princesa</li>
+			<li class="border bg-white p-1" *ngFor="let item of messages">
+				<span class="text-success">{{ item.fromUser.nombre }} {{ item.fromUser.apellido }}: </span> 
+					{{item.body}}
+			</li>
 		</ul>
+			<div *ngIf="counter < 21">
+				will be updated in {{ counter }}
+			</div>
+			<div *ngIf="loaderMsg">
+				<div class="lds-ellipsis">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
 	</div>
 </div>
 

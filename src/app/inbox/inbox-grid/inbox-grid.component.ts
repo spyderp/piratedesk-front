@@ -5,6 +5,7 @@ import { EstateService } from '../../admin/shared/services/estate.service'
 import { DepartmentService } from '../../admin/shared/services/department.service'
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap'
 import { Router} from '@angular/router'
+import { PriorityService } from '../../admin/shared/services/priority.service'
 @Component({
 	selector: 'app-inbox-grid',
 	templateUrl: './inbox-grid.component.html',
@@ -14,6 +15,7 @@ export class InboxGridComponent implements OnInit {
 	@Output() edit = new EventEmitter()
 	departamentos: any[]
 	estados: any[]
+	priorities: any[]
 	isDel = false
 	isEdit = false
 	model: Filter = new Filter
@@ -25,6 +27,7 @@ export class InboxGridComponent implements OnInit {
 	constructor(
 		private departmentService: DepartmentService,
 		private estateService: EstateService,
+		private priorityService: PriorityService,
 		private modalService: NgbModal,
 		private router: Router,
 		private ticketService: TicketService
@@ -57,7 +60,8 @@ export class InboxGridComponent implements OnInit {
 			this.loading = false
 		})
 		this.departmentService.getList().subscribe( data => { this.departamentos = data })
-		 this.estateService.getAll().subscribe( data => { this.estados = data })
+		this.estateService.getAll().subscribe( data => { this.estados = data })
+		this.priorityService.getAll().subscribe(data => { this.priorities = data })
 	}
 	/**
 	 * [sortDate description] Permite ordenar la fecha
@@ -104,8 +108,7 @@ export class InboxGridComponent implements OnInit {
 		}
 	}
 	onEdit(id) {
-		this.isEdit = false
-		this.router.navigate(['/inbox/edit', { id: id}])
+		this.router.navigate(['/inbox/edit/' + id])
 		this.selected = []
 	}
 	onDel() {

@@ -14,7 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { NgxSmartLoaderModule, NgxSmartLoaderService } from 'ngx-smart-loader'
 import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule, } from 'ngx-toastr'
 
-registerLocaleData(localeEs, 'es')
+registerLocaleData(localeEs, 'es-PA')
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -41,7 +41,7 @@ registerLocaleData(localeEs, 'es')
 			useClass: JwtInterceptor,
 			multi: true
 		},
-		{ provide: LOCALE_ID, useValue: 'es' },
+		{ provide: LOCALE_ID, useValue: 'es-PA' },
 		NgxSmartLoaderService,
 
 	],

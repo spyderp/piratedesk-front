@@ -6,7 +6,7 @@ import { AuthGuard } from '../shared/auth.guard'
 
 const routes: Routes = [
 	{ path: '', component: InboxComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
-	{ path: 'edit', component: EditTicketComponent, canActivate: [AuthGuard], },
+	{ path: 'edit/:id', component: EditTicketComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
 ]
 
 @NgModule({

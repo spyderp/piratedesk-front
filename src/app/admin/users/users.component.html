@@ -19,15 +19,15 @@
     </button>
   </div>
   <div class="modal-body">
-	<form  #userForm="ngForm"  (ngSubmit)="userForm.form.valid && onSubmit()">
+	<form class="was-validated"  #userForm="ngForm"  (ngSubmit)="userForm.form.valid && onSubmit()">
 		<div class="row">
 		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="username.invalid && username.touched" >
 			<label for="usuario">Usuario</label>
-			<input [class.form-control-danger]="username.invalid && username.touched"  [(ngModel)]="model.username" type="text" class=" form-control" placeholder="Usuario" required autofocus name="usuario"  #username="ngModel" >
+			<input [class.form-control-danger]="username.invalid && username.touched"  [(ngModel)]="model.username" type="text" class=" form-control" placeholder="Usuario" required autofocus name="usuario"  #username="ngModel" minlength="5" >
 		</div>
 		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="email.invalid && email.touched" >
 			<label for="correo">Correo</label>
-			<input [class.form-control-danger]="email.invalid && email.touched"  [(ngModel)]="model.email" type="email" class=" form-control" placeholder="Ejemplo:correo@correo.com" required autofocus name="correo"  #email="ngModel" >
+			<input [class.form-control-danger]="email.invalid && email.touched"  [(ngModel)]="model.email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class=" form-control" placeholder="Ejemplo:correo@correo.com" required autofocus name="correo"  #email="ngModel" >
 		</div>
 		<div class="form-group col-xs-12 col-md-6" [class.has-danger]="password.invalid && password.touched" >
 			<label for="contrasena">Contraseña</label>

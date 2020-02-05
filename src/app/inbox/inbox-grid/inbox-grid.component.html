@@ -21,26 +21,11 @@
 			</div>
 			<label for="">Prioridad</label>
 			<div class="container"><div class="row">
-			<div class="col-md-6 form-check">
-				<input class="form-check-input"  type="checkbox" value="1"  (change)="onCheck($event)">
-				<label class="form-check-label">Baja</label>
+			<div class="col-md-6 form-check" *ngFor="let priority of priorities">
+				<input class="form-check-input"  type="checkbox" value="{{ priority.id }}"  (change)="onCheck($event)">
+				<label class="form-check-label">{{ priority.descripcion }}</label>
 			</div>
-			<div class="col-md-6 form-check">
-				<input class="form-check-input"  type="checkbox" value="2" (change)="onCheck($event)">
-				<label class="form-check-label">Media baja</label>
-			</div>
-			<div class="col-md-6 form-check">
-				<input class="form-check-input"  type="checkbox" value="3" (change)="onCheck($event)">
-				<label class="form-check-label">Media</label>
-			</div>
-			<div class="col-md-6 form-check">
-				<input class="form-check-input"  type="checkbox" value="4" (change)="onCheck($event)">
-				<label class="form-check-label">Alta</label>
-			</div>
-			<div class="col-md-6 form-check">
-				<input class="form-check-input"  type="checkbox" value="5" (change)="onCheck($event)">
-				<label class="form-check-label">Urgente</label>
-			</div>
+			
 			</div></div>
 			<div class="form-group">
 				<label for="">Fecha:Desde</label>
@@ -125,7 +110,7 @@
       </ngx-datatable-column> 
       <ngx-datatable-column name="Prioridad" prop="priorities" >
       	<ng-template let-value="value" ngx-datatable-cell-template >
-           <div class="text-center h5" > <span [ngClass]="{'badge-success':value.id==1,'badge-info':value.id==2,'badge-warning':value.id==3,'badge-orange':value.id==4,'badge-danger':value.id==5}" class="badge ">{{value.descripcion}}</span></div>
+           <div class="text-center h5" > <span [ngClass]="{'badge-success':value.id==1,'badge-warning':value.id==2,'badge-danger':value.id==3,'badge-orange':value.id==4}" class="badge ">{{value.descripcion}}</span></div>
           </ng-template>
       </ngx-datatable-column> 
       <ngx-datatable-column
@@ -138,7 +123,9 @@
 		prop="id"
 		>
 		<ng-template let-value="value" ngx-datatable-cell-template >
-			<div class="text-center"><button class="btn btn-primary btn-sm" (click)="onEdit(value)">Ver</button>	</div>
+			<div class="text-center">
+				<button class="btn btn-primary btn-sm" (click)="onEdit(value)">Ver</button>	
+			</div>
 		</ng-template>
 	</ngx-datatable-column> 
 </ngx-datatable>
@@ -148,7 +135,7 @@
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Crear Nuevo Ticket</h4>
+    <h5 class="modal-title">Crear Nuevo Ticket</h5>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

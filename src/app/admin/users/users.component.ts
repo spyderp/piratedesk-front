@@ -73,6 +73,7 @@ export class UsersComponent implements OnInit {
 			},
 			error => {
 				this.toastyService.error(error)
+				this.loader.stop('appLoader')
 			})
 		 } else {
 			this.userService.create(this.model).subscribe( data => {
@@ -86,6 +87,7 @@ export class UsersComponent implements OnInit {
 				this.loader.stop('appLoader')
 			},
 			error => {
+				this.loader.stop('appLoader')
 				this.toastyService.error(error)
 			})
 		 }

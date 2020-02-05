@@ -9,6 +9,11 @@
 	(edit)="onEdit($event, content)"
 	(del)="onDelete($event)"
 	>	
+	<ngx-datatable-column name="T. Respuesta" prop="respuesta">
+		<ng-template let-value="value" ngx-datatable-cell-template>
+			<div class="text-center"> {{value}} horas </div>
+		</ng-template>
+	</ngx-datatable-column>
 	</datagrid>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
@@ -29,13 +34,13 @@
 		<div class="col-12 col-sm-6">
 			<div class="form-group"  >
 				<label for="res">Tiempo de Respuesta</label>
-				<input [(ngModel)]="model.respuesta" type="text" class=" form-control"  name="res"  #descripcion="ngModel" default="0">
+				<input [(ngModel)]="model.respuesta" type="text" class=" form-control"  name="res"  #descripcion="ngModel" default="0" placeholder="Horas">
 			</div>
 		</div>
 		<div class="col-12 col-sm-6">
 			<div class="form-group"  >
 				<label for="resu">Tiempo de Resuelto</label>
-				<input [(ngModel)]="model.resuelto" type="text" class=" form-control"  name="resu"  #descripcion="ngModel" default="0">
+				<input [(ngModel)]="model.resuelto" type="text" class=" form-control"  name="resu"  #descripcion="ngModel" default="0" pĺaceholder="horas">
 			</div>
 		</div>
 		<div class="col-12 col-sm-6">

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild} from '@angular/core'
-import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { Ticket } from '../shared/models'
 import { TicketService } from '../shared/services/ticket.service'
 import { ToastrService } from 'ngx-toastr'
@@ -10,6 +10,8 @@ import { EstateService } from '../../admin/shared/services/estate.service'
 import { NgxSmartLoaderService } from 'ngx-smart-loader'
 import { DropzoneConfigInterface, DropzoneComponent } from 'ngx-dropzone-wrapper'
 import { environment} from '../../../environments/environment'
+import { element } from 'protractor'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 @Component({
 	selector: 'edit-ticket',
 	templateUrl: './edit-ticket.component.html',
@@ -48,15 +50,15 @@ export class EditTicketComponent implements OnInit {
 		private estateService: EstateService,
 		private loader: NgxSmartLoaderService,
 		private priorityService: PriorityService,
-		private route: ActivatedRouteSnapshot,
+		private route: ActivatedRoute,
 		private ticketService: TicketService,
 		private toastrService: ToastrService,
-		// private router: Router
+		private modal: NgbModal
 	) { }
 
 	ngOnInit() {
 		this.loader.start('appLoader')
-		this.ticketId = this.route.paramMap.get('id')
+		this.ticketId = this.route.snapshot.paramMap.get('id')
 		this._loadAll(this.ticketId)
 	}
 
@@ -83,7 +85,7 @@ export class EditTicketComponent implements OnInit {
 			//this.del = e.supervisor
 			this.edit = true
 		} else {
-
+			this.modal.open('listAssign')
 		}
 	}
 	onCancelEdit() {
@@ -95,12 +97,28 @@ export class EditTicketComponent implements OnInit {
 
 		}
 	}
+
+	onDeleteFile(id) {
+		const data = {
+			file_id: id
+		}
+		this.ticketService.patch(this.model.id, data, 3).subscribe( () => {
+			if (this.model.files.length > 0) {
+				const index: number = this.model.files.map(element => element.id).indexOf(id)
+				if (index > -1) {
+					this.model.files.splice(index, 1)
+				}
+			}
+		}, error => {
+				this.toastrService.error('Ocurrio un error y no se pudo eliminar el archivo, intente nuevamente')
+		})
+	}
 	onEdit() {
 		this.formEdit = true
 		this.tempContent = this.model.content
 	}
 	onState(stateId: number, event) {
-		if ( stateId !== 4 || confirm('Esta seguro que desea finalizar el caso')){
+		if ( stateId != 4){
 			const data = {
 				state_id: stateId
 			}
@@ -108,13 +126,33 @@ export class EditTicketComponent implements OnInit {
 				() => {
 					this.toastrService.success('Se ha cambiado el estado con exito')
 					this.changeState = stateId
+					if( this.edit === false && stateId > 4 ){
+						this.edit = true
+					}
 				},
 				error => {
 					this.toastrService.error('Ocurrio un error y no se pudo guardar, corregir e intente nuevamente')
 				}
 			)
-		} else {
-			// event.target.value = this.changeState
+		} else if (stateId == 4) {
+			const answer = confirm('Esta seguro que desea finalizar el caso')
+			if (answer) {
+				const data = {
+					state_id: stateId
+				}
+				this.ticketService.patch(this.model.id, data, 1).subscribe(
+					() => {
+						this.toastrService.success('Se ha cambiado el estado con exito')
+						this.changeState = stateId
+						this.edit = false
+					},
+					error => {
+						this.toastrService.error('Ocurrio un error y no se pudo guardar, corregir e intente nuevamente')
+					}
+				)
+			} else {
+				event.target.value = this.changeState
+			}
 		}
 	}
 	onSubmit() {
@@ -158,7 +196,7 @@ export class EditTicketComponent implements OnInit {
 				if (e.user_id === this.__currentUser.id){
 					this.assigment = true
 					this.del = e.supervisor
-					this.edit = e.edit
+					this.edit = this.model.state_id != 4 ? e.edit : false
 					this.changeState = model.state_id
 				}
 			})
