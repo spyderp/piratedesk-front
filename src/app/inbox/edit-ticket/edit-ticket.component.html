@@ -156,3 +156,25 @@
 		</div>
 	</div>
 </div>
+
+
+<ng-template #asingList let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Lista de Usuarios</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+			<div class="form-group">
+				<label for="name">Seleccione el usuario a Asignar</label>
+				<select [(ngModel)]="asingSupervisor" class="form-control">
+					<option *ngFor="let item of agents" value="{{item.id}}">{{item.nombre}} {{item.apellido}} ({{item.rol_id}})</option>
+				</select>
+			</div>
+			<hr>
+			<button class="btn btn-lg btn-aqua" (click)="onSupervisorAssing()">Asignar</button>
+			<button class="btn btn-lg btn-aqua" (click)="c('Close click')"> Cancelar </button>
+		
+	</div>
+</ng-template>

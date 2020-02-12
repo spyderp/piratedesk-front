@@ -37,7 +37,7 @@ export class CommentsComponent implements AfterViewInit {
 			this.messages = []
 			this.loaderMsg = false
 		})
-		setInterval(() => {
+		/*setInterval(() => {
 			this.loadUpdate()
 		}, 60000)
 		setInterval(() => {
@@ -45,7 +45,7 @@ export class CommentsComponent implements AfterViewInit {
 			if (this.counter === -1) {
 				this.counter = 60
 			}
-		}, 1000)
+		}, 1000)*/
 	}
 	public loadUpdate() {
 		this.loaderMsg = true

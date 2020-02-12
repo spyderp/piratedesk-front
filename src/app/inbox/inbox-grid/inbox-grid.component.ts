@@ -24,6 +24,7 @@ export class InboxGridComponent implements OnInit {
 	tickets: Ticket[] = []
 	loading = false
 	modalReference
+
 	constructor(
 		private departmentService: DepartmentService,
 		private estateService: EstateService,

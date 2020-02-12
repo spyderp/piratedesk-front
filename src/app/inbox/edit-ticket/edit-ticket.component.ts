@@ -10,8 +10,8 @@ import { EstateService } from '../../admin/shared/services/estate.service'
 import { NgxSmartLoaderService } from 'ngx-smart-loader'
 import { DropzoneConfigInterface, DropzoneComponent } from 'ngx-dropzone-wrapper'
 import { environment} from '../../../environments/environment'
-import { element } from 'protractor'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { UserService } from '../../admin/shared/services/user.service'
 @Component({
 	selector: 'edit-ticket',
 	templateUrl: './edit-ticket.component.html',
@@ -19,13 +19,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 })
 
 export class EditTicketComponent implements OnInit {
-	static SUPERVISOR = 3
+	static SUPERVISOR = 'supervisor'
+	@ViewChild('asingList') asingList
 	config: DropzoneConfigInterface = {
 		url: environment.apiServer + '/files',
 		maxFilesize: 2,
 		acceptedFiles: 'image/*,application/pdf'
 	}
-	path: String = environment.apiServer + '/files'
+	agents: any[] = []
+	asingSupervisor = null
 	assigment = false
 	changeState: number
 	client: any[]
@@ -36,6 +38,8 @@ export class EditTicketComponent implements OnInit {
 	edit = false
 	formEdit = false
 	model: Ticket = new Ticket()
+	m: any
+	path: String = environment.apiServer + '/files'
 	pDescription: string
 	prioritiesId: number
 	priority: any = []
@@ -48,12 +52,13 @@ export class EditTicketComponent implements OnInit {
 		private clientService: ClientService,
 		private departmentService: DepartmentService,
 		private estateService: EstateService,
+		private userService: UserService,
 		private loader: NgxSmartLoaderService,
+		private modal: NgbModal,
 		private priorityService: PriorityService,
 		private route: ActivatedRoute,
 		private ticketService: TicketService,
-		private toastrService: ToastrService,
-		private modal: NgbModal
+		private toastrService: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -64,29 +69,27 @@ export class EditTicketComponent implements OnInit {
 
 	onAssign() {
 		// Se valida que el usuario no sea supervisor
-		if ( this.__currentUser.rol_id !== EditTicketComponent.SUPERVISOR) {
+		if ( this.__currentUser.role !== EditTicketComponent.SUPERVISOR) {
 			const data = {
 				user_id: this.__currentUser.id,
 				edit: true,
 				state_id: 2
 			}
-			this.ticketService.patch(this.model.id, data).subscribe(
-				() => {
-					this.toastrService.success('Se ha asignado a este caso')
-					this.changeState = 2
-					this.model.state_id = 2
-				},
-				error => {
-					this.toastrService.error('Ocurrio un error y no se pudo guardar, corregir e intente nuevamente')
-				}
-			)
-			this.assigment = true
-			//TODO: cuando un supervisor se asigna
-			//this.del = e.supervisor
-			this.edit = true
+			this._setAssing(data);
 		} else {
-			this.modal.open('listAssign')
+			this.userService.getAgent().subscribe( data => this.agents = data, error => console.log(error) )
+			this.m = this.modal.open(this.asingList)
 		}
+	}
+	onSupervisorAssing() {
+		const data = {
+			user_id: this.asingSupervisor,
+			edit: true,
+			state_id: 2
+		}
+		const currentUser = this.asingSupervisor === this.__currentUser.id
+		this._setAssing(data, currentUser)
+		this.m.close()
 	}
 	onCancelEdit() {
 		this.model.content = this.tempContent
@@ -202,6 +205,25 @@ export class EditTicketComponent implements OnInit {
 			})
 		}
 	}
+
+	private _setAssing(data, assigment = true) {
+		this.ticketService.patch(this.model.id, data).subscribe(
+			() => {
+				this.toastrService.success('Se ha asignado a este caso')
+				this.changeState = 2
+				this.model.state_id = 2
+				if (assigment) {
+					this.assigment = true
+					this.edit = true
+				}
+			},
+			error => {
+				const msg = error.error.message === 'Error: USER' ? 'El usuario ya se encuentra asignado' :
+				 'Ocurrio un error y no se pudo guardar, corregir e intente nuevamente'
+				this.toastrService.error(msg)
+			}
+		)
+	}
 	public onUploadError(args: any): void {
 		this.toastrService.error('Ocurrio un error al cargar el archivo. Intenten nuevamente')
 	}
@@ -222,4 +244,5 @@ export class EditTicketComponent implements OnInit {
 				}
 		)
 	}
+	
 }

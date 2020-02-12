@@ -36,4 +36,8 @@ export class UserService extends Rest{
 	associations() {
 		return this.http.get(this.url + '/departments?type=list');
 	}
+
+	getAgent(){
+		return this.http.get<User[]>(this.url + '/users?agent=true')
+	}
 }
